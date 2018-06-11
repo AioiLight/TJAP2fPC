@@ -1,4 +1,5 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
@@ -94,37 +95,40 @@ namespace DTXMania
 
                 for( int i = 0; i < CDTXMania.ConfigIni.nPlayerCount; i++ )
                 {
-                    if( this.ct進行[ i * 3 ].b進行中 )
+                    //レーンフラッシュ面
+		    if( this.ct進行[ i * 3 ].b進行中 )
                     {
-	                    int num8 = ( ( ( 100 - this.ct進行[i * 3].n現在の値 ) * 0xff ) / 100 );
+	                    int num8 = ( ( ( 150 - this.ct進行[i * 3].n現在の値 ) * 0xff ) / 100 );
 					    if( CDTXMania.Tx.Lane_Red != null && CDTXMania.Tx.Lane_Yellow != null )
 					    {
                             CDTXMania.Tx.Lane_Red.n透明度 = ( num8 );
                             CDTXMania.Tx.Lane_Red.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
-                            CDTXMania.Tx.Lane_Yellow.n透明度 = ( num8 );
-                            CDTXMania.Tx.Lane_Yellow.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
+                            //CDTXMania.Tx.Lane_Yellow.n透明度 = ( num8 );
+                            //CDTXMania.Tx.Lane_Yellow.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
 					    }
                     }
+		    //レーンフラッシュ縁
                     if( this.ct進行[ 1 + ( i * 3 ) ].b進行中 )
                     {
-	                    int num8 = ( ( ( 100 - this.ct進行[ 1 + ( i * 3 ) ].n現在の値 ) * 0xff ) / 100 );
+	                    int num8 = ( ( ( 150 - this.ct進行[ 1 + ( i * 3 ) ].n現在の値 ) * 0xff ) / 100 );
 					    if( CDTXMania.Tx.Lane_Blue != null && CDTXMania.Tx.Lane_Yellow != null )
 					    {
                             CDTXMania.Tx.Lane_Blue.n透明度 = ( num8 );
                             CDTXMania.Tx.Lane_Blue.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
-                            CDTXMania.Tx.Lane_Yellow.n透明度 = ( num8 );
-                            CDTXMania.Tx.Lane_Yellow.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
+                            //CDTXMania.Tx.Lane_Yellow.n透明度 = ( num8 );
+                            //CDTXMania.Tx.Lane_Yellow.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
 					    }
                     }
-                    if( this.ct進行[ 2 + ( i * 3 ) ].b進行中 )
-                    {
-	                    int num8 = ( ( ( 100 - this.ct進行[ 2 + ( i * 3 ) ].n現在の値 ) * 0xff ) / 100 );
-					    if(CDTXMania.Tx.Lane_Yellow != null )
-					    {
-                            CDTXMania.Tx.Lane_Yellow.n透明度 = ( num8 );
-                            CDTXMania.Tx.Lane_Yellow.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
-					    }
-                    }
+		    //レーンフラッシュ連打
+                    //if( this.ct進行[ 2 + ( i * 3 ) ].b進行中 )
+                    //{
+	            //        int num8 = ( ( ( 100 - this.ct進行[ 2 + ( i * 3 ) ].n現在の値 ) * 0xff ) / 100 );
+			//		    if(CDTXMania.Tx.Lane_Yellow != null )
+			//		    {
+                    //        CDTXMania.Tx.Lane_Yellow.n透明度 = ( num8 );
+                    //        CDTXMania.Tx.Lane_Yellow.t2D描画( CDTXMania.app.Device, 333, CDTXMania.Skin.nScrollFieldY[ i ] );
+			//		    }
+                    //}
                 }
 
 
