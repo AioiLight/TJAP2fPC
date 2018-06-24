@@ -2172,3 +2172,4 @@ namespace DTXMania
 		#endregion
 	}
 }
+　
