@@ -280,3 +280,4 @@ namespace DTXMania
 		#endregion
 	}
 }
+　
