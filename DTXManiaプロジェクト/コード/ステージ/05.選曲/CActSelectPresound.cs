@@ -215,3 +215,4 @@ namespace DTXMania
 		#endregion
 	}
 }
+　
