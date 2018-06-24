@@ -461,4 +461,4 @@ namespace DTXMania
         //protected CTexture txゲージ線;
         //protected CTexture txゲージ線2P;
     }
-}
+}　
