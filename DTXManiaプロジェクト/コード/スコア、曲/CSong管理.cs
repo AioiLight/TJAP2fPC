@@ -1998,3 +1998,4 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 		#endregion
 	}
 }
+　
