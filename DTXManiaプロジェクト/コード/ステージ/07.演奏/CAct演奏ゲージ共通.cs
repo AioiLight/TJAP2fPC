@@ -442,8 +442,6 @@ namespace DTXMania
 		public double[] db現在のゲージ値 = new double[ 4 ];
         protected CCounter ct炎;
         protected CCounter ct虹アニメ;
-        protected CCounter ct虹アニメX;
-        protected CCounter ctゲージフラッシュX;
         //protected CTexture txゲージ;
         //      protected CTexture txゲージ背景;
         //protected CTexture txゲージ2P;
@@ -454,10 +452,6 @@ namespace DTXMania
         //      protected CTexture tx音符;
         protected CTexture[] txゲージ虹 = new CTexture[ 12 ];
         protected CTexture[] txゲージ虹2P = new CTexture[ 12 ];
-        protected CTexture[] txゲージ虹X = new CTexture[40];
-        protected CTexture[] txゲージ虹2PX = new CTexture[40];
-        protected CTexture[] txゲージフラッシュX = new CTexture[40];
-        protected CTexture[] txゲージフラッシュ2PX = new CTexture[40];
         //protected CTexture txゲージ線;
         //protected CTexture txゲージ線2P;
     }
