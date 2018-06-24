@@ -937,3 +937,4 @@ namespace DTXMania
 		#endregion
 	}
 }
+　
