@@ -149,8 +149,6 @@ namespace DTXMania
                 //    this.txゲージ虹[ i ] = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\Gauge\Gauge_rainbow_" + i.ToString() + ".png") );
                 //}
                     this.ct虹アニメ = new CCounter(0, 11, 80, CDTXMania.Timer);
-                    this.ct虹アニメX = new CCounter(0, 39, 18, CDTXMania.Timer);
-                    this.ctゲージフラッシュX = new CCounter(0, 29, 19, CDTXMania.Timer);
             
                 //this.tx音符 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_taiko_notes.png"));
                 base.OnManagedリソースの作成();
@@ -215,27 +213,10 @@ namespace DTXMania
                     CDTXMania.Tx.Gauge[0].t2D描画( CDTXMania.app.Device, 488, 144, new Rectangle( 0, 0, nRectX, 44 ) );
 
                     if(CDTXMania.Tx.Gauge_Line[0] != null )
-                    {
-                        if (this.db現在のゲージ値[0] >= 80.0)
-                        {  
-                            if (CDTXMania.Tx.Gauge_YellowFlashX[this.ctゲージフラッシュX.n現在の値] != null)
-                            {
-                                this.ctゲージフラッシュX.t進行Loop();
-                                CDTXMania.Tx.Gauge_YellowFlashX[this.ctゲージフラッシュX.n現在の値].t2D描画(CDTXMania.app.Device, 492, 166);
-                            }
-                            else
-                            {
-                                ;
-                            }
-                        }
+     　　　　　　　　　{
                         if( this.db現在のゲージ値[ 0 ] >= 100.0 )
                         {
-                            if (CDTXMania.Tx.Gauge_SmoothRainbowX[this.ct虹アニメX.n現在の値] != null)
-                            {
-                                this.ct虹アニメX.t進行Loop();
-                                CDTXMania.Tx.Gauge_SmoothRainbowX[this.ct虹アニメX.n現在の値].t2D描画(CDTXMania.app.Device, 492, 144);
-                            }
-                            else if (CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値] != null)
+                            if (CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値] != null)
                             {
                                 this.ct虹アニメ.t進行Loop();
                                 CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値].t2D描画(CDTXMania.app.Device, 492, 144);
@@ -265,26 +246,9 @@ namespace DTXMania
                     CDTXMania.Tx.Gauge[1].t2D描画( CDTXMania.app.Device, 488, 532, new Rectangle( 0, 0, nRectX2P, 44 ) );
                     if(CDTXMania.Tx.Gauge[1] != null )
                     {
-                        if (this.db現在のゲージ値[1] >= 80.0)
-                        {
-                            if (CDTXMania.Tx.Gauge_YellowFlashX[this.ctゲージフラッシュX.n現在の値] != null)
-                            {
-                                this.ctゲージフラッシュX.t進行Loop();
-                                CDTXMania.Tx.Gauge_YellowFlashX[this.ctゲージフラッシュX.n現在の値].t2D描画(CDTXMania.app.Device, 492, 532);
-                            }
-                            else
-                            {
-                                ;
-                            }
-                        }
                         if (this.db現在のゲージ値[1] >= 100.0)
                         {
-                            if (CDTXMania.Tx.Gauge_SmoothRainbowX[this.ct虹アニメX.n現在の値] != null)
-                            {
-                                this.ct虹アニメX.t進行Loop();
-                                CDTXMania.Tx.Gauge_SmoothRainbowX[this.ct虹アニメX.n現在の値].t2D上下反転描画(CDTXMania.app.Device, 492, 532);
-                            }
-                            else if (CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値] != null)
+                            if (CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値] != null)
                             {
                                 this.ct虹アニメ.t進行Loop();
                                 CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値].t2D上下反転描画(CDTXMania.app.Device, 492, 532);
