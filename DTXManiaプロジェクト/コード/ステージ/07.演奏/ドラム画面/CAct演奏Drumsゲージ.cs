@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
@@ -128,28 +128,28 @@ namespace DTXMania
 		}
 		public override void OnManagedリソースの作成()
 		{
-			if( !base.b活性化してない )
-			{
-				//this.txゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge.png" ) );
-				//this.txゲージ背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_base.png" ) );
-    //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
-    //                this.txゲージ2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_2P.png" ) );
-    //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
-    //                this.txゲージ背景2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_base_2P.png" ) );
-    //            this.txゲージ線 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_line.png" ) );
-    //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
-    //                this.txゲージ線2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_line_2P.png" ) );
+            if (!base.b活性化してない)
+            {
+                //this.txゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge.png" ) );
+                //this.txゲージ背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_base.png" ) );
+                //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
+                //                this.txゲージ2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_2P.png" ) );
+                //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
+                //                this.txゲージ背景2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_base_2P.png" ) );
+                //            this.txゲージ線 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_line.png" ) );
+                //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
+                //                this.txゲージ線2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_line_2P.png" ) );
 
-    //            this.tx魂 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Soul.png" ) );
-    //            this.tx炎 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Soul_fire.png" ) );
+                //            this.tx魂 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Soul.png" ) );
+                //            this.tx炎 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Soul_fire.png" ) );
 
-    //            this.tx魂花火 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_explosion_soul.png" ) );
+                //            this.tx魂花火 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_explosion_soul.png" ) );
                 //for( int i = 0; i < 12; i++ )
                 //{
                 //    this.txゲージ虹[ i ] = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\Gauge\Gauge_rainbow_" + i.ToString() + ".png") );
                 //}
-                this.ct虹アニメ = new CCounter( 0, 11, 80, CDTXMania.Timer );
-
+                    this.ct虹アニメ = new CCounter(0, 11, 80, CDTXMania.Timer);
+            
                 //this.tx音符 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_taiko_notes.png"));
                 base.OnManagedリソースの作成();
 			}
@@ -210,18 +210,21 @@ namespace DTXMania
                 #region[ ゲージ1P ]
                 if( CDTXMania.Tx.Gauge[0] != null )
                 {
-                    CDTXMania.Tx.Gauge[0].t2D描画( CDTXMania.app.Device, 492, 144, new Rectangle( 0, 0, nRectX, 44 ) );
+                    CDTXMania.Tx.Gauge[0].t2D描画( CDTXMania.app.Device, 488, 144, new Rectangle( 0, 0, nRectX, 44 ) );
 
                     if(CDTXMania.Tx.Gauge_Line[0] != null )
-                    {
+     　　　　　　　　　{
                         if( this.db現在のゲージ値[ 0 ] >= 100.0 )
                         {
-                            this.ct虹アニメ.t進行Loop();
-                            if(CDTXMania.Tx.Gauge_Rainbow[ this.ct虹アニメ.n現在の値 ] != null )
+                            if (CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値] != null)
                             {
-                                CDTXMania.Tx.Gauge_Rainbow[ this.ct虹アニメ.n現在の値 ].t2D描画( CDTXMania.app.Device, 492, 144 );
+                                this.ct虹アニメ.t進行Loop();
+                                CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値].t2D描画(CDTXMania.app.Device, 492, 144);
                             }
-
+                            else
+                            {
+                                ;
+                            }
                         }
                         CDTXMania.Tx.Gauge_Line[0].t2D描画( CDTXMania.app.Device, 492, 144 );
                     }
@@ -240,16 +243,19 @@ namespace DTXMania
                 #region[ ゲージ2P ]
                 if( CDTXMania.stage演奏ドラム画面.bDoublePlay && CDTXMania.Tx.Gauge[1] != null )
                 {
-                    CDTXMania.Tx.Gauge[1].t2D描画( CDTXMania.app.Device, 492, 532, new Rectangle( 0, 0, nRectX2P, 44 ) );
+                    CDTXMania.Tx.Gauge[1].t2D描画( CDTXMania.app.Device, 488, 532, new Rectangle( 0, 0, nRectX2P, 44 ) );
                     if(CDTXMania.Tx.Gauge[1] != null )
                     {
                         if (this.db現在のゲージ値[1] >= 100.0)
                         {
-                            this.ct虹アニメ.t進行Loop();
                             if (CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値] != null)
                             {
+                                this.ct虹アニメ.t進行Loop();
                                 CDTXMania.Tx.Gauge_Rainbow[this.ct虹アニメ.n現在の値].t2D上下反転描画(CDTXMania.app.Device, 492, 532);
-
+                            }
+                            else
+                            {
+                                ;
                             }
                         }
                         CDTXMania.Tx.Gauge_Line[1].t2D描画( CDTXMania.app.Device, 492, 532 );
