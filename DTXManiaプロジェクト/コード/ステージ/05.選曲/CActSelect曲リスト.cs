@@ -1135,11 +1135,11 @@ namespace DTXMania
                                 if (i == 3 && CDTXMania.stage選曲.n現在選択中の曲の難易度 == 4) break;
                                 if (i == 4 && CDTXMania.stage選曲.n現在選択中の曲の難易度 == 4)
                                 {
-                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (3 * 60), 505 - (n * 30), new Rectangle(32 * i, 0, 32, 32));
+                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (3 * 60), 505 - (n * 17), new Rectangle(32 * i, 0, 32, 32));
                                 }
                                 if (i != 4)
                                 {
-                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (i * 60), 505 - (n * 30), new Rectangle(32 * i, 0, 32, 32));
+                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (i * 60), 505 - (n * 17), new Rectangle(32 * i, 0, 32, 32));
                                 }
 
                             }
@@ -1435,11 +1435,11 @@ namespace DTXMania
                                 if (i == 3 && CDTXMania.stage選曲.n現在選択中の曲の難易度 == 4) break;
                                 if (i == 4 && CDTXMania.stage選曲.n現在選択中の曲の難易度 == 4)
                                 {
-                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (3 * 60), 505 - (n * 30), new Rectangle(32 * i, 0, 32, 32));
+                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (3 * 60), 505 - (n * 17), new Rectangle(32 * i, 0, 32, 32));
                                 }
                                 if (i != 4)
                                 {
-                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (i * 60), 505 - (n * 30), new Rectangle(32 * i, 0, 32, 32));
+                                    CDTXMania.Tx.SongSelect_Level.t2D描画(CDTXMania.app.Device, 476 + (i * 60), 505 - (n * 17), new Rectangle(32 * i, 0, 32, 32));
                                 }
 
                             }
