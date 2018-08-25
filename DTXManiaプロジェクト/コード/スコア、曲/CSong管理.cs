@@ -959,7 +959,8 @@ namespace DTXMania
 			{
 				C曲リストノード itemRandom = new C曲リストノード();
 				itemRandom.eノード種別 = C曲リストノード.Eノード種別.RANDOM;
-				itemRandom.strタイトル = "ランダムで曲を選ぶ";
+				itemRandom.strタイトル = "ランダムに曲をえらぶ";
+				itemRandom.strジャンル = "ランダム";
 				itemRandom.nスコア数 = 5;
 				itemRandom.r親ノード = ノードリスト[ 0 ].r親ノード;
                 
