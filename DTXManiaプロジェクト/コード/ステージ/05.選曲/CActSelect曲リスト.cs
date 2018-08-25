@@ -1948,6 +1948,15 @@ namespace DTXMania
                     //-----------------
                     #endregion
                     break;
+		case "とじる":
+                    #region [ とじる ]
+                    //-----------------
+                    if (CDTXMania.Tx.SongSelect_Bar_Genre[10] != null)
+                        CDTXMania.Tx.SongSelect_Bar_Genre[10].t2D描画(CDTXMania.app.Device, x, y);
+                    //-----------------
+                    #endregion
+                    break;
+
 
                 case "難易度ソート":
 				    #region [ 難易度ソート ]
