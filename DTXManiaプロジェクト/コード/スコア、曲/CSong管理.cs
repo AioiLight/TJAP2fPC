@@ -1013,7 +1013,8 @@ namespace DTXMania
 				{
 					C曲リストノード itemBack = new C曲リストノード();
 					itemBack.eノード種別 = C曲リストノード.Eノード種別.BACKBOX;
-					itemBack.strタイトル = "閉じる";
+					itemBack.strタイトル = "とじる";
+					itemRandom.strジャンル = "とじる";
 					itemBack.nスコア数 = 1;
 					itemBack.r親ノード = c曲リストノード;
 
