@@ -1940,30 +1940,6 @@ namespace DTXMania
 	    			//-----------------
 		    		#endregion
                     break;
-                case "ランダム":
-                    #region [ ランダム ]
-                    //-----------------
-                    if (CDTXMania.Tx.SongSelect_Bar_Genre[9] != null)
-                        CDTXMania.Tx.SongSelect_Bar_Genre[9].t2D描画(CDTXMania.app.Device, x, y);
-                    //-----------------
-                    #endregion
-                    break;
-		case "とじる":
-                    #region [ とじる ]
-                    //-----------------
-                    if (CDTXMania.Tx.SongSelect_Bar_Genre[10] != null)
-                        CDTXMania.Tx.SongSelect_Bar_Genre[10].t2D描画(CDTXMania.app.Device, x, y);
-                    //-----------------
-                    #endregion
-                    break;
-                case "段位":
-                    #region [ 段位 ]
-                    //-----------------
-                    if (CDTXMania.Tx.SongSelect_Bar_Genre[11] != null)
-                        CDTXMania.Tx.SongSelect_Bar_Genre[11].t2D描画(CDTXMania.app.Device, x, y);
-                    //-----------------
-                    #endregion
-                    break;
 
                 case "難易度ソート":
 				    #region [ 難易度ソート ]
