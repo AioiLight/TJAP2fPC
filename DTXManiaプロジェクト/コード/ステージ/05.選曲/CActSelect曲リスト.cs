@@ -1940,7 +1940,6 @@ namespace DTXMania
 	    			//-----------------
 		    		#endregion
                     break;
-
                 case "難易度ソート":
 				    #region [ 難易度ソート ]
     				//-----------------
