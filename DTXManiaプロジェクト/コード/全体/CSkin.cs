@@ -34,7 +34,8 @@ namespace DTXMania
         SOUND風船,
         SOUND曲決定音,
         SOUND成績発表,
-		Count				// システムサウンド総数の計算用
+        SOUND回転音,
+        Count				// システムサウンド総数の計算用
     }
 
     internal class CSkin : IDisposable
@@ -324,6 +325,8 @@ namespace DTXMania
         public Cシステムサウンド sound曲決定音 = null;
         public Cシステムサウンド sound成績発表 = null;
 
+        public Cシステムサウンド sound回転音 = null;
+
         //public Cシステムサウンド soundRed = null;
         //public Cシステムサウンド soundBlue = null;
         public Cシステムサウンド soundBalloon = null;
@@ -398,6 +401,9 @@ namespace DTXMania
 
                     case Eシステムサウンド.SOUND成績発表:
                         return this.sound成績発表;
+
+                    case Eシステムサウンド.SOUND回転音:
+                        return this.sound回転音;
                 }
                 throw new IndexOutOfRangeException();
             }
@@ -470,6 +476,9 @@ namespace DTXMania
 
                     case 18:
                         return this.sound成績発表;
+
+                    case 19:
+                        return this.sound回転音;
                 }
                 throw new IndexOutOfRangeException();
             }
@@ -624,6 +633,8 @@ namespace DTXMania
             this.soundBalloon = new Cシステムサウンド(@"Sounds\balloon.ogg", false, false, true, ESoundGroup.SoundEffect);
             this.sound曲決定音 = new Cシステムサウンド(@"Sounds\SongDecide.ogg", false, false, true, ESoundGroup.Voice);
             this.sound成績発表 = new Cシステムサウンド(@"Sounds\ResultIn.ogg", false, false, false, ESoundGroup.Voice);
+
+            this.sound回転音 = new Cシステムサウンド(@"Sounds\Rotate.ogg", true, true, false, ESoundGroup.SoundEffect);
 
             tReadSkinConfig();
         }
