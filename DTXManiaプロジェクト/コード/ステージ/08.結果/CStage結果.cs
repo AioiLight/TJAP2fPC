@@ -386,18 +386,32 @@ namespace DTXMania
 					if ( base.eフェーズID == CStage.Eフェーズ.共通_通常状態 )
 					{
 						if ( CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Escape ) )
-						{
-							CDTXMania.Skin.sound取消音.t再生する();
-							this.actFO.tフェードアウト開始();
-							base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
-							this.eフェードアウト完了時の戻り値 = E戻り値.完了;
+                        {
+                            if (!CDTXMania.stage結果.actParameterPanel.b文字アニメ終了)
+                            {
+                                CDTXMania.stage結果.actParameterPanel.b文字アニメ終了 = true;
+                            }
+                            else
+                            {
+                                CDTXMania.Skin.sound取消音.t再生する();
+                                this.actFO.tフェードアウト開始();
+                                base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
+                                this.eフェードアウト完了時の戻り値 = E戻り値.完了;
+                            }
 						}
 						if ( ( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) ) && this.bアニメが完了 )
-						{
-							CDTXMania.Skin.sound取消音.t再生する();
-//							this.actFO.tフェードアウト開始();
-							base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
-							this.eフェードアウト完了時の戻り値 = E戻り値.完了;
+                        {
+                            if (!CDTXMania.stage結果.actParameterPanel.b文字アニメ終了)
+                            {
+                                CDTXMania.stage結果.actParameterPanel.b文字アニメ終了 = true;
+                            }
+                            else
+                            {
+                                CDTXMania.Skin.sound取消音.t再生する();
+                                //							this.actFO.tフェードアウト開始();
+                                base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
+                                this.eフェードアウト完了時の戻り値 = E戻り値.完了;
+                            }
 						}
 					}
 				}
@@ -490,3 +504,4 @@ namespace DTXMania
 		#endregion
 	}
 }
+
