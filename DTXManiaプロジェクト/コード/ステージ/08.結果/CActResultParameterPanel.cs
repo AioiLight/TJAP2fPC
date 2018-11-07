@@ -180,8 +180,16 @@ namespace DTXMania
 			if( this.ct表示用 != null )
 			{
 				this.ct表示用 = null;
-			}
-			if( this.sdDTXで指定されたフルコンボ音 != null )
+            }
+            if (this.ct文字アニメ用 != null)
+            {
+                this.ct文字アニメ用 = null;
+            }
+            if (this.ct待機用 != null)
+            {
+                this.ct待機用 = null;
+            }
+            if ( this.sdDTXで指定されたフルコンボ音 != null )
 			{
 				CDTXMania.Sound管理.tサウンドを破棄する( this.sdDTXで指定されたフルコンボ音 );
 				this.sdDTXで指定されたフルコンボ音 = null;
@@ -229,8 +237,8 @@ namespace DTXMania
     //            CDTXMania.tテクスチャの解放( ref this.txネームプレート );
 				base.OnManagedリソースの解放();
 			}
-		}
-		public override int On進行描画()
+        }
+        public override int On進行描画()
 		{
 			if( base.b活性化してない )
 			{
@@ -238,11 +246,34 @@ namespace DTXMania
 			}
 			if( base.b初めての進行描画 )
 			{
-				this.ct表示用 = new CCounter( 0, 0x3e7, 2, CDTXMania.Timer );
-				base.b初めての進行描画 = false;
+                this.n文字アニメ = 1;
+                this.bスコアアニメ終了 = false;
+                this.bスコア待機終了 = false;
+                this.bGreatアニメ終了 = false;
+                this.bGreat待機終了 = false;
+                this.bGoodアニメ終了 = false;
+                this.bGood待機終了 = false;
+                this.bBadアニメ終了 = false;
+                this.bBad待機終了 = false;
+                this.bComboアニメ終了 = false;
+                this.bCombo待機終了 = false;
+                this.bRollアニメ終了 = false;
+                this.bRoll待機終了 = false;
+                this.b文字アニメ終了 = false;
+                this.b回転音再生中 = false;
+
+                this.ct表示用 = new CCounter( 0, 0x3e7, 2, CDTXMania.Timer );
+                this.ct文字アニメ用 = new CCounter();
+                this.ct文字アニメ用.t開始(0, this.文字アニメ用回転回数, this.文字アニメ用Timer, CDTXMania.Timer);
+
+                this.ct待機用 = new CCounter();
+                this.ct待機用.t開始(0, 1, this.文字アニメ用Timer2, CDTXMania.Timer);
+                base.b初めての進行描画 = false;
 			}
 			this.ct表示用.t進行();
-			if(CDTXMania.Tx.Result_Panel != null )
+            this.ct待機用.t進行();
+            this.ct文字アニメ用.t進行();
+            if (CDTXMania.Tx.Result_Panel != null )
 			{
                 CDTXMania.Tx.Result_Panel.t2D描画( CDTXMania.app.Device, CDTXMania.Skin.nResultPanelP1X, CDTXMania.Skin.nResultPanelP1Y );
 			}
@@ -376,13 +407,9 @@ namespace DTXMania
                 CDTXMania.Tx.Gauge_Soul.t2D描画( CDTXMania.app.Device, 1174, 107, new Rectangle( 0, 0, 80, 80 ) );
             }
             //演奏中のやつ使いまわせなかった。ファック。
-            this.tスコア文字表示( CDTXMania.Skin.nResultScoreP1X, CDTXMania.Skin.nResultScoreP1Y, string.Format( "{0,7:######0}",CDTXMania.stage結果.st演奏記録.Drums.nスコア ) );
-            this.t小文字表示( CDTXMania.Skin.nResultGreatP1X, CDTXMania.Skin.nResultGreatP1Y, string.Format( "{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.nPerfect数.ToString() ) );
-            this.t小文字表示( CDTXMania.Skin.nResultGoodP1X, CDTXMania.Skin.nResultGoodP1Y, string.Format( "{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.nGreat数.ToString() ) );
-            this.t小文字表示( CDTXMania.Skin.nResultBadP1X, CDTXMania.Skin.nResultBadP1Y, string.Format( "{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.nMiss数.ToString() ) );
 
-            this.t小文字表示( CDTXMania.Skin.nResultComboP1X, CDTXMania.Skin.nResultComboP1Y, string.Format( "{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.n最大コンボ数.ToString() ) );
-            this.t小文字表示( CDTXMania.Skin.nResultRollP1X, CDTXMania.Skin.nResultRollP1Y, string.Format( "{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.n連打数.ToString() ) );
+            this.文字表示();
+
             //CDTXMania.act文字コンソール.tPrint( 960, 200, C文字コンソール.Eフォント種別.白, string.Format( "{0,4:###0}",CDTXMania.stage結果.st演奏記録.Drums.nPerfect数.ToString()) );
             //CDTXMania.act文字コンソール.tPrint( 960, 236, C文字コンソール.Eフォント種別.白, string.Format( "{0,4:###0}",CDTXMania.stage結果.st演奏記録.Drums.nGreat数.ToString()) );
             //CDTXMania.act文字コンソール.tPrint( 960, 276, C文字コンソール.Eフォント種別.白, string.Format( "{0,4:###0}",CDTXMania.stage結果.st演奏記録.Drums.nMiss数.ToString()) );
@@ -399,7 +426,40 @@ namespace DTXMania
 			}
 			return 1;
 		}
-		
+        private void 文字表示()
+        {
+            this.tスコア文字表示(CDTXMania.Skin.nResultScoreP1X, CDTXMania.Skin.nResultScoreP1Y, string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録.Drums.nスコア), ref bスコアアニメ終了, ref bスコア待機終了);
+            if ((!(bスコアアニメ終了 && ct待機用.b終了値に達した)) && !bスコア待機終了 && !this.b文字アニメ終了)
+            {
+                return;
+            }
+            this.t小文字表示(CDTXMania.Skin.nResultGreatP1X, CDTXMania.Skin.nResultGreatP1Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.nPerfect数.ToString()), ref bGreatアニメ終了, ref bGreat待機終了);
+            if ((!(bGreatアニメ終了 && ct待機用.b終了値に達した)) && !bGreat待機終了 && !this.b文字アニメ終了)
+            {
+                return;
+            }
+            this.t小文字表示(CDTXMania.Skin.nResultGoodP1X, CDTXMania.Skin.nResultGoodP1Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.nGreat数.ToString()), ref bGoodアニメ終了, ref bGood待機終了);
+            if ((!(bGoodアニメ終了 && ct待機用.b終了値に達した)) && !bGood待機終了 && !this.b文字アニメ終了)
+            {
+                return;
+            }
+            this.t小文字表示(CDTXMania.Skin.nResultBadP1X, CDTXMania.Skin.nResultBadP1Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.nMiss数.ToString()), ref bBadアニメ終了, ref bBad待機終了);
+            if ((!(bBadアニメ終了 && ct待機用.b終了値に達した)) && !bBad待機終了 && !this.b文字アニメ終了)
+            {
+                return;
+            }
+            this.t小文字表示(CDTXMania.Skin.nResultComboP1X, CDTXMania.Skin.nResultComboP1Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.n最大コンボ数.ToString()), ref bComboアニメ終了, ref bCombo待機終了);
+            if ((!(bComboアニメ終了 && ct待機用.b終了値に達した)) && !bCombo待機終了 && !this.b文字アニメ終了)
+            {
+                return;
+            }
+            this.t小文字表示(CDTXMania.Skin.nResultRollP1X, CDTXMania.Skin.nResultRollP1Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録.Drums.n連打数.ToString()), ref bRollアニメ終了, ref bRoll待機終了);
+            if ((!(bRollアニメ終了 && ct待機用.b終了値に達した)) && !bRoll待機終了 && !this.b文字アニメ終了)
+            {
+                return;
+            }
+            this.b文字アニメ終了 = true;
+        }
 
 		// その他
 
@@ -413,8 +473,28 @@ namespace DTXMania
 		}
 
 		private bool bフルコンボ音再生済み;
-		private CCounter ct表示用;
-		private readonly Point[] ptFullCombo位置;
+        private CCounter ct表示用;
+        private CCounter ct文字アニメ用;
+        private CCounter ct待機用;
+        private int 文字アニメ用Timer = 69;
+        private int 文字アニメ用回転回数 = 15;
+        private int 文字アニメ用Timer2 = 600;
+        private int n文字アニメ = 1;
+        private bool bスコアアニメ終了;
+        private bool bスコア待機終了;
+        private bool bGreatアニメ終了;
+        private bool bGreat待機終了;
+        private bool bGoodアニメ終了;
+        private bool bGood待機終了;
+        private bool bBadアニメ終了;
+        private bool bBad待機終了;
+        private bool bComboアニメ終了;
+        private bool bCombo待機終了;
+        private bool bRollアニメ終了;
+        private bool bRoll待機終了;
+        private bool b回転音再生中;
+        public bool b文字アニメ終了;
+        private readonly Point[] ptFullCombo位置;
 		private CSound sdDTXで指定されたフルコンボ音;
 		private readonly ST文字位置[] st小文字位置;
 		private readonly ST文字位置[] st大文字位置;
@@ -434,11 +514,83 @@ namespace DTXMania
   //      //private CTexture txプレイヤーナンバー;
   //      private CTexture txネームプレート;
 
-		private void t小文字表示( int x, int y, string str )
-		{
-			foreach( char ch in str )
-			{
-				for( int i = 0; i < this.st小文字位置.Length; i++ )
+		private void t小文字表示( int x, int y, string str, ref bool b終了, ref bool b待機終了)
+        {
+            int width = 22;
+
+            x -= width;
+            foreach (char ch in str)
+            {
+                x += width;
+            }
+
+            str = 文字反転(str.Replace(" ", ""));
+
+            if (!b文字アニメ終了)
+            {
+                if (b終了 && !b待機終了)
+                {
+                    if (this.b回転音再生中)
+                    {
+                        CDTXMania.Skin.sound回転音.t停止する();
+                        this.b回転音再生中 = false;
+                    }
+                }
+                else if (!this.b回転音再生中)
+                {
+                    CDTXMania.Skin.sound回転音.t再生する();
+                    this.b回転音再生中 = true;
+                }
+            }
+            else if (this.b回転音再生中)
+            {
+                CDTXMania.Skin.sound回転音.t停止する();
+                this.b回転音再生中 = false;
+            }
+
+            if(!b終了 && b文字アニメ終了)
+            {
+                b終了 = true;
+            }
+            if (!b終了)
+            {
+                this.ct待機用.n現在の値 = 0;
+            }
+            else if (!ct待機用.b終了値に達した && !b待機終了)
+            {
+                this.ct文字アニメ用.n現在の値 = 0;
+            }
+            else if (!b待機終了)
+            {
+                b待機終了 = true;
+            }
+
+            if (this.ct文字アニメ用.b終了値に達した && !b終了)
+            {
+                this.ct文字アニメ用.n現在の値 = 0;
+                if (str.Length <= this.n文字アニメ)
+                {
+                    this.n文字アニメ = 1;
+                    CDTXMania.Skin.sound決定音.t再生する();
+                    b終了 = true;
+                }
+                else
+                {
+                    this.n文字アニメ++;
+                }
+            }
+
+            int n文字カウント = 0;
+
+            foreach ( char ch in str )
+            {
+                n文字カウント++;
+                if (n文字カウント > this.n文字アニメ && !b終了)
+                {
+                    return;
+                }
+
+                for ( int i = 0; i < this.st小文字位置.Length; i++ )
 				{
                     if( ch == ' ' )
                     {
@@ -446,8 +598,16 @@ namespace DTXMania
                     }
 
 					if( this.st小文字位置[ i ].ch == ch )
-					{
-						Rectangle rectangle = new Rectangle( this.st小文字位置[ i ].pt.X, this.st小文字位置[ i ].pt.Y, 32, 38 );
+                    {
+                        Rectangle rectangle;
+                        if (n文字カウント == this.n文字アニメ && !b終了)
+                        {
+                            rectangle = new Rectangle(this.st小文字位置[n0から9の値(this.ct文字アニメ用.n現在の値)].pt.X, this.st小文字位置[i].pt.Y, 32, 38);
+                        }
+                        else
+                        {
+                            rectangle = new Rectangle(this.st小文字位置[i].pt.X, this.st小文字位置[i].pt.Y, 32, 38);
+                        }
 						if(CDTXMania.Tx.Result_Number != null )
 						{
                             CDTXMania.Tx.Result_Number.t2D描画( CDTXMania.app.Device, x, y, rectangle );
@@ -455,7 +615,7 @@ namespace DTXMania
 						break;
 					}
 				}
-				x += 22;
+				x -= width;
 			}
 		}
 		private void t大文字表示( int x, int y, string str )
@@ -486,16 +646,87 @@ namespace DTXMania
 				x += 8;
 			}
 		}
-
-        protected void tスコア文字表示(int x, int y, string str)
+        protected void tスコア文字表示(int x, int y, string str, ref bool b終了, ref bool b待機終了)
         {
+            str = 文字反転(str.Replace(" ", ""));
+
+            if (!b文字アニメ終了)
+            {
+                if (b終了 && !b待機終了)
+                {
+                    if (this.b回転音再生中)
+                    {
+                        CDTXMania.Skin.sound回転音.t停止する();
+                        this.b回転音再生中 = false;
+                    }
+                }
+                else if (!this.b回転音再生中)
+                {
+                    CDTXMania.Skin.sound回転音.t再生する();
+                    this.b回転音再生中 = true;
+                }
+            }
+            else if (this.b回転音再生中)
+            {
+                CDTXMania.Skin.sound回転音.t停止する();
+                this.b回転音再生中 = false;
+            }
+
+            if (!b終了 && b文字アニメ終了)
+            {
+                b終了 = true;
+            }
+            if (!b終了)
+            {
+                this.ct待機用.n現在の値 = 0;
+            }
+            else if(!ct待機用.b終了値に達した && !b待機終了)
+            {
+                this.ct文字アニメ用.n現在の値 = 0;
+            }
+            else if (!b待機終了)
+            {
+                b待機終了 = true;
+            }
+            if (this.ct文字アニメ用.b終了値に達した && !b終了)
+            {
+                this.ct文字アニメ用.n現在の値 = 0;
+                if (str.Length <= this.n文字アニメ)
+                {
+                    this.n文字アニメ = 1;
+                    CDTXMania.Skin.sound決定音.t再生する();
+                    b終了 = true;
+                }
+                else
+                {
+                    this.n文字アニメ++;
+                }
+            }
+            int width = 24;
+            int n文字カウント = 0;
+
+            x += width * 6;
+            
             foreach (char ch in str)
             {
+                n文字カウント++;
+                if (n文字カウント > this.n文字アニメ && !b終了)
+                {
+                    return;
+                }
                 for (int i = 0; i < this.stScoreFont.Length; i++)
                 {
                     if (this.stScoreFont[i].ch == ch)
                     {
-                        Rectangle rectangle = new Rectangle(this.stScoreFont[ i ].pt.X, 0, 24, 40);
+                        Rectangle rectangle;
+                        if (n文字カウント == this.n文字アニメ && !b終了)
+                        {
+                            rectangle = new Rectangle(this.stScoreFont[n0から9の値(this.ct文字アニメ用.n現在の値)].pt.X, 0, 24, 40);
+                        }
+                        else
+                        {
+                            rectangle = new Rectangle(this.stScoreFont[i].pt.X, 0, 24, 40);
+                        }
                         if (CDTXMania.Tx.Result_Score_Number != null)
                         {
                             CDTXMania.Tx.Result_Score_Number.t2D描画(CDTXMania.app.Device, x, y, rectangle);
@@ -503,10 +734,28 @@ namespace DTXMania
                         break;
                     }
                 }
-                x += 24;
+                x -= width;
             }
         }
-		//-----------------
-		#endregion
-	}
+        private string 文字反転(string str)
+        {
+            char[] 反転 = str.ToCharArray();
+            Array.Reverse(反転);
+            str = new string(反転);
+            return str;
+        }
+        private int n0から9の値(int i)
+        {
+            double i2 = i;
+            if (i2 >= 10)
+            {
+                i2 = Math.Floor(i2 / 10);
+                i2 = i2 * 10;
+                i = i - (int)i2;
+            }
+            return i;
+        }
+        //-----------------
+        #endregion
+    }
 }
