@@ -50,6 +50,10 @@ namespace DTXMania
             for (int i = 0; i < 2; i++)
             {
                 ct上背景スクロール用タイマー[i] = null;
+                ct上背景2ndスクロール用タイマー[i] = null;
+                ct上背景2nd下方向移動用タイマー[i] = null;
+                ct上背景3rdスクロール用タイマー[i] = null;
+                ct上背景3rd上下移動用タイマー[i] = null;
             }
             CDTXMania.t安全にDisposeする( ref this.ct下背景スクロール用タイマー1 );
             base.On非活性化();
@@ -64,12 +68,28 @@ namespace DTXMania
             //this.tx下背景クリアサブ1 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Dancer_BG\01\bg_clear_01.png" ) );
             //this.ct上背景スクロール用タイマー = new CCounter( 1, 328, 40, CDTXMania.Timer );
             this.ct上背景スクロール用タイマー = new CCounter[2];
+            this.ct上背景2ndスクロール用タイマー = new CCounter[2];
+            this.ct上背景2nd下方向移動用タイマー = new CCounter[2];
+            this.ct上背景3rdスクロール用タイマー = new CCounter[2];
+            this.ct上背景3rd上下移動用タイマー = new CCounter[2];
             this.ct上背景クリアインタイマー = new CCounter[2];
             for (int i = 0; i < 2; i++)
             {
                 if (CDTXMania.Tx.Background_Up[i] != null)
                 {
-                    this.ct上背景スクロール用タイマー[i] = new CCounter(1, CDTXMania.Tx.Background_Up[i].szテクスチャサイズ.Width, 16, CDTXMania.Timer);
+                    this.ct上背景スクロール用タイマー[i] = new CCounter(1, CDTXMania.Tx.Background_Up[i].szテクスチャサイズ.Width, 13, CDTXMania.Timer);
+                    this.ct上背景クリアインタイマー[i] = new CCounter();
+                }
+                if (CDTXMania.Tx.Background_Up_2nd[i] != null)
+                {
+                    this.ct上背景2ndスクロール用タイマー[i] = new CCounter(1, CDTXMania.Tx.Background_Up_2nd[i].szテクスチャサイズ.Width, 3, CDTXMania.Timer);
+                    this.ct上背景2nd下方向移動用タイマー[i] = new CCounter(1, 300, 5, CDTXMania.Timer);
+                    this.ct上背景クリアインタイマー[i] = new CCounter();
+                }
+                if (CDTXMania.Tx.Background_Up_3rd[i] != null)
+                {
+                    this.ct上背景3rdスクロール用タイマー[i] = new CCounter(1, CDTXMania.Tx.Background_Up_3rd[i].szテクスチャサイズ.Width, 13, CDTXMania.Timer);
+                    this.ct上背景3rd上下移動用タイマー[i] = new CCounter(1, 50, 50, CDTXMania.Timer);
                     this.ct上背景クリアインタイマー[i] = new CCounter();
                 }
             }
@@ -105,6 +125,26 @@ namespace DTXMania
                 if (this.ct上背景スクロール用タイマー[i] != null)
                     this.ct上背景スクロール用タイマー[i].t進行Loop();
             }
+            for (int i = 0; i < 2; i++)
+            {
+                if (this.ct上背景2ndスクロール用タイマー[i] != null)
+                    this.ct上背景2ndスクロール用タイマー[i].t進行Loop();
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (this.ct上背景2nd下方向移動用タイマー[i] != null)
+                    this.ct上背景2nd下方向移動用タイマー[i].t進行Loop();
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (this.ct上背景3rdスクロール用タイマー[i] != null)
+                    this.ct上背景3rdスクロール用タイマー[i].t進行Loop();
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (this.ct上背景3rd上下移動用タイマー[i] != null)
+                    this.ct上背景3rd上下移動用タイマー[i].t進行Loop();
+            }
             if (this.ct下背景スクロール用タイマー1 != null)
                 this.ct下背景スクロール用タイマー1.t進行Loop();
 
@@ -125,6 +165,42 @@ namespace DTXMania
                         CDTXMania.Tx.Background_Up[i].t2D描画(CDTXMania.app.Device, +(l * CDTXMania.Tx.Background_Up[i].szテクスチャサイズ.Width) - this.ct上背景スクロール用タイマー[i].n現在の値, CDTXMania.Skin.Background_Scroll_Y[i]);
                     }
                 }
+                if (this.ct上背景2ndスクロール用タイマー[i] != null && this.ct上背景2nd下方向移動用タイマー[i] != null)
+                {
+                    double TexSize = 1280 / CDTXMania.Tx.Background_Up_2nd[i].szテクスチャサイズ.Width;
+                    // 1280をテクスチャサイズで割ったものを切り上げて、プラス+1足す。
+                    int ForLoop = (int)Math.Ceiling(TexSize) + 1;
+                    //int nループ幅 = 328;
+                    CDTXMania.Tx.Background_Up_2nd[i].t2D描画(CDTXMania.app.Device, 0 - this.ct上背景2ndスクロール用タイマー[i].n現在の値, CDTXMania.Skin.Background_Scroll_Y[i] - 100 + this.ct上背景2nd下方向移動用タイマー[i].n現在の値);
+                    for (int l = 1; l < ForLoop + 1; l++)
+                    {
+                        CDTXMania.Tx.Background_Up_2nd[i].t2D描画(CDTXMania.app.Device, +(l * CDTXMania.Tx.Background_Up_2nd[i].szテクスチャサイズ.Width) - this.ct上背景2ndスクロール用タイマー[i].n現在の値, CDTXMania.Skin.Background_Scroll_Y[i] - 100 + this.ct上背景2nd下方向移動用タイマー[i].n現在の値);
+                    }
+                }
+                if (this.ct上背景3rdスクロール用タイマー[i] != null && this.ct上背景3rd上下移動用タイマー[i] != null)
+                {
+                    int motion;
+
+                    if (this.ct上背景3rd上下移動用タイマー[i].n現在の値 < 25)
+                    {
+                        motion = CDTXMania.Skin.Background_Scroll_Y[i] + 15 - this.ct上背景3rd上下移動用タイマー[i].n現在の値;
+                    }
+                    else
+                    {
+                        motion = CDTXMania.Skin.Background_Scroll_Y[i] - 35 + this.ct上背景3rd上下移動用タイマー[i].n現在の値;
+                    }
+
+                    double TexSize = 1280 / CDTXMania.Tx.Background_Up_3rd[i].szテクスチャサイズ.Width;
+                    // 1280をテクスチャサイズで割ったものを切り上げて、プラス+1足す。
+                    int ForLoop = (int)Math.Ceiling(TexSize) + 1;
+                    //int nループ幅 = 328;
+
+                    CDTXMania.Tx.Background_Up_3rd[i].t2D描画(CDTXMania.app.Device, 0 - this.ct上背景3rdスクロール用タイマー[i].n現在の値, motion);
+                    for (int l = 1; l < ForLoop + 1; l++)
+                    {
+                        CDTXMania.Tx.Background_Up_3rd[i].t2D描画(CDTXMania.app.Device, +(l * CDTXMania.Tx.Background_Up_3rd[i].szテクスチャサイズ.Width) - this.ct上背景3rdスクロール用タイマー[i].n現在の値, motion);
+                    }
+                }
                 if (this.ct上背景スクロール用タイマー[i] != null)
                 {
                     if (CDTXMania.stage演奏ドラム画面.bIsAlreadyCleared[i])
@@ -140,6 +216,52 @@ namespace DTXMania
                     for (int l = 1; l < ForLoop + 1; l++)
                     {
                         CDTXMania.Tx.Background_Up_Clear[i].t2D描画(CDTXMania.app.Device, (l * CDTXMania.Tx.Background_Up_Clear[i].szテクスチャサイズ.Width) - this.ct上背景スクロール用タイマー[i].n現在の値, CDTXMania.Skin.Background_Scroll_Y[i]);
+                    }
+                }
+                if (this.ct上背景2ndスクロール用タイマー[i] != null && this.ct上背景2nd下方向移動用タイマー[i] != null)
+                {
+                    if (CDTXMania.stage演奏ドラム画面.bIsAlreadyCleared[i])
+                        CDTXMania.Tx.Background_Up_Clear_2nd[i].n透明度 = ((this.ct上背景クリアインタイマー[i].n現在の値 * 0xff) / 100);
+                    else
+                        CDTXMania.Tx.Background_Up_Clear_2nd[i].n透明度 = 0;
+
+                    double TexSize = 1280 / CDTXMania.Tx.Background_Up_2nd[i].szテクスチャサイズ.Width;
+                    // 1280をテクスチャサイズで割ったものを切り上げて、プラス+1足す。
+                    int ForLoop = (int)Math.Ceiling(TexSize) + 1;
+                    //int nループ幅 = 328;
+                    CDTXMania.Tx.Background_Up_Clear_2nd[i].t2D描画(CDTXMania.app.Device, 0 - this.ct上背景2ndスクロール用タイマー[i].n現在の値, CDTXMania.Skin.Background_Scroll_Y[i] - 100 + this.ct上背景2nd下方向移動用タイマー[i].n現在の値);
+                    for (int l = 1; l < ForLoop + 1; l++)
+                    {
+                        CDTXMania.Tx.Background_Up_Clear_2nd[i].t2D描画(CDTXMania.app.Device, +(l * CDTXMania.Tx.Background_Up_Clear_2nd[i].szテクスチャサイズ.Width) - this.ct上背景2ndスクロール用タイマー[i].n現在の値, CDTXMania.Skin.Background_Scroll_Y[i] - 100 + this.ct上背景2nd下方向移動用タイマー[i].n現在の値);
+                    }
+                }
+                if (this.ct上背景3rdスクロール用タイマー[i] != null && this.ct上背景3rd上下移動用タイマー[i] != null)
+                {
+                    if (CDTXMania.stage演奏ドラム画面.bIsAlreadyCleared[i])
+                        CDTXMania.Tx.Background_Up_Clear_3rd[i].n透明度 = ((this.ct上背景クリアインタイマー[i].n現在の値 * 0xff) / 100);
+                    else
+                        CDTXMania.Tx.Background_Up_Clear_3rd[i].n透明度 = 0;
+
+                    int motion;
+
+                    if (this.ct上背景3rd上下移動用タイマー[i].n現在の値 < 25)
+                    {
+                        motion = CDTXMania.Skin.Background_Scroll_Y[i] + 15 - this.ct上背景3rd上下移動用タイマー[i].n現在の値;
+                    }
+                    else
+                    {
+                        motion = CDTXMania.Skin.Background_Scroll_Y[i] - 35 + this.ct上背景3rd上下移動用タイマー[i].n現在の値;
+                    }
+
+                    double TexSize = 1280 / CDTXMania.Tx.Background_Up_3rd[i].szテクスチャサイズ.Width;
+                    // 1280をテクスチャサイズで割ったものを切り上げて、プラス+1足す。
+                    int ForLoop = (int)Math.Ceiling(TexSize) + 1;
+                    //int nループ幅 = 328;
+
+                    CDTXMania.Tx.Background_Up_Clear_3rd[i].t2D描画(CDTXMania.app.Device, 0 - this.ct上背景3rdスクロール用タイマー[i].n現在の値, motion);
+                    for (int l = 1; l < ForLoop + 1; l++)
+                    {
+                        CDTXMania.Tx.Background_Up_Clear_3rd[i].t2D描画(CDTXMania.app.Device, +(l * CDTXMania.Tx.Background_Up_Clear_3rd[i].szテクスチャサイズ.Width) - this.ct上背景3rdスクロール用タイマー[i].n現在の値, motion);
                     }
                 }
 
@@ -186,6 +308,10 @@ namespace DTXMania
         #region[ private ]
         //-----------------
         private CCounter[] ct上背景スクロール用タイマー; //上背景のX方向スクロール用
+        private CCounter[] ct上背景2ndスクロール用タイマー;
+        private CCounter[] ct上背景2nd下方向移動用タイマー;
+        private CCounter[] ct上背景3rdスクロール用タイマー;
+        private CCounter[] ct上背景3rd上下移動用タイマー;
         private CCounter ct下背景スクロール用タイマー1; //下背景パーツ1のX方向スクロール用
         private CCounter ct上背景FIFOタイマー;
         private CCounter[] ct上背景クリアインタイマー;
