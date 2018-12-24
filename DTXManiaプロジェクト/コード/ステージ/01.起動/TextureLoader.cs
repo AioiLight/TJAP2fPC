@@ -308,9 +308,21 @@ namespace DTXMania
             Background_Up = new CTexture[2];
             Background_Up[0] = TxC(GAME + BACKGROUND + @"0\" + @"1P_Up.png");
             Background_Up[1] = TxC(GAME + BACKGROUND + @"0\" + @"2P_Up.png");
+            Background_Up_2nd = new CTexture[2];
+            Background_Up_2nd[0] = TxC(GAME + BACKGROUND + @"0\" + @"1P_Up_2nd.png");
+            Background_Up_2nd[1] = TxC(GAME + BACKGROUND + @"0\" + @"2P_Up_2nd.png");
+            Background_Up_3rd = new CTexture[2];
+            Background_Up_3rd[0] = TxC(GAME + BACKGROUND + @"0\" + @"1P_Up_3rd.png");
+            Background_Up_3rd[1] = TxC(GAME + BACKGROUND + @"0\" + @"2P_Up_3rd.png");
             Background_Up_Clear = new CTexture[2];
             Background_Up_Clear[0] = TxC(GAME + BACKGROUND + @"0\" + @"1P_Up_Clear.png");
             Background_Up_Clear[1] = TxC(GAME + BACKGROUND + @"0\" + @"2P_Up_Clear.png");
+            Background_Up_Clear_2nd = new CTexture[2];
+            Background_Up_Clear_2nd[0] = TxC(GAME + BACKGROUND + @"0\" + @"1P_Up_Clear_2nd.png");
+            Background_Up_Clear_2nd[1] = TxC(GAME + BACKGROUND + @"0\" + @"2P_Up_Clear_2nd.png");
+            Background_Up_Clear_3rd = new CTexture[2];
+            Background_Up_Clear_3rd[0] = TxC(GAME + BACKGROUND + @"0\" + @"1P_Up_Clear_3rd.png");
+            Background_Up_Clear_3rd[1] = TxC(GAME + BACKGROUND + @"0\" + @"2P_Up_Clear_3rd.png");
             Background_Down = TxC(GAME + BACKGROUND + @"0\" + @"Down.png");
             Background_Down_Clear = TxC(GAME + BACKGROUND + @"0\" + @"Down_Clear.png");
             Background_Down_Scroll = TxC(GAME + BACKGROUND + @"0\" + @"Down_Scroll.png");
@@ -669,8 +681,16 @@ namespace DTXMania
             CDTXMania.tテクスチャの解放(ref Background);
             CDTXMania.tテクスチャの解放(ref Background_Up[0]);
             CDTXMania.tテクスチャの解放(ref Background_Up[1]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_2nd[0]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_2nd[1]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_3rd[0]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_3rd[1]);
             CDTXMania.tテクスチャの解放(ref Background_Up_Clear[0]);
             CDTXMania.tテクスチャの解放(ref Background_Up_Clear[1]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_Clear_2nd[0]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_Clear_2nd[1]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_Clear_3rd[0]);
+            CDTXMania.tテクスチャの解放(ref Background_Up_Clear_3rd[1]);
             CDTXMania.tテクスチャの解放(ref Background_Down);
             CDTXMania.tテクスチャの解放(ref Background_Down_Clear);
             CDTXMania.tテクスチャの解放(ref Background_Down_Scroll);
@@ -925,7 +945,11 @@ namespace DTXMania
             Background_Down_Clear,
             Background_Down_Scroll;
         public CTexture[] Background_Up,
-            Background_Up_Clear;
+            Background_Up_2nd,
+            Background_Up_3rd,
+            Background_Up_Clear,
+            Background_Up_Clear_2nd,
+            Background_Up_Clear_3rd;
         #endregion
         #region 太鼓
         public CTexture[] Taiko_Frame, // MTaiko下敷き
