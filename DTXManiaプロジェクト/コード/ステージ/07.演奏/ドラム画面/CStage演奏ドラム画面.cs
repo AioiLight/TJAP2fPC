@@ -2015,15 +2015,15 @@ namespace DTXMania
 			}
 			if ( ( pChip.b可視 ) && (CDTXMania.Tx.Bar != null ) )
 			{
-                if( x >= 0 )
+                 if (x >= 0)
                 {
-                       if( pChip.bBranch )
+                    if (pChip.bBranch)
                     {
-                        CDTXMania.Tx.Bar_Branch.t2D描画( CDTXMania.app.Device, x - 3, y, new Rectangle( 0, 0, 3, 130 ) );
+                        CDTXMania.Tx.Bar_Branch.t2D描画( CDTXMania.app.Device, x - 2, y, new Rectangle( 0, 0, 3, 130 ) );
                     }
                     else
                     {
-                        CDTXMania.Tx.Bar.t2D描画( CDTXMania.app.Device, x - 3, y, new Rectangle( 0, 0, 3, 130 ) );
+                        CDTXMania.Tx.Bar.t2D描画( CDTXMania.app.Device, x - 2, y, new Rectangle( 0, 0, 3, 130 ) );
                     }
                 }
 			}
