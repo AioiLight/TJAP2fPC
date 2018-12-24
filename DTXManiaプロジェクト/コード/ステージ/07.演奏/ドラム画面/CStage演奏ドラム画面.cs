@@ -2017,19 +2017,13 @@ namespace DTXMania
 			{
                 if( x >= 0 )
                 {
-                    Matrix mat = Matrix.Identity;
-                    mat *= Matrix.RotationZ(C変換.DegreeToRadian(-(90.0f * (float)pChip.dbSCROLL_Y)));
-                    mat *= Matrix.Translation((float)(x - 640.0f) - 1.5f, -(y - 360.0f + 65.0f), 0f);
-
                     if( pChip.bBranch )
                     {
-                        //this.tx小節線_branch.t2D描画( CDTXMania.app.Device, x - 3, y, new Rectangle( 0, 0, 3, 130 ) );
-                        CDTXMania.Tx.Bar_Branch.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0, 3, 130 ) );
+                        CDTXMania.Tx.Bar_Branch.t2D描画( CDTXMania.app.Device, x - 3, y, new Rectangle( 0, 0, 3, 130 ) );
                     }
                     else
                     {
-                        //this.tx小節線.t2D描画( CDTXMania.app.Device, x - 3, y, new Rectangle( 0, 0, 3, 130 ) );
-                        CDTXMania.Tx.Bar.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0, 3, 130 ) );
+                        CDTXMania.Tx.Bar.t2D描画( CDTXMania.app.Device, x - 3, y, new Rectangle( 0, 0, 3, 130 ) );
                     }
                 }
 			}
