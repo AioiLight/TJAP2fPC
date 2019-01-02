@@ -1571,7 +1571,7 @@ namespace TJAPlayer3
 
 		#region [ private ]
 		//-----------------
-		private enum Eバー種別 { Score, Box, Other }
+		private enum Eバー種別 { Score, Box, BackBox, Random, Other }
 
 		private struct STバー
 		{
@@ -1754,8 +1754,13 @@ namespace TJAPlayer3
 						return Eバー種別.Score;
 
 					case C曲リストノード.Eノード種別.BOX:
-					case C曲リストノード.Eノード種別.BACKBOX:
-						return Eバー種別.Box;
+                                                return Eバー種別.Box;
+
+                                        case C曲リストノード.Eノード種別.BACKBOX:
+                                                return Eバー種別.BackBox;
+
+                                        case C曲リストノード.Eノード種別.RANDOM:
+                                                return Eバー種別.Random;
 				}
 			}
 			return Eバー種別.Other;
