@@ -563,8 +563,6 @@ namespace TJAPlayer3
             TJAPlayer3.tテクスチャの解放(ref SongSelect_Cursor_Right);
             TJAPlayer3.tテクスチャの解放(ref SongSelect_Bar_BackBox);
             TJAPlayer3.tテクスチャの解放(ref SongSelect_Bar_Random);
-            
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Cursor_Random);
             for (int i = 0; i < 9; i++)
             {
                 TJAPlayer3.tテクスチャの解放(ref SongSelect_Bar_Genre[i]);
