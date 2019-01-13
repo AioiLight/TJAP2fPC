@@ -40,7 +40,7 @@ namespace TJAPlayer3
                         string strDiff = "";
                         if (TJAPlayer3.Skin.eDiffDispMode == E難易度表示タイプ.n曲目に表示)
                         {
-                            switch (TJAPlayer3.stage選曲.n確定された曲の難易度)
+                            switch (TJAPlayer3.stage選曲.nSeelectedCource[0])
                             {
                                 case 0:
                                     strDiff = "かんたん ";

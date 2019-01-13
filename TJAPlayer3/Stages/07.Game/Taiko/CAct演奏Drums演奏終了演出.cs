@@ -23,7 +23,7 @@ namespace TJAPlayer3
         {
             this.ct進行メイン = new CCounter(0, 300, 22, TJAPlayer3.Timer);
             // モードの決定。クリア失敗・フルコンボも事前に作っとく。
-            if(TJAPlayer3.stage選曲.n確定された曲の難易度 == (int)Difficulty.Dan)
+            if(TJAPlayer3.stage選曲.nSeelectedCource[0] == (int)Difficulty.Dan)
             {
                 // 段位認定モード。
                 if (!TJAPlayer3.stage演奏ドラム画面.actDan.GetFailedAllChallenges())

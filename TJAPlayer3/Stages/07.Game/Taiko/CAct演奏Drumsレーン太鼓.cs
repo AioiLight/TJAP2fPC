@@ -888,7 +888,7 @@ namespace TJAPlayer3
         public void GOGOSTART()
         {
             this.ctゴーゴー = new CCounter(0, 17, 18, TJAPlayer3.Timer);
-            if(TJAPlayer3.ConfigIni.nPlayerCount == 1 && TJAPlayer3.stage選曲.n確定された曲の難易度 != (int)Difficulty.Dan) TJAPlayer3.stage演奏ドラム画面.GoGoSplash.StartSplash();
+            if(TJAPlayer3.ConfigIni.nPlayerCount == 1 && TJAPlayer3.stage選曲.nSeelectedCource[0] != (int)Difficulty.Dan) TJAPlayer3.stage演奏ドラム画面.GoGoSplash.StartSplash();
         }
 
 

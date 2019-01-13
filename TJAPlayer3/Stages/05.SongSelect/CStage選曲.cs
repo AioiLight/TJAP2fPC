@@ -51,7 +51,7 @@ namespace TJAPlayer3
                 return this.act曲リスト.bスクロール中;
             }
         }
-        public int n確定された曲の難易度
+        public int[] nSeelectedCource
         {
             get;
             private set;
@@ -167,6 +167,7 @@ namespace TJAPlayer3
 
 		public override void On活性化()
 		{
+            nSeelectedCource = new int[] { 0, 0 };
 			Trace.TraceInformation( "選曲ステージを活性化します。" );
 			Trace.Indent();
 			try
@@ -758,7 +759,7 @@ namespace TJAPlayer3
 		public CActSortSongs actSortSongs;
 		private CActSelectQuickConfig actQuickConfig;
 
-                private int nGenreBack;
+        private int nGenreBack;
 		private bool bBGM再生済み;
 		private STキー反復用カウンタ ctキー反復用;
 		public CCounter ct登場時アニメ用共通;
@@ -917,8 +918,8 @@ namespace TJAPlayer3
 				}
 			}
 			this.r確定された曲 = song.listランダム用ノードリスト[ song.stackランダム演奏番号.Pop() ];
-			this.n確定された曲の難易度 = this.act曲リスト.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( this.r確定された曲 );
-			this.r確定されたスコア = this.r確定された曲.arスコア[ this.n確定された曲の難易度 ];
+			this.nSeelectedCource[0] = this.act曲リスト.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( this.r確定された曲 );
+			this.r確定されたスコア = this.r確定された曲.arスコア[ this.nSeelectedCource[0]];
             this.str確定された曲のジャンル = this.r確定された曲.strジャンル;
 			this.eフェードアウト完了時の戻り値 = E戻り値.選曲した;
 			this.actFOtoNowLoading.tフェードアウト開始();					// #27787 2012.3.10 yyagi 曲決定時の画面フェードアウトの省略
@@ -947,7 +948,7 @@ namespace TJAPlayer3
 		{
 			this.r確定された曲 = this.act曲リスト.r現在選択中の曲;
 			this.r確定されたスコア = this.act曲リスト.r現在選択中のスコア;
-			this.n確定された曲の難易度 = this.act曲リスト.n現在選択中の曲の現在の難易度レベル;
+			this.nSeelectedCource[0] = this.act曲リスト.n現在選択中の曲の現在の難易度レベル;
             this.str確定された曲のジャンル = this.r確定された曲.strジャンル;
             if ( ( this.r確定された曲 != null ) && ( this.r確定されたスコア != null ) )
 			{
@@ -961,7 +962,7 @@ namespace TJAPlayer3
 		{
 			this.r確定された曲 = this.act曲リスト.r現在選択中の曲;
 			this.r確定されたスコア = this.act曲リスト.r現在選択中のスコア;
-			this.n確定された曲の難易度 = nCurrentLevel;
+			this.nSeelectedCource[0] = nCurrentLevel;
             this.str確定された曲のジャンル = this.r確定された曲.strジャンル;
             if ( ( this.r確定された曲 != null ) && ( this.r確定されたスコア != null ) )
 			{

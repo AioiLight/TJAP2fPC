@@ -368,7 +368,7 @@ namespace TJAPlayer3
             //this.txネームプレート.t2D描画( CDTXMania.app.Device, 254, 93 );
 
             #region 段位認定モード用
-            if(TJAPlayer3.stage選曲.n確定された曲の難易度 == (int)Difficulty.Dan)
+            if(TJAPlayer3.stage選曲.nSeelectedCource[0] == (int)Difficulty.Dan)
             {
                 TJAPlayer3.stage演奏ドラム画面.actDan.DrawExam(TJAPlayer3.stage結果.st演奏記録.Drums.Dan_C);
                 switch (TJAPlayer3.stage演奏ドラム画面.actDan.GetExamStatus(TJAPlayer3.stage結果.st演奏記録.Drums.Dan_C))

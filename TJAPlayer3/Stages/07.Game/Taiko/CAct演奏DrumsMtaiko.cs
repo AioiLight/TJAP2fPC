@@ -293,9 +293,9 @@ namespace TJAPlayer3
                 //    else if( CDTXMania.ConfigIni.eSTEALTH == Eステルスモード.DORON )
                 //        this.txオプションパネル_特殊.t2D描画( CDTXMania.app.Device, 0, 300, new Rectangle( 0, 44, 162, 44 ) );
                 //}
-                if (TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.n確定された曲の難易度] != null)
+                if (TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.nSeelectedCource[0]] != null)
                 {
-                    TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.n確定された曲の難易度].t2D描画(TJAPlayer3.app.Device,
+                    TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.nSeelectedCource[0]].t2D描画(TJAPlayer3.app.Device,
                         TJAPlayer3.Skin.Game_CourseSymbol_X[i],
                         TJAPlayer3.Skin.Game_CourseSymbol_Y[i]
                         );

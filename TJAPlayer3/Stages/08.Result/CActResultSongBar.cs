@@ -117,7 +117,7 @@ namespace TJAPlayer3
                 this.txMusicName.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_MusicName_X - this.txMusicName.szテクスチャサイズ.Width * txMusicName.vc拡大縮小倍率.X, TJAPlayer3.Skin.Result_MusicName_Y);
             }
 
-            if(TJAPlayer3.stage選曲.n確定された曲の難易度 != (int)Difficulty.Dan)
+            if(TJAPlayer3.stage選曲.nSeelectedCource[0] != (int)Difficulty.Dan)
             {
                 if (TJAPlayer3.Skin.Result_StageText_ReferencePoint == CSkin.ReferencePoint.Center)
                 {

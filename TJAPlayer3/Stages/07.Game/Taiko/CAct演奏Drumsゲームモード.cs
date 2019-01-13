@@ -261,7 +261,7 @@ namespace TJAPlayer3
                 };
 
                 //★10の場合超激辛モードになる。
-                if( TJAPlayer3.DTX.LEVELtaiko[ TJAPlayer3.stage選曲.n確定された曲の難易度 ] >= 10 )
+                if( TJAPlayer3.DTX.LEVELtaiko[ TJAPlayer3.stage選曲.nSeelectedCource[0]] >= 10 )
                 {
                     #region[ 超激辛 ]
                     this.st叩ききりまショー.b超激辛 = true;
