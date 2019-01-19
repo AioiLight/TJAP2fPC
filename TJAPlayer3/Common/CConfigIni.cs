@@ -2628,11 +2628,15 @@ namespace TJAPlayer3
 											{
 												this.判定文字表示位置.Drums = (E判定文字表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.判定文字表示位置.Drums );
 											}
-											else if( str3.Equals( "DrumsScrollSpeed" ) )
+											else if( str3.Equals( "1PDrumsScrollSpeed" ) )
 											{
 												this.n譜面スクロール速度[0].Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 0x7cf, this.n譜面スクロール速度[0].Drums );
 											}
-											else if( str3.Equals( "PlaySpeed" ) )
+                                            else if (str3.Equals( "2PDrumsScrollSpeed"))
+                                            {
+                                                this.n譜面スクロール速度[0].Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 0x7cf, this.n譜面スクロール速度[0].Drums);
+                                            }
+                                            else if( str3.Equals( "PlaySpeed" ) )
 											{
 												this.n演奏速度 = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 5, 40, this.n演奏速度 );
 											}

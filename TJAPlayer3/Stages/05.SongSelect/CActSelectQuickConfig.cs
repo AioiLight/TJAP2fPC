@@ -162,9 +162,6 @@ namespace TJAPlayer3
                     case (int)EOrder2P.Stealth:
                         TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] = (Eステルスモード)GetIndex((int)EOrder2P.Stealth);
                         break;
-                    case (int)EOrder2P.ShinuchiMode:
-                        TJAPlayer3.ConfigIni.ShinuchiMode = !TJAPlayer3.ConfigIni.ShinuchiMode;
-                        break;
                     case (int)EOrder2P.More:
                         SetAutoParameters();            // 簡易CONFIGメニュー脱出に伴い、簡易CONFIG内のAUTOの設定をConfigIniクラスに反映する
                         this.bGotoDetailConfig = true;
@@ -279,7 +276,7 @@ namespace TJAPlayer3
             ScrollSpeed,
             Random,
             Stealth,
-            ShinuchiMode,
+            //ShinuchiMode,
             More,
             Return,
             END,

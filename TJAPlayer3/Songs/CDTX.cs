@@ -3055,9 +3055,15 @@ namespace TJAPlayer3
                 #endregion
 
                 //指定したコースの譜面の命令を消去する。
+
+                //多難易度選択が可能になったので、セッション譜面は同じ難易度再生の時以外はお預けにしておく
+                int n読み込むセッション譜面パート = 0;
+                if (TJAPlayer3.ConfigIni.nPlayerCount >= 2 && TJAPlayer3.stage選曲.nSeelectedCource[0] == TJAPlayer3.stage選曲.nSeelectedCource[1])
+                    n読み込むセッション譜面パート = nPlayerSide + 1;
+
                 strSplitした譜面[n読み込むコース] = CDTXStyleExtractor.tセッション譜面がある(
                     strSplitした譜面[n読み込むコース],
-                    nPlayerSide,
+                    n読み込むセッション譜面パート,
                     this.strファイル名の絶対パス);
 
                 //命令をすべて消去した譜面
