@@ -578,14 +578,14 @@ namespace TJAPlayer3
             //    " automatically." );
             //this.list項目リスト.Add( this.iDrumsLeftBassDrum );
 
-			this.iTaikoAutoPlay = new CItemToggle( "AUTO PLAY", TJAPlayer3.ConfigIni.b太鼓パートAutoPlay,
-				"すべての音符を自動で演奏します。\n" +
+			this.iTaikoAutoPlay = new CItemToggle( "AUTO PLAY", TJAPlayer3.ConfigIni.bAutoPlay[0],
+                "すべての音符を自動で演奏します。\n" +
 				"",
 				"To play both Taiko\n" +
 				" automatically." );
 			this.list項目リスト.Add( this.iTaikoAutoPlay );
 
-			this.iTaikoAutoPlay2P = new CItemToggle( "AUTO PLAY 2P", TJAPlayer3.ConfigIni.b太鼓パートAutoPlay,
+			this.iTaikoAutoPlay2P = new CItemToggle( "AUTO PLAY 2P", TJAPlayer3.ConfigIni.bAutoPlay[1],
 				"すべての音符を自動で演奏します。\n" +
 				"",
 				"To play both Taiko\n" +
@@ -600,7 +600,7 @@ namespace TJAPlayer3
 			this.list項目リスト.Add( this.iTaikoAutoRoll );
 			#endregion
 
-			this.iDrumsScrollSpeed = new CItemInteger( "ScrollSpeed", 0, 0x7cf, TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums,
+			this.iDrumsScrollSpeed1P = new CItemInteger( "ScrollSpeed", 0, 0x7cf, TJAPlayer3.ConfigIni.n譜面スクロール速度[0].Drums,
 				"演奏時のドラム譜面のスクロールの\n" +
 				"速度を指定します。\n" +
 				"x0.5 ～ x1000.0 を指定可能です。",
@@ -608,7 +608,17 @@ namespace TJAPlayer3
 				"drums lanes.\n" +
 				"You can set it from x0.5 to x1000.0.\n" +
 				"(ScrollSpeed=x0.5 means half speed)" );
-			this.list項目リスト.Add( this.iDrumsScrollSpeed );
+			this.list項目リスト.Add( this.iDrumsScrollSpeed1P );
+
+            this.iDrumsScrollSpeed2P = new CItemInteger("ScrollSpeed", 0, 0x7cf, TJAPlayer3.ConfigIni.n譜面スクロール速度[1].Drums,
+                "演奏時のドラム譜面のスクロールの\n" +
+                "速度を指定します。\n" +
+                "x0.5 ～ x1000.0 を指定可能です。",
+                "To change the scroll speed for the\n" +
+                "drums lanes.\n" +
+                "You can set it from x0.5 to x1000.0.\n" +
+                "(ScrollSpeed=x0.5 means half speed)");
+            this.list項目リスト.Add(this.iDrumsScrollSpeed2P);
 
             //this.iDrumsSudHid = new CItemList( "Sud+Hid", CItemBase.Eパネル種別.通常, getDefaultSudHidValue(E楽器パート.DRUMS ),
             //    "ドラムチップの表示方式:\n" +
@@ -642,35 +652,35 @@ namespace TJAPlayer3
             //    new string[] { "OFF", "Sudden", "Hidden", "Sud+Hid", "S-Invisible", "F-Invisible" } );
             //this.list項目リスト.Add( this.iDrumsSudHid );
 
-			//this.iDrumsSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Drums,
-			//    "ドラムチップが譜面の下の方から表\n" +
-			//    "示されるようになります。",
-			//    "Drums chips are disappered until they\n" +
-			//    "come near the hit bar, and suddenly\n" +
-			//    "appears." );
-			//this.list項目リスト.Add( this.iDrumsSudden );
+            //this.iDrumsSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Drums,
+            //    "ドラムチップが譜面の下の方から表\n" +
+            //    "示されるようになります。",
+            //    "Drums chips are disappered until they\n" +
+            //    "come near the hit bar, and suddenly\n" +
+            //    "appears." );
+            //this.list項目リスト.Add( this.iDrumsSudden );
 
-			//this.iDrumsHidden = new CItemToggle( "Hidden", CDTXMania.ConfigIni.bHidden.Drums,
-			//    "ドラムチップが譜面の下の方で表示\n" +
-			//    "されなくなります。",
-			//    "Drums chips are hidden by approaching\n" +
-			//    "to the hit bar. " );
-			//this.list項目リスト.Add( this.iDrumsHidden );
+            //this.iDrumsHidden = new CItemToggle( "Hidden", CDTXMania.ConfigIni.bHidden.Drums,
+            //    "ドラムチップが譜面の下の方で表示\n" +
+            //    "されなくなります。",
+            //    "Drums chips are hidden by approaching\n" +
+            //    "to the hit bar. " );
+            //this.list項目リスト.Add( this.iDrumsHidden );
 
-			//this.iDrumsInvisible = new CItemList( "Invisible", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eInvisible.Drums,
-			//    "ドラムチップの透明化\n" +
-			//    "OFF: チップを常に表示します。\n" +
-			//    "SEMI: 通常はチップを透明にしますが、\n" +
-			//    "　　　Poor/Miss時はしばらく表示します。\n" +
-			//    "FULL: チップを常に透明にします。\n" +
-			//    "　　　暗譜での練習にお使いください。\n" +
-			//    "これをONにすると、SuddenとHiddenの\n" +
-			//    "効果は無効になります。",
-			//    "Invisible drums chip:\n" +
-			//    "If you set Blindfold=ON, you can't\n" +
-			//    "see the chips at all.",
-			//    new string[] { "OFF", "SEMI", "FULL" } );
-			//this.list項目リスト.Add( this.iDrumsInvisible );
+            //this.iDrumsInvisible = new CItemList( "Invisible", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eInvisible.Drums,
+            //    "ドラムチップの透明化\n" +
+            //    "OFF: チップを常に表示します。\n" +
+            //    "SEMI: 通常はチップを透明にしますが、\n" +
+            //    "　　　Poor/Miss時はしばらく表示します。\n" +
+            //    "FULL: チップを常に透明にします。\n" +
+            //    "　　　暗譜での練習にお使いください。\n" +
+            //    "これをONにすると、SuddenとHiddenの\n" +
+            //    "効果は無効になります。",
+            //    "Invisible drums chip:\n" +
+            //    "If you set Blindfold=ON, you can't\n" +
+            //    "see the chips at all.",
+            //    new string[] { "OFF", "SEMI", "FULL" } );
+            //this.list項目リスト.Add( this.iDrumsInvisible );
 
             //this.iCommonDark = new CItemList( "Dark", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eDark,
             //    "HALF: 背景、レーン、ゲージが表示\n" +
@@ -693,7 +703,7 @@ namespace TJAPlayer3
             //    + "flow from the bottom to the top." );
             //this.list項目リスト.Add( this.iDrumsReverse );
 
-			this.iSystemRisky = new CItemInteger( "Risky", 0, 10, TJAPlayer3.ConfigIni.nRisky,
+            this.iSystemRisky = new CItemInteger( "Risky", 0, 10, TJAPlayer3.ConfigIni.nRisky,
 				"Riskyモードの設定:\n" +
 				"1以上の値にすると、その回数分の\n" +
 				"不可で演奏が強制終了します。\n" +
@@ -708,21 +718,36 @@ namespace TJAPlayer3
 				"Set 0 to disable Risky mode." );
 			this.list項目リスト.Add( this.iSystemRisky );
 
-			this.iTaikoRandom = new CItemList( "Random", CItemBase.Eパネル種別.通常, (int) TJAPlayer3.ConfigIni.eRandom.Taiko,
+			this.iTaikoRandom1P = new CItemList( "Random", CItemBase.Eパネル種別.通常, (int) TJAPlayer3.ConfigIni.eRandom[0].Taiko,
 				"いわゆるランダム。\n  RANDOM: ちょっと変わる\n  MIRROR: あべこべ \n  SUPER: そこそこヤバい\n  HYPER: 結構ヤバい\nなお、実装は適当な模様",
 				"Notes come randomly.\n\n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
 				new string[] { "OFF", "RANDOM", "MIRROR", "SUPER", "HYPER" } );
-			this.list項目リスト.Add( this.iTaikoRandom );
+			this.list項目リスト.Add( this.iTaikoRandom1P );
 
-			this.iTaikoStealth = new CItemList( "Stealth", CItemBase.Eパネル種別.通常, (int) TJAPlayer3.ConfigIni.eSTEALTH,
+            this.iTaikoRandom2P = new CItemList("Random 2P", CItemBase.Eパネル種別.通常, (int)TJAPlayer3.ConfigIni.eRandom[1].Taiko,
+                "いわゆるランダム。\n  RANDOM: ちょっと変わる\n  MIRROR: あべこべ \n  SUPER: そこそこヤバい\n  HYPER: 結構ヤバい\nなお、実装は適当な模様",
+                "Notes come randomly.\n\n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
+                new string[] { "OFF", "RANDOM", "MIRROR", "SUPER", "HYPER" });
+            this.list項目リスト.Add(this.iTaikoRandom2P);
+
+            this.iTaikoStealth1P = new CItemList( "Stealth", CItemBase.Eパネル種別.通常, (int) TJAPlayer3.ConfigIni.eSTEALTH[0],
 				"DORON:ドロン\n"+
                 "STEALTH:ステルス",
 				"DORON:Hidden for NoteImage.\n"+
                 "STEALTH:Hidden for NoteImage and SeNotes",
 				new string[] { "OFF", "DORON", "STEALTH" } );
-			this.list項目リスト.Add( this.iTaikoStealth );
+			this.list項目リスト.Add( this.iTaikoStealth1P );
 
-			this.iTaikoNoInfo = new CItemToggle( "NoInfo", TJAPlayer3.ConfigIni.bNoInfo,
+            this.iTaikoStealth2P = new CItemList("Stealth 2P", CItemBase.Eパネル種別.通常, (int)TJAPlayer3.ConfigIni.eSTEALTH[1],
+                "DORON:ドロン\n" +
+                "STEALTH:ステルス",
+                "DORON:Hidden for NoteImage.\n" +
+                "STEALTH:Hidden for NoteImage and SeNotes",
+                new string[] { "OFF", "DORON", "STEALTH" });
+            this.list項目リスト.Add(this.iTaikoStealth2P);
+
+
+            this.iTaikoNoInfo = new CItemToggle( "NoInfo", TJAPlayer3.ConfigIni.bNoInfo,
 				"有効にすると曲情報などが見えなくなります。\n" +
 				"",
 				"It becomes MISS to hit pad without\n" +
@@ -1862,16 +1887,16 @@ namespace TJAPlayer3
 					//-----------------
 						#endregion
 
-					case CItemBase.E種別.整数:		// #24789 2011.4.8 yyagi: add PlaySpeed supports (copied them from OPTION)
-						#region [ *** ]
-						//-----------------
-						if ( this.list項目リスト[ nItem ] == this.iCommonPlaySpeed )
-						{
-							double d = ( (double) ( (CItemInteger) this.list項目リスト[ nItem ] ).n現在の値 ) / 20.0;
-							//CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, d.ToString( "0.000" ), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
-							strParam = d.ToString( "0.000" );
-						}
-						else if ( this.list項目リスト[ nItem ] == this.iDrumsScrollSpeed || this.list項目リスト[ nItem ] == this.iGuitarScrollSpeed || this.list項目リスト[ nItem ] == this.iBassScrollSpeed )
+					case CItemBase.E種別.整数:      // #24789 2011.4.8 yyagi: add PlaySpeed supports (copied them from OPTION)
+                        #region [ *** ]
+                        //-----------------
+                        if (this.list項目リスト[nItem] == this.iCommonPlaySpeed)
+                        {
+                            double d = ((double)((CItemInteger)this.list項目リスト[nItem]).n現在の値) / 20.0;
+                            //CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, d.ToString( "0.000" ), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
+                            strParam = d.ToString("0.000");
+                        }
+                        else if (this.list項目リスト[nItem] == this.iDrumsScrollSpeed1P || this.list項目リスト[nItem] == this.iDrumsScrollSpeed2P || this.list項目リスト[nItem] == this.iGuitarScrollSpeed || this.list項目リスト[nItem] == this.iBassScrollSpeed)
 						{
 							float f = ( ( (CItemInteger) this.list項目リスト[ nItem ] ).n現在の値 + 1 ) * 0.5f;
 							//CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, f.ToString( "x0.0" ), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
@@ -2185,8 +2210,9 @@ namespace TJAPlayer3
 		private CItemList iDrumsPosition;
 		private CItemBase iDrumsReturnToMenu;
 		private CItemToggle iDrumsReverse;
-		private CItemInteger iDrumsScrollSpeed;
-		private CItemToggle iDrumsSnare;
+		private CItemInteger iDrumsScrollSpeed1P;
+        private CItemInteger iDrumsScrollSpeed2P;
+        private CItemToggle iDrumsSnare;
 		//private CItemToggle iDrumsSudden;
 		private CItemToggle iDrumsTight;
 		private CItemToggle iDrumsGraph;        // #24074 2011.01.23 add ikanick
@@ -2204,8 +2230,10 @@ namespace TJAPlayer3
         private CItemList iTaikoBranchAnime;
         private CItemToggle iTaikoChara;
         private CItemToggle iTaikoNoInfo;
-		private CItemList iTaikoRandom;
-        private CItemList iTaikoStealth;
+		private CItemList iTaikoRandom1P;
+        private CItemList iTaikoRandom2P;
+        private CItemList iTaikoStealth1P;
+        private CItemList iTaikoStealth2P;
         private CItemList iTaikoGameMode;
         private CItemToggle iTaikoJust;
         private CItemToggle iTaikoJudgeCountDisp;
@@ -2389,22 +2417,23 @@ namespace TJAPlayer3
 		}
 		private void tConfigIniへ記録する_Drums()
 		{
-            TJAPlayer3.ConfigIni.b太鼓パートAutoPlay = this.iTaikoAutoPlay.bON;
-            TJAPlayer3.ConfigIni.b太鼓パートAutoPlay2P = this.iTaikoAutoPlay2P.bON;
+            TJAPlayer3.ConfigIni.bAutoPlay[0] = this.iTaikoAutoPlay.bON;
+            TJAPlayer3.ConfigIni.bAutoPlay[1] = this.iTaikoAutoPlay2P.bON;
             TJAPlayer3.ConfigIni.bAuto先生の連打 = this.iTaikoAutoRoll.bON;
 
-			TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums = this.iDrumsScrollSpeed.n現在の値;
+			TJAPlayer3.ConfigIni.n譜面スクロール速度[0].Drums = this.iDrumsScrollSpeed1P.n現在の値;
+            TJAPlayer3.ConfigIni.n譜面スクロール速度[1].Drums = this.iDrumsScrollSpeed2P.n現在の値;
             //CDTXMania.ConfigIni.bドラムコンボ表示 = this.iDrumsComboDisp.bON;
-												// "Sudden" || "Sud+Hid"
+            // "Sudden" || "Sud+Hid"
             //CDTXMania.ConfigIni.bSudden.Drums = ( this.iDrumsSudHid.n現在選択されている項目番号 == 1 || this.iDrumsSudHid.n現在選択されている項目番号 == 3 ) ? true : false;
-												// "Hidden" || "Sud+Hid"
+            // "Hidden" || "Sud+Hid"
             //CDTXMania.ConfigIni.bHidden.Drums = ( this.iDrumsSudHid.n現在選択されている項目番号 == 2 || this.iDrumsSudHid.n現在選択されている項目番号 == 3 ) ? true : false;
             //if      ( this.iDrumsSudHid.n現在選択されている項目番号 == 4 ) CDTXMania.ConfigIni.eInvisible.Drums = EInvisible.SEMI;	// "S-Invisible"
             //else if ( this.iDrumsSudHid.n現在選択されている項目番号 == 5 ) CDTXMania.ConfigIni.eInvisible.Drums = EInvisible.FULL;	// "F-Invisible"
             //else                                                           CDTXMania.ConfigIni.eInvisible.Drums = EInvisible.OFF;
             //CDTXMania.ConfigIni.bReverse.Drums = this.iDrumsReverse.bON;
             //CDTXMania.ConfigIni.判定文字表示位置.Drums = (E判定文字表示位置) this.iDrumsPosition.n現在選択されている項目番号;
-			TJAPlayer3.ConfigIni.bTight = this.iDrumsTight.bON;
+            TJAPlayer3.ConfigIni.bTight = this.iDrumsTight.bON;
 
 		    TJAPlayer3.ConfigIni.nInputAdjustTimeMs = this.iInputAdjustTimeMs.n現在の値;
 
@@ -2419,8 +2448,10 @@ namespace TJAPlayer3
             TJAPlayer3.ConfigIni.nBranchAnime = this.iTaikoBranchAnime.n現在選択されている項目番号;
             //CDTXMania.ConfigIni.bHispeedRandom = this.iTaikoHispeedRandom.bON;
             TJAPlayer3.ConfigIni.bNoInfo = this.iTaikoNoInfo.bON;
-            TJAPlayer3.ConfigIni.eRandom.Taiko = (Eランダムモード)this.iTaikoRandom.n現在選択されている項目番号;
-            TJAPlayer3.ConfigIni.eSTEALTH = (Eステルスモード)this.iTaikoStealth.n現在選択されている項目番号;
+            TJAPlayer3.ConfigIni.eRandom[0].Taiko = (Eランダムモード)this.iTaikoRandom1P.n現在選択されている項目番号;
+            TJAPlayer3.ConfigIni.eRandom[1].Taiko = (Eランダムモード)this.iTaikoRandom2P.n現在選択されている項目番号;
+            TJAPlayer3.ConfigIni.eSTEALTH[0] = (Eステルスモード)this.iTaikoStealth1P.n現在選択されている項目番号;
+            TJAPlayer3.ConfigIni.eSTEALTH[1] = (Eステルスモード)this.iTaikoStealth2P.n現在選択されている項目番号;
             TJAPlayer3.ConfigIni.eGameMode = (EGame)this.iTaikoGameMode.n現在選択されている項目番号;
             TJAPlayer3.ConfigIni.bJust = this.iTaikoJust.bON;
             TJAPlayer3.ConfigIni.bJudgeCountDisplay = this.iTaikoJudgeCountDisp.bON;

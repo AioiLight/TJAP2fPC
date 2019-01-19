@@ -93,13 +93,13 @@ namespace TJAPlayer3
 
 		private bool tプレビュー画像の指定があれば構築する()
 		{
-			if( string.IsNullOrEmpty( TJAPlayer3.DTX.PREIMAGE ) )
+			if( string.IsNullOrEmpty( TJAPlayer3.DTX[0].PREIMAGE ) )
 			{
 				return false;
 			}
 			TJAPlayer3.tテクスチャの解放( ref this.txリザルト画像 );
 			this.r表示するリザルト画像 = null;
-			string path = TJAPlayer3.DTX.strフォルダ名 + TJAPlayer3.DTX.PREIMAGE;
+			string path = TJAPlayer3.DTX[0].strフォルダ名 + TJAPlayer3.DTX[0].PREIMAGE;
 			if( !File.Exists( path ) )
 			{
 				Trace.TraceWarning( "ファイルが存在しません。({0})", new object[] { path } );

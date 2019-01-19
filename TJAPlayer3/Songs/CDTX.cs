@@ -35,10 +35,10 @@ namespace TJAPlayer3
                 #region [ strAVIファイル名の作成。]
                 //-----------------
                 string strAVIファイル名;
-                if (!string.IsNullOrEmpty(TJAPlayer3.DTX.PATH_WAV))
-                    strAVIファイル名 = TJAPlayer3.DTX.PATH_WAV + this.strファイル名;
+                if (!string.IsNullOrEmpty(TJAPlayer3.DTX[0].PATH_WAV))
+                    strAVIファイル名 = TJAPlayer3.DTX[0].PATH_WAV + this.strファイル名;
                 else
-                    strAVIファイル名 = TJAPlayer3.DTX.strフォルダ名 + this.strファイル名;
+                    strAVIファイル名 = TJAPlayer3.DTX[0].strフォルダ名 + this.strファイル名;
                 //-----------------
                 #endregion
 
@@ -80,10 +80,10 @@ namespace TJAPlayer3
                     #region [ strAVIファイル名 の作成。 ]
                     //-----------------
                     string strAVIファイル名;
-                    if (!string.IsNullOrEmpty(TJAPlayer3.DTX.PATH_WAV))
-                        strAVIファイル名 = TJAPlayer3.DTX.PATH_WAV + this.strファイル名;
+                    if (!string.IsNullOrEmpty(TJAPlayer3.DTX[0].PATH_WAV))
+                        strAVIファイル名 = TJAPlayer3.DTX[0].PATH_WAV + this.strファイル名;
                     else
-                        strAVIファイル名 = TJAPlayer3.DTX.strフォルダ名 + this.strファイル名;
+                        strAVIファイル名 = TJAPlayer3.DTX[0].strフォルダ名 + this.strファイル名;
                     //-----------------
                     #endregion
 
@@ -137,10 +137,10 @@ namespace TJAPlayer3
                 #region [ str動画ファイル名の作成。]
                 //-----------------
                 string str動画ファイル名;
-                if (!string.IsNullOrEmpty(TJAPlayer3.DTX.PATH_WAV))
-                    str動画ファイル名 = TJAPlayer3.DTX.PATH_WAV + this.strファイル名;
+                if (!string.IsNullOrEmpty(TJAPlayer3.DTX[0].PATH_WAV))
+                    str動画ファイル名 = TJAPlayer3.DTX[0].PATH_WAV + this.strファイル名;
                 else
-                    str動画ファイル名 = TJAPlayer3.DTX.strフォルダ名 + this.strファイル名;
+                    str動画ファイル名 = TJAPlayer3.DTX[0].strフォルダ名 + this.strファイル名;
                 //-----------------
                 #endregion
 
@@ -181,10 +181,10 @@ namespace TJAPlayer3
                     #region [ strAVIファイル名 の作成。 ]
                     //-----------------
                     string str動画ファイル名;
-                    if (!string.IsNullOrEmpty(TJAPlayer3.DTX.PATH_WAV))
-                        str動画ファイル名 = TJAPlayer3.DTX.PATH_WAV + this.strファイル名;
+                    if (!string.IsNullOrEmpty(TJAPlayer3.DTX[0].PATH_WAV))
+                        str動画ファイル名 = TJAPlayer3.DTX[0].PATH_WAV + this.strファイル名;
                     else
-                        str動画ファイル名 = TJAPlayer3.DTX.strフォルダ名 + this.strファイル名;
+                        str動画ファイル名 = TJAPlayer3.DTX[0].strフォルダ名 + this.strファイル名;
                     //-----------------
                     #endregion
 
@@ -561,7 +561,7 @@ namespace TJAPlayer3
                 if (this.bWAVを使うチャンネルである)       // WAV
                 {
                     CDTX.CWAV wc;
-                    TJAPlayer3.DTX.listWAV.TryGetValue(this.n整数値_内部番号, out wc);
+                    TJAPlayer3.DTX[0].listWAV.TryGetValue(this.n整数値_内部番号, out wc);
                     if (wc == null)
                     {
                         nDuration = 0;
@@ -581,7 +581,7 @@ namespace TJAPlayer3
                     }
                 }
 
-                double _db再生速度 = (TJAPlayer3.DTXVmode.Enabled) ? TJAPlayer3.DTX.dbDTXVPlaySpeed : TJAPlayer3.DTX.db再生速度;
+                double _db再生速度 = (TJAPlayer3.DTXVmode.Enabled) ? TJAPlayer3.DTX[0].dbDTXVPlaySpeed : TJAPlayer3.DTX[0].db再生速度;
                 return (int)(nDuration / _db再生速度);
             }
 
@@ -3034,9 +3034,9 @@ namespace TJAPlayer3
                         this.b譜面が存在する[i] = false;
                 }
                 #region[ 読み込ませるコースを決定 ]
-                if (this.b譜面が存在する[TJAPlayer3.stage選曲.nSeelectedCource[0]] == false)
+                if (this.b譜面が存在する[TJAPlayer3.stage選曲.nSeelectedCource[nPlayerSide]] == false)
                 {
-                    n読み込むコース = TJAPlayer3.stage選曲.nSeelectedCource[0];
+                    n読み込むコース = TJAPlayer3.stage選曲.nSeelectedCource[nPlayerSide];
                     n読み込むコース++;
                     for (int n = 1; n < (int)Difficulty.Total; n++)
                     {
@@ -3051,13 +3051,13 @@ namespace TJAPlayer3
                     }
                 }
                 else
-                    n読み込むコース = TJAPlayer3.stage選曲.nSeelectedCource[0];
+                    n読み込むコース = TJAPlayer3.stage選曲.nSeelectedCource[nPlayerSide];
                 #endregion
 
                 //指定したコースの譜面の命令を消去する。
                 strSplitした譜面[n読み込むコース] = CDTXStyleExtractor.tセッション譜面がある(
                     strSplitした譜面[n読み込むコース],
-                    TJAPlayer3.ConfigIni.nPlayerCount > 1 ? (this.nPlayerSide + 1) : 0,
+                    nPlayerSide,
                     this.strファイル名の絶対パス);
 
                 //命令をすべて消去した譜面

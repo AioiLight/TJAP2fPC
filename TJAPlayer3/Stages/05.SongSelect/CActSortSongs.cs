@@ -31,7 +31,7 @@ namespace TJAPlayer3
 		public void tActivatePopupMenu( E楽器パート einst, ref CActSelect曲リスト ca )
 		{
 		    this.act曲リスト = ca;
-			base.tActivatePopupMenu( einst );
+            base.tActivatePopupMenu(einst, 0);
 		}
 		//public void tDeativatePopupMenu()
 		//{

@@ -191,7 +191,7 @@ namespace TJAPlayer3
 			this.bフィルイン中 = false;
             this.n待機中の大音符の座標 = 0;
             this.actGame.t叩ききりまショー_初期化();
-            base.ReSetScore(TJAPlayer3.DTX.nScoreInit[0, TJAPlayer3.stage選曲.nSeelectedCource[0]], TJAPlayer3.DTX.nScoreDiff[TJAPlayer3.stage選曲.nSeelectedCource[0]]);
+            base.ReSetScore(TJAPlayer3.DTX[0].nScoreInit[0, TJAPlayer3.stage選曲.nSeelectedCource[0]], TJAPlayer3.DTX[0].nScoreDiff[TJAPlayer3.stage選曲.nSeelectedCource[0]]);
 			base.On活性化();
 
 			// MODIFY_BEGIN #25398 2011.06.07 FROM
@@ -274,10 +274,10 @@ namespace TJAPlayer3
             //}
             // Discord Presence の更新
             var difficultyName = TJAPlayer3.DifficultyNumberToEnum(TJAPlayer3.stage選曲.nSeelectedCource[0]).ToString();
-            Discord.UpdatePresence(TJAPlayer3.ConfigIni.SendDiscordPlayingInformation ? TJAPlayer3.DTX.TITLE + ".tja" : "",
-                Properties.Discord.Stage_InGame + (TJAPlayer3.ConfigIni.b太鼓パートAutoPlay == true ? " (" + Properties.Discord.Info_IsAuto + ")" : ""),
+            Discord.UpdatePresence(TJAPlayer3.ConfigIni.SendDiscordPlayingInformation ? TJAPlayer3.DTX[0].TITLE + ".tja" : "",
+                Properties.Discord.Stage_InGame + (TJAPlayer3.ConfigIni.bAutoPlay[0] == true ? " (" + Properties.Discord.Info_IsAuto + ")" : ""),
                 0,
-                Discord.GetUnixTime() + (long)TJAPlayer3.DTX.listChip[TJAPlayer3.DTX.listChip.Count - 1].n発声時刻ms / 1000,
+                Discord.GetUnixTime() + (long)TJAPlayer3.DTX[0].listChip[TJAPlayer3.DTX[0].listChip.Count - 1].n発声時刻ms / 1000,
                 TJAPlayer3.ConfigIni.SendDiscordPlayingInformation ? difficultyName.ToLower() : "",
                 TJAPlayer3.ConfigIni.SendDiscordPlayingInformation ? String.Format("COURSE:{0} ({1})", difficultyName, TJAPlayer3.stage選曲.nSeelectedCource[0]) : "");
         }
@@ -399,10 +399,10 @@ namespace TJAPlayer3
 				if ( ( ( TJAPlayer3.ConfigIni.nRisky != 0 && this.actGauge.IsFailed( E楽器パート.TAIKO ) ) || this.actGame.st叩ききりまショー.ct残り時間.b終了値に達した ) && ( base.eフェーズID == CStage.Eフェーズ.共通_通常状態 ) )
 				{
 					this.actStageFailed.Start();
-					TJAPlayer3.DTX.t全チップの再生停止();
+					TJAPlayer3.DTX[0].t全チップの再生停止();
 					base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_FAILED;
 				}
-                if( !String.IsNullOrEmpty( TJAPlayer3.DTX.strBGIMAGE_PATH ) || ( TJAPlayer3.DTX.listAVI.Count == 0 ) ) //背景動画があったら背景画像を描画しない。
+                if( !String.IsNullOrEmpty( TJAPlayer3.DTX[0].strBGIMAGE_PATH ) || ( TJAPlayer3.DTX[0].listAVI.Count == 0 ) ) //背景動画があったら背景画像を描画しない。
                 {
 				    this.t進行描画_背景();
                 }
@@ -783,13 +783,13 @@ namespace TJAPlayer3
 			return true;
 		}
 
-		protected override void ドラムスクロール速度アップ()
+		protected override void ドラムスクロール速度アップ(int nPlayer)
 		{
-			TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums = Math.Min( TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums + 1, 1999 );
+			TJAPlayer3.ConfigIni.n譜面スクロール速度[nPlayer].Drums = Math.Min( TJAPlayer3.ConfigIni.n譜面スクロール速度[nPlayer].Drums + 1, 1999 );
 		}
-		protected override void ドラムスクロール速度ダウン()
-		{
-			TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums = Math.Max( TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums - 1, 0 );
+		protected override void ドラムスクロール速度ダウン(int nPlayer)
+        {
+			TJAPlayer3.ConfigIni.n譜面スクロール速度[nPlayer].Drums = Math.Max( TJAPlayer3.ConfigIni.n譜面スクロール速度[nPlayer].Drums - 1, 0 );
 		}
 
 	
@@ -1287,8 +1287,8 @@ namespace TJAPlayer3
 			Rectangle bgrect = new Rectangle( 0, 0, 1280, 720 );
 			string DefaultBgFilename = @"Graphics\5_Game\5_Background\0\Background.png";
 			string BgFilename = "";
-            if( !String.IsNullOrEmpty( TJAPlayer3.DTX.strBGIMAGE_PATH ) )
-                BgFilename = TJAPlayer3.DTX.strBGIMAGE_PATH;
+            if( !String.IsNullOrEmpty( TJAPlayer3.DTX[0].strBGIMAGE_PATH ) )
+                BgFilename = TJAPlayer3.DTX[0].strBGIMAGE_PATH;
 			base.t背景テクスチャの生成( DefaultBgFilename, bgrect, BgFilename );
 		}
 		protected override void t進行描画_チップ_Taiko( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, int nPlayer )
@@ -1304,19 +1304,7 @@ namespace TJAPlayer3
                     if ((!pChip.bHit) && (pChip.n発声時刻ms <= nPlayTime))
                     {
                         bool bAutoPlay = false;
-                        switch (nPlayer)
-                        {
-                            case 0:
-                                bAutoPlay = TJAPlayer3.ConfigIni.b太鼓パートAutoPlay;
-                                break;
-                            case 1:
-                                bAutoPlay = TJAPlayer3.ConfigIni.b太鼓パートAutoPlay2P;
-                                break;
-                            case 2:
-                            case 3:
-                                bAutoPlay = true;
-                                break;
-                        }
+                        bAutoPlay = configIni.bAutoPlay[nPlayer];
 
                         if (bAutoPlay)
                         {
@@ -1362,7 +1350,7 @@ namespace TJAPlayer3
 
                     if ( pChip.nノーツ移動開始時刻ms != 0 && ( nPlayTime < pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) )
                     {
-                        x = (int)( ( ( ( pChip.n発声時刻ms ) - ( pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.5 ) ) / 628.7 );
+                        x = (int)( ( ( ( pChip.n発声時刻ms ) - ( pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度[nPlayer].Drums + 1.5 ) ) / 628.7 );
                     }
                     else
                     {
@@ -1421,7 +1409,7 @@ namespace TJAPlayer3
                     #endregion
 
                     #region[ HIDSUD & STEALTH ]
-                    if( TJAPlayer3.ConfigIni.eSTEALTH == Eステルスモード.STEALTH )
+                    if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] == Eステルスモード.STEALTH )
                     {
                         pChip.bShow = false;
                     }
@@ -1431,7 +1419,7 @@ namespace TJAPlayer3
                     {
                         y = TJAPlayer3.Skin.nScrollFieldY[ nPlayer ];
                         if( TJAPlayer3.ConfigIni.eScrollMode == EScrollMode.Normal )
-                            y += (int) ( ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * pChip.dbBPM * pChip.dbSCROLL_Y * ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.5 ) ) / 628.7 );
+                            y += (int) ( ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * pChip.dbBPM * pChip.dbSCROLL_Y * ( this.act譜面スクロール速度.db現在の譜面スクロール速度[nPlayer].Drums + 1.5 ) ) / 628.7 );
                         else if( TJAPlayer3.ConfigIni.eScrollMode == EScrollMode.BMSCROLL || TJAPlayer3.ConfigIni.eScrollMode == EScrollMode.HBSCROLL )
                             y += pChip.nバーからの距離dot.Taiko;
                     }
@@ -1525,7 +1513,7 @@ namespace TJAPlayer3
 
                                     if( TJAPlayer3.Tx.Notes != null )
                                     {
-                                        if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                                        if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                                             TJAPlayer3.Tx.Notes.t2D描画( device, x, y, new Rectangle( 130, num9, 130, 130 ) );
                                         TJAPlayer3.Tx.SENotes.t2D描画( device, x - 2, y + nSenotesY, new Rectangle( 0, 30 * pChip.nSenote, 136, 30 ) );
                                         //CDTXMania.act文字コンソール.tPrint( x + 60, y + 140, C文字コンソール.Eフォント種別.白, pChip.nSenote.ToString() );
@@ -1535,7 +1523,7 @@ namespace TJAPlayer3
                                 case 0x12:
                                     if( TJAPlayer3.Tx.Notes != null )
                                     {
-                                        if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                                        if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                                             TJAPlayer3.Tx.Notes.t2D描画( device, x, y, new Rectangle( 260, num9, 130, 130) );
                                         TJAPlayer3.Tx.SENotes.t2D描画( device, x - 2, y + nSenotesY, new Rectangle( 0, 30 * pChip.nSenote, 136, 30 ) );
                                         //CDTXMania.act文字コンソール.tPrint( x + 60, y + 140, C文字コンソール.Eフォント種別.白, pChip.nSenote.ToString() );
@@ -1546,7 +1534,7 @@ namespace TJAPlayer3
                                 case 0x13:
                                     if( TJAPlayer3.Tx.Notes != null )
                                     {
-                                        if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                                        if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                                         {
                                             TJAPlayer3.Tx.Notes.t2D描画( device, x, y, new Rectangle( 390, num9, 130, 130 ) );
                                             //CDTXMania.Tx.Notes.t3D描画( device, mat, new Rectangle( 390, num9, 130, 130 ) );
@@ -1559,7 +1547,7 @@ namespace TJAPlayer3
                                 case 0x14:
                                     if( TJAPlayer3.Tx.Notes != null )
                                     {
-                                        if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                                        if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                                             TJAPlayer3.Tx.Notes.t2D描画( device, x, y, new Rectangle( 520, num9, 130, 130 ) );
                                         TJAPlayer3.Tx.SENotes.t2D描画( device, x - 2, y + nSenotesY, new Rectangle( 0, 30 * pChip.nSenote, 136, 30 ) );
                                         //CDTXMania.act文字コンソール.tPrint( x + 60, y + 140, C文字コンソール.Eフォント種別.白, pChip.nSenote.ToString() );
@@ -1570,7 +1558,7 @@ namespace TJAPlayer3
                                 case 0x1A:
                                     if( TJAPlayer3.Tx.Notes != null )
                                     {
-                                        if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                                        if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                                         {
                                             if( nPlayer == 0 )
                                             {
@@ -1592,7 +1580,7 @@ namespace TJAPlayer3
                                 case 0x1B:
                                     if( TJAPlayer3.Tx.Notes != null )
                                     {
-                                        if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                                        if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                                         {
                                             if( nPlayer == 0 )
                                             {
@@ -1653,8 +1641,8 @@ namespace TJAPlayer3
 
                     if( pChip.nノーツ移動開始時刻ms != 0 && ( CSound管理.rc演奏用タイマ.n現在時刻ms < pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) )
                     {
-                        nノート座標 = (int)( ( ( ( pChip.n発声時刻ms ) - ( pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.5 ) ) / 628.7 );
-                        nノート末端座標 = (int)( ( ( pChip.nノーツ終了時刻ms - ( pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.5 ) ) / 628.7 );
+                        nノート座標 = (int)( ( ( ( pChip.n発声時刻ms ) - ( pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度[nPlayer].Drums + 1.5 ) ) / 628.7 );
+                        nノート末端座標 = (int)( ( ( pChip.nノーツ終了時刻ms - ( pChip.n発声時刻ms - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度[nPlayer].Drums + 1.5 ) ) / 628.7 );
                     }
                     else
                     {
@@ -1683,7 +1671,7 @@ namespace TJAPlayer3
                     //そうしなければ連打先頭と連打末端の移動開始時刻にズレが出てしまう。
                     if( pChip.nノーツ移動開始時刻ms != 0 && ( CSound管理.rc演奏用タイマ.n現在時刻ms < n先頭発声位置 - pChip.nノーツ移動開始時刻ms ) )
                     {
-                        nノート座標 = (int)( ( ( pChip.n発声時刻ms - ( n先頭発声位置 - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.5 ) ) / 628.7 );
+                        nノート座標 = (int)( ( ( pChip.n発声時刻ms - ( n先頭発声位置 - pChip.nノーツ移動開始時刻ms ) ) * pChip.dbBPM * pChip.dbSCROLL * ( this.act譜面スクロール速度.db現在の譜面スクロール速度[nPlayer].Drums + 1.5 ) ) / 628.7 );
                     }
                     else
                     {
@@ -1731,7 +1719,7 @@ namespace TJAPlayer3
                 }
 
                 #region[ HIDSUD & STEALTH ]
-                if( TJAPlayer3.ConfigIni.eSTEALTH == Eステルスモード.STEALTH )
+                if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] == Eステルスモード.STEALTH )
                 {
                     pChip.bShow = false;
                 }
@@ -1842,7 +1830,7 @@ namespace TJAPlayer3
                         if ( pChip.nチャンネル番号 == 0x15 ) //連打(小)
                         {
                             int index = x末端 - x; //連打の距離
-                            if ( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                            if ( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                             {
                                 #region[末端をテクスチャ側で中央に持ってくる場合の方式]
 
@@ -1884,7 +1872,7 @@ namespace TJAPlayer3
                         {
                             int index = x末端 - x; //連打の距離
 
-                            if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                            if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                             {
                                 #region[末端をテクスチャ側で中央に持ってくる場合の方式]
 
@@ -1928,7 +1916,7 @@ namespace TJAPlayer3
                         {
                             if( pChip.n発声時刻ms < CSound管理.rc演奏用タイマ.n現在時刻ms && pChip.nノーツ終了時刻ms > CSound管理.rc演奏用タイマ.n現在時刻ms )
                                 x = 349;
-                            if( TJAPlayer3.ConfigIni.eSTEALTH != Eステルスモード.DORON )
+                            if( TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] != Eステルスモード.DORON )
                                 TJAPlayer3.Tx.Notes.t2D描画( TJAPlayer3.app.Device, x, y, new Rectangle( 1430, num9, 260, 130 ) );
 
                             TJAPlayer3.Tx.SENotes.t2D描画(TJAPlayer3.app.Device, x - 2, y + nSenotesY, new Rectangle(0, 30 * pChip.nSenote, 136, 30));
@@ -1970,7 +1958,7 @@ namespace TJAPlayer3
             if( pChip.n発声時刻ms < CSound管理.rc演奏用タイマ.n現在時刻ms && pChip.nノーツ終了時刻ms > CSound管理.rc演奏用タイマ.n現在時刻ms )
             {
                 //時間内でかつ0x9Aじゃないならならヒット処理
-                if( pChip.nチャンネル番号 != 0x18 && ( nPlayer == 0 ? TJAPlayer3.ConfigIni.b太鼓パートAutoPlay : TJAPlayer3.ConfigIni.b太鼓パートAutoPlay2P ) )
+                if( pChip.nチャンネル番号 != 0x18 && ( nPlayer == 0 ? TJAPlayer3.ConfigIni.bAutoPlay[0] : TJAPlayer3.ConfigIni.bAutoPlay[1]) )
                     this.tチップのヒット処理( pChip.n発声時刻ms, pChip, E楽器パート.TAIKO, false, 0, nPlayer );
             }
             #endregion
@@ -1999,7 +1987,7 @@ namespace TJAPlayer3
             if( pChip.dbSCROLL_Y != 0.0 )
             {
                 y = TJAPlayer3.Skin.nScrollFieldY[ nPlayer ];
-                y += (int) ( ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * pChip.dbBPM * pChip.dbSCROLL_Y * ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.5 ) ) / 628.7 );
+                y += (int) ( ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * pChip.dbBPM * pChip.dbSCROLL_Y * ( this.act譜面スクロール速度.db現在の譜面スクロール速度[nPlayer].Drums + 1.5 ) ) / 628.7 );
             }
 
 			if ( !pChip.bHit && pChip.n発声時刻ms > CSound管理.rc演奏用タイマ.n現在時刻 )
@@ -2109,64 +2097,64 @@ namespace TJAPlayer3
             int n次回分岐までの小節数 = 0;
             string strNext = "BRANCH END";
 
-            if( ( this.n分岐した回数[ 0 ] < TJAPlayer3.DTX.listBRANCH.Count ) && TJAPlayer3.ConfigIni.bBranchGuide && !TJAPlayer3.ConfigIni.b太鼓パートAutoPlay )
+            if ((this.n分岐した回数[0] < TJAPlayer3.DTX[0].listBRANCH.Count) && TJAPlayer3.ConfigIni.bBranchGuide && !TJAPlayer3.ConfigIni.bAutoPlay[0])
             {
                 f現在の精度 = 0;
-                n種類 = TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n分岐の種類;
+                n種類 = TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n分岐の種類;
                 strNext = "NORMAL";
-                n次回分岐までの小節数 = ( TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n現在の小節 - 2 ) - TJAPlayer3.stage演奏ドラム画面.actPlayInfo.n小節番号;
+                n次回分岐までの小節数 = (TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n現在の小節 - 2) - TJAPlayer3.stage演奏ドラム画面.actPlayInfo.n小節番号;
 
-                if( TJAPlayer3.stage演奏ドラム画面.actPlayInfo.n小節番号 < 0 )
+                if (TJAPlayer3.stage演奏ドラム画面.actPlayInfo.n小節番号 < 0)
                 {
-                    n次回分岐までの小節数 = TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n現在の小節 - 2;
+                    n次回分岐までの小節数 = TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n現在の小節 - 2;
                 }
 
-                if( ( this.nBranch_Perfect[ 0 ] + this.nBranch_Good[ 0 ] + this.nBranch_Miss[ 0 ] ) != 0 )
+                if ((this.nBranch_Perfect[0] + this.nBranch_Good[0] + this.nBranch_Miss[0]) != 0)
                 {
-                    f現在の精度 = ( (float)this.nBranch_Perfect[ 0 ] / (float)( this.nBranch_Perfect[ 0 ] + this.nBranch_Good[ 0 ] + this.nBranch_Miss[ 0 ] ) ) * 100.0f;
+                    f現在の精度 = ((float)this.nBranch_Perfect[0] / (float)(this.nBranch_Perfect[0] + this.nBranch_Good[0] + this.nBranch_Miss[0])) * 100.0f;
                 }
 
-                if( n種類 == 0 )
+                if (n種類 == 0)
                 {
-                    if( f現在の精度 < TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値A )
+                    if (f現在の精度 < TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値A)
                     {
                         strNext = "NORMAL";
                     }
-                    else if( f現在の精度 >= TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値A && f現在の精度 < TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値B )
+                    else if (f現在の精度 >= TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値A && f現在の精度 < TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値B)
                     {
                         strNext = "EXPERT";
                     }
-                    else if( f現在の精度 >= TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値B )
+                    else if (f現在の精度 >= TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値B)
                     {
                         strNext = "MASTER";
                     }
 
-                    TJAPlayer3.act文字コンソール.tPrint( 0, 128, C文字コンソール.Eフォント種別.白, f現在の精度.ToString() );
+                    TJAPlayer3.act文字コンソール.tPrint(0, 128, C文字コンソール.Eフォント種別.白, f現在の精度.ToString());
                 }
-                if( n種類 == 1 )
+                if (n種類 == 1)
                 {
-                    if( this.nBranch_roll[ 0 ] < TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値A )
+                    if (this.nBranch_roll[0] < TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値A)
                     {
                         strNext = "NORMAL";
                     }
-                    else if( this.nBranch_roll[ 0 ] >= TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値A && this.nBranch_roll[ 0 ] < TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値B )
+                    else if (this.nBranch_roll[0] >= TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値A && this.nBranch_roll[0] < TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値B)
                     {
                         strNext = "EXPERT";
                     }
-                    else if( this.nBranch_roll[ 0 ] >= TJAPlayer3.DTX.listBRANCH[this.n分岐した回数[ 0 ]].n条件数値B )
+                    else if (this.nBranch_roll[0] >= TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値B)
                     {
                         strNext = "MASTER";
                     }
 
-                    TJAPlayer3.act文字コンソール.tPrint( 0, 128, C文字コンソール.Eフォント種別.白, this.nBranch_roll.ToString() );
+                    TJAPlayer3.act文字コンソール.tPrint(0, 128, C文字コンソール.Eフォント種別.白, this.nBranch_roll.ToString());
                 }
 
 
-                TJAPlayer3.act文字コンソール.tPrint( 0, 160, C文字コンソール.Eフォント種別.白, string.Format( "NEXT BRANCH:{0:##0}", n次回分岐までの小節数.ToString() ) );
-                TJAPlayer3.act文字コンソール.tPrint( 0, 362, C文字コンソール.Eフォント種別.白, string.Format( "NEXT BRANCH INFO:{0:##0} , {1:##0}", TJAPlayer3.DTX.listBRANCH[ this.n分岐した回数[ 0 ] ].n条件数値A.ToString(), TJAPlayer3.DTX.listBRANCH[ this.n分岐した回数[ 0 ] ].n条件数値B.ToString() ) );
-                TJAPlayer3.act文字コンソール.tPrint( 0, 144, C文字コンソール.Eフォント種別.白, strNext.ToString() );
+                TJAPlayer3.act文字コンソール.tPrint(0, 160, C文字コンソール.Eフォント種別.白, string.Format("NEXT BRANCH:{0:##0}", n次回分岐までの小節数.ToString()));
+                TJAPlayer3.act文字コンソール.tPrint(0, 362, C文字コンソール.Eフォント種別.白, string.Format("NEXT BRANCH INFO:{0:##0} , {1:##0}", TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値A.ToString(), TJAPlayer3.DTX[0].listBRANCH[this.n分岐した回数[0]].n条件数値B.ToString()));
+                TJAPlayer3.act文字コンソール.tPrint(0, 144, C文字コンソール.Eフォント種別.白, strNext.ToString());
             }
-            else if( ( this.n分岐した回数[ 0 ] >= TJAPlayer3.DTX.listBRANCH.Count ) && TJAPlayer3.ConfigIni.bBranchGuide && !TJAPlayer3.ConfigIni.b太鼓パートAutoPlay  )
+            else if ((this.n分岐した回数[0] >= TJAPlayer3.DTX[0].listBRANCH.Count) && TJAPlayer3.ConfigIni.bBranchGuide && !TJAPlayer3.ConfigIni.bAutoPlay[0])
             {
                 TJAPlayer3.act文字コンソール.tPrint( 0, 144, C文字コンソール.Eフォント種別.白, strNext.ToString() );
             }
@@ -2204,11 +2192,11 @@ namespace TJAPlayer3
 
                     CSound管理.rc演奏用タイマ.t一時停止();
 	    			TJAPlayer3.Timer.t一時停止();
-	                TJAPlayer3.DTX.t全チップの再生一時停止();
+	                TJAPlayer3.DTX[0].t全チップの再生一時停止();
                     this.actAVI.tPauseControl();
 
                     this.bPAUSE = true;
-                    this.actPauseMenu.tActivatePopupMenu( E楽器パート.DRUMS );
+                    this.actPauseMenu.tActivatePopupMenu(E楽器パート.DRUMS, 0);
                 }
 
             }
@@ -2236,7 +2224,7 @@ namespace TJAPlayer3
 
         private void t進行描画_リアルタイム判定数表示()
         {
-            if( TJAPlayer3.ConfigIni.nPlayerCount == 1 ? ( TJAPlayer3.ConfigIni.bJudgeCountDisplay && !TJAPlayer3.ConfigIni.b太鼓パートAutoPlay ) : false )
+            if( TJAPlayer3.ConfigIni.nPlayerCount == 1 ? ( TJAPlayer3.ConfigIni.bJudgeCountDisplay && !TJAPlayer3.ConfigIni.bAutoPlay[0]) : false )
             {
                 //ボードの横幅は333px
                 //数字フォントの小さいほうはリザルトのものと同じ。

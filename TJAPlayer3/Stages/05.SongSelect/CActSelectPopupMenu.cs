@@ -39,7 +39,7 @@ namespace TJAPlayer3
 			get;
 			private set;
 		}
-		public virtual void tActivatePopupMenu( E楽器パート einst )
+        public virtual void tActivatePopupMenu(E楽器パート einst, int nPlayer)
 		{
 			nItemSelecting = -1;		// #24757 2011.4.1 yyagi: Clear sorting status in each stating menu.
 			this.eInst = einst;
@@ -343,9 +343,9 @@ namespace TJAPlayer3
 					}
                     TJAPlayer3.Tx.Menu_Highlight.t2D描画( TJAPlayer3.app.Device, curX, curY, new Rectangle( 0x10, 0, 16, 32 ) );
 				}
-				#endregion
-				#region [ ソート候補文字列描画 ]
-				for ( int i = 0; i < lciMenuItems.Length; i++ )
+                #endregion
+                #region [ ソート候補文字列描画 ]
+                for (int i = 0; i < lciMenuItems.Length; i++)
 				{
 					bool bItemBold = ( i == nItemSelecting && !bShowAllItems ) ? true : false;
 					//font.t文字列描画( 190, 80 + i * 32, lciMenuItems[ i ].cItem.str項目名, bItemBold, 1.0f );
@@ -373,7 +373,6 @@ namespace TJAPlayer3
                                     s = "x" + d.ToString("0.0");
                                 }
                                 break;
-
                             default:
                                 s = lciMenuItems[i].cItem.obj現在値().ToString();
                                 break;

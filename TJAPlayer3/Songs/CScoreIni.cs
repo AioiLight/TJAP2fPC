@@ -162,7 +162,6 @@ namespace TJAPlayer3
 		}
 		public class C演奏記録
 		{
-			public STAUTOPLAY bAutoPlay;
 			public bool bDrums有効;
 			public bool bGuitar有効;
 			public STDGBVALUE<bool> bHidden;
@@ -218,27 +217,6 @@ namespace TJAPlayer3
 
 			public C演奏記録()
 			{
-				this.bAutoPlay = new STAUTOPLAY();
-				this.bAutoPlay.LC = false;
-				this.bAutoPlay.HH = false;
-				this.bAutoPlay.SD = false;
-				this.bAutoPlay.BD = false;
-				this.bAutoPlay.HT = false;
-				this.bAutoPlay.LT = false;
-				this.bAutoPlay.FT = false;
-				this.bAutoPlay.CY = false;
-				this.bAutoPlay.Guitar = false;
-				this.bAutoPlay.Bass = false;
-				this.bAutoPlay.GtR = false;
-				this.bAutoPlay.GtG = false;
-				this.bAutoPlay.GtB = false;
-				this.bAutoPlay.GtPick = false;
-				this.bAutoPlay.GtW = false;
-				this.bAutoPlay.BsR = false;
-				this.bAutoPlay.BsG = false;
-				this.bAutoPlay.BsB = false;
-				this.bAutoPlay.BsPick = false;
-				this.bAutoPlay.BsW = false;
 
 				this.bSudden = new STDGBVALUE<bool>();
 				this.bSudden.Drums = false;
@@ -845,17 +823,6 @@ namespace TJAPlayer3
 							{
 								c演奏記録.n全チップ数 = int.Parse( para );
 							}
-							else if( item.Equals( "AutoPlay" ) )
-							{
-								// LCなし               LCあり               CYとRDが別           Gt/Bs autolane/pick
-								if( para.Length == 9 || para.Length == 10 || para.Length == 11 || para.Length == 21 )
-								{
-									for( int i = 0; i < para.Length; i++ )
-									{
-										c演奏記録.bAutoPlay[ i ] = this.ONorOFF( para[ i ] );
-									}
-								}
-							}
 							else if ( item.Equals( "Risky" ) )
 							{
 								c演奏記録.nRisky = int.Parse( para );
@@ -1235,11 +1202,6 @@ namespace TJAPlayer3
 				writer.WriteLine( "Miss={0}", this.stセクション[ i ].nMiss数 );
 				writer.WriteLine( "MaxCombo={0}", this.stセクション[ i ].n最大コンボ数 );
 				writer.WriteLine( "TotalChips={0}", this.stセクション[ i ].n全チップ数 );
-				writer.Write( "AutoPlay=" );
-				for ( int j = 0; j < (int) Eレーン.MAX; j++ )
-				{
-					writer.Write( this.stセクション[ i ].bAutoPlay[ j ] ? 1 : 0 );
-				}
 				writer.WriteLine();
 				writer.WriteLine( "Risky={0}", this.stセクション[ i ].nRisky );
 				writer.WriteLine( "SuddenDrums={0}", this.stセクション[ i ].bSudden.Drums ? 1 : 0 );
@@ -1350,18 +1312,18 @@ namespace TJAPlayer3
 			}
 			return (int)ERANK.E;
 		}
-		internal static double tゲーム型スキルを計算して返す( int nLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay )
+		internal static double tゲーム型スキルを計算して返す( int nLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst )
 		{
 			double ret;
 			if( ( nTotal == 0 ) || ( ( nPerfect == 0 ) && ( nCombo == 0 ) ) )
 				ret = 0.0;
 
 			ret = ( ( nLevel * ( ( nPerfect * 0.8 + nCombo * 0.2 ) / ( (double) nTotal ) ) ) / 2.0 );
-			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
+			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst );
 
 			return ret;
 		}
-		internal static double t演奏型スキルを計算して返す( int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, E楽器パート inst, STAUTOPLAY bAutoPlay)
+		internal static double t演奏型スキルを計算して返す( int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, E楽器パート inst)
 		{
 			if( nTotal == 0 )
 				return 0.0;
@@ -1370,10 +1332,10 @@ namespace TJAPlayer3
 			double y = ( ( nPerfect * 1.0 + nGreat * 0.8 + nGood * 0.5 + nPoor * 0.2 + nMiss * 0.0 + nAuto * 0.0 ) * 100.0 ) / ( (double) nTotal );
 			double ret = ( 100.0 * ( ( Math.Pow( 1.03, y ) - 1.0 ) / ( Math.Pow( 1.03, 100.0 ) - 1.0 ) ) );
 
-			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
+			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst );
 			return ret;
 		}
-		internal static double dbCalcReviseValForDrGtBsAutoLanes( E楽器パート inst, STAUTOPLAY bAutoPlay )
+		internal static double dbCalcReviseValForDrGtBsAutoLanes( E楽器パート inst )
 		{
             //削除
 			return 1.0;
@@ -1427,8 +1389,6 @@ namespace TJAPlayer3
 			builder.Append( cc.nMiss数 );
 			builder.Append( cc.n最大コンボ数 );
 			builder.Append( cc.n全チップ数 );
-			for( int i = 0; i < 10; i++ )
-				builder.Append( boolToChar( cc.bAutoPlay[ i ] ) );
 			builder.Append( boolToChar( cc.bTight ) );
 			builder.Append( boolToChar( cc.bSudden.Drums ) );
 			builder.Append( boolToChar( cc.bSudden.Guitar ) );
@@ -1481,7 +1441,7 @@ namespace TJAPlayer3
 		}
 		internal static void t更新条件を取得する( out bool bDrumsを更新する, out bool bGuitarを更新する, out bool bBassを更新する )
 		{
-            bDrumsを更新する = !TJAPlayer3.ConfigIni.b太鼓パートAutoPlay;
+            bDrumsを更新する = !TJAPlayer3.ConfigIni.bAutoPlay[0];
 			bGuitarを更新する = false;
 			bBassを更新する =   false;
 		}

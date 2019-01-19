@@ -145,7 +145,7 @@ namespace TJAPlayer3
 		}
 		public void SkipStart( int n移動開始時刻ms )
 		{
-			foreach ( CDTX.CChip chip in TJAPlayer3.DTX.listChip )
+			foreach ( CDTX.CChip chip in TJAPlayer3.DTX[0].listChip )
 			{
 				if ( chip.n発声時刻ms > n移動開始時刻ms )
 				{

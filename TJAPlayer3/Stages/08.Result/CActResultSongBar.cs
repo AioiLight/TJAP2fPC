@@ -48,7 +48,7 @@ namespace TJAPlayer3
 
 		    var title = TJAPlayer3.IsPerformingCalibration
 		        ? $"Calibration complete. InputAdjustTime is now {TJAPlayer3.ConfigIni.nInputAdjustTimeMs}ms"
-		        : TJAPlayer3.DTX.TITLE;
+		        : TJAPlayer3.DTX[0].TITLE;
 
 		    using (var bmpSongTitle = pfMusicName.DrawPrivateFont(title, TJAPlayer3.Skin.Result_MusicName_ForeColor, TJAPlayer3.Skin.Result_MusicName_BackColor))
 

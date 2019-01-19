@@ -48,48 +48,33 @@ namespace TJAPlayer3
 			get; 
 			private set;
 		}
-		public static CDTX DTX
-		{
-			get
-			{
-				return dtx[ 0 ];
-			}
-			set
-			{
-				if( ( dtx[ 0 ] != null ) && ( app != null ) )
-				{
-					dtx[ 0 ].On非活性化();
-					app.listトップレベルActivities.Remove( dtx[ 0 ] );
-				}
-				dtx[ 0 ] = value;
-				if( ( dtx[ 0 ] != null ) && ( app != null ) )
-				{
-					app.listトップレベルActivities.Add( dtx[ 0 ] );
-				}
-			}
-		}
-		public static CDTX DTX_2P
-		{
-			get
-			{
-				return dtx[ 1 ];
-			}
-			set
-			{
-				if( ( dtx[ 1 ] != null ) && ( app != null ) )
-				{
-					dtx[ 1 ].On非活性化();
-					app.listトップレベルActivities.Remove( dtx[ 1 ] );
-				}
-				dtx[ 1 ] = value;
-				if( ( dtx[ 1 ] != null ) && ( app != null ) )
-				{
-					app.listトップレベルActivities.Add( dtx[ 1 ] );
-				}
-			}
-		}
-
-	    public static bool IsPerformingCalibration;
+        public static CDTX[] DTX
+        {
+            get
+            {
+                return dtx;
+            }
+            set
+            {
+                for (int nPlayer = 0; nPlayer < 2; nPlayer++)
+                {
+                    if ((dtx[nPlayer] != null) && (app != null))
+                    {
+                        dtx[nPlayer].On非活性化();
+                        app.listトップレベルActivities.Remove(dtx[nPlayer]);
+                    }
+                }
+                dtx = value;
+                for (int nPlayer = 0; nPlayer < 2; nPlayer++)
+                {
+                    if ((dtx[nPlayer] != null) && (app != null))
+                    {
+                        app.listトップレベルActivities.Add(dtx[nPlayer]);
+                    }
+                }
+            }
+        }
+        public static bool IsPerformingCalibration;
 
 		public static CFPS FPS
 		{ 
@@ -1099,9 +1084,9 @@ namespace TJAPlayer3
 							#region [ ESC押下時は、曲の読み込みを中止して選曲画面に戻る ]
 							if ( this.n進行描画の戻り値 == (int) E曲読込画面の戻り値.読込中止 )
 							{
-								//DTX.t全チップの再生停止();
-								if( DTX != null )
-                                    DTX.On非活性化();
+                                //DTX.t全チップの再生停止();
+                                if (DTX[0] != null)
+                                    DTX[0].On非活性化();
 								Trace.TraceInformation( "曲の読み込みを中止しました。" );
 								this.tガベージコレクションを実行する();
 								Trace.TraceInformation( "----------------------" );
@@ -1234,9 +1219,9 @@ for (int i = 0; i < 3; i++) {
 						switch( this.n進行描画の戻り値 )
 						{
 							case (int) E演奏画面の戻り値.再読込_再演奏:
-								#region [ DTXファイルを再読み込みして、再演奏 ]
-								DTX.t全チップの再生停止();
-								DTX.On非活性化();
+                                #region [ DTXファイルを再読み込みして、再演奏 ]
+                                DTX[0].t全チップの再生停止();
+                                DTX[0].On非活性化();
 								r現在のステージ.On非活性化();
 								stage曲読み込み.On活性化();
 								r直前のステージ = r現在のステージ;
@@ -1293,11 +1278,11 @@ for (int i = 0; i < 3; i++) {
 									pg.plugin.On演奏キャンセル( scoreIni );
 									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
 								}
-								//---------------------
-								#endregion
+                                //---------------------
+                                #endregion
 
-								DTX.t全チップの再生停止();
-								DTX.On非活性化();
+                                DTX[0].t全チップの再生停止();
+                                DTX[0].On非活性化();
 								r現在のステージ.On非活性化();
 								if( bコンパクトモード )
 								{
@@ -1342,11 +1327,11 @@ for (int i = 0; i < 3; i++) {
 									pg.plugin.On演奏失敗( scoreIni );
 									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
 								}
-								//---------------------
-								#endregion
+                                //---------------------
+                                #endregion
 
-								DTX.t全チップの再生停止();
-								DTX.On非活性化();
+                                DTX[0].t全チップの再生停止();
+                                DTX[0].On非活性化();
 								r現在のステージ.On非活性化();
 								if( bコンパクトモード )
 								{
@@ -1469,9 +1454,9 @@ for (int i = 0; i < 3; i++) {
 						//-----------------------------
 						if( this.n進行描画の戻り値 != 0 )
 						{
-							//DTX.t全チップの再生一時停止();
-                            DTX.t全チップの再生停止とミキサーからの削除();
-                            DTX.On非活性化();
+                            //DTX.t全チップの再生一時停止();
+                            DTX[0].t全チップの再生停止とミキサーからの削除();
+                            DTX[0].On非活性化();
 							r現在のステージ.On非活性化();
                             this.tガベージコレクションを実行する();
                             if ( !bコンパクトモード )
@@ -1981,14 +1966,17 @@ for (int i = 0; i < 3; i++) {
 			this.t全画面_ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif
 			actFlushGPU = new CActFlushGPU();
-			//---------------------
-			#endregion
+            //---------------------
+            #endregion
 
-			DTX = null;
+            DTX[0] = null;
+            Trace.WriteLine("null化します");
+            DTX[1] = null;
 
-			#region [ Skin の初期化 ]
-			//---------------------
-			Trace.TraceInformation( "スキンの初期化を行います。" );
+
+            #region [ Skin の初期化 ]
+            //---------------------
+            Trace.TraceInformation( "スキンの初期化を行います。" );
 			Trace.Indent();
 			try
 			{
@@ -2702,13 +2690,13 @@ for (int i = 0; i < 3; i++) {
 		private CScoreIni tScoreIniへBGMAdjustとHistoryとPlayCountを更新(string str新ヒストリ行)
 		{
 			bool bIsUpdatedDrums, bIsUpdatedGuitar, bIsUpdatedBass;
-			string strFilename = DTX.strファイル名の絶対パス + ".score.ini";
+			string strFilename = DTX[0].strファイル名の絶対パス + ".score.ini";
 			CScoreIni ini = new CScoreIni( strFilename );
 			if( !File.Exists( strFilename ) )
 			{
-				ini.stファイル.Title = DTX.TITLE;
-				ini.stファイル.Name = DTX.strファイル名;
-				ini.stファイル.Hash = CScoreIni.tファイルのMD5を求めて返す( DTX.strファイル名の絶対パス );
+				ini.stファイル.Title = DTX[0].TITLE;
+				ini.stファイル.Name = DTX[0].strファイル名;
+				ini.stファイル.Hash = CScoreIni.tファイルのMD5を求めて返す(DTX[0].strファイル名の絶対パス );
 				for( int i = 0; i < 6; i++ )
 				{
 					ini.stセクション[ i ].nPerfectになる範囲ms = nPerfect範囲ms;
@@ -2717,7 +2705,7 @@ for (int i = 0; i < 3; i++) {
 					ini.stセクション[ i ].nPoorになる範囲ms = nPoor範囲ms;
 				}
 			}
-			ini.stファイル.BGMAdjust = DTX.nBGMAdjust;
+			ini.stファイル.BGMAdjust = DTX[0].nBGMAdjust;
 			CScoreIni.t更新条件を取得する( out bIsUpdatedDrums, out bIsUpdatedGuitar, out bIsUpdatedBass );
 			if( bIsUpdatedDrums || bIsUpdatedGuitar || bIsUpdatedBass )
 			{

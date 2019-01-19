@@ -644,7 +644,7 @@ namespace TJAPlayer3
 		public int nウインドウheight;				// #23510 2010.10.31 yyagi add
 		public Dictionary<int, string> dicJoystick;
 		public Eダークモード eDark;
-		public STDGBVALUE<Eランダムモード> eRandom;
+		public STDGBVALUE<Eランダムモード>[] eRandom;
 		public Eダメージレベル eダメージレベル;
         public CKeyAssign KeyAssign;
 		public int n非フォーカス時スリープms;       // #23568 2010.11.04 ikanick add
@@ -721,7 +721,7 @@ namespace TJAPlayer3
 	    }
 
 	    public STDGBVALUE<int> n表示可能な最小コンボ数;
-		public STDGBVALUE<int> n譜面スクロール速度;
+		public STDGBVALUE<int>[] n譜面スクロール速度;
 		public string strDTXManiaのバージョン;
 		public string str曲データ検索パス;
         public string FontName;
@@ -731,8 +731,7 @@ namespace TJAPlayer3
 
 
         public int nPlayerCount; //2017.08.18 kairera0467 マルチプレイ対応
-        public bool b太鼓パートAutoPlay;
-        public bool b太鼓パートAutoPlay2P; //2017.08.16 kairera0467 マルチプレイ対応
+        public bool[] bAutoPlay;
         public bool bAuto先生の連打;
         public bool b大音符判定;
         public int n両手判定の待ち時間;
@@ -753,7 +752,7 @@ namespace TJAPlayer3
         public bool bスクロールモードを上書き = false;
 
         public bool bHispeedRandom;
-        public Eステルスモード eSTEALTH;
+        public Eステルスモード[] eSTEALTH;
         public bool bNoInfo;
 
         public int nDefaultSongSort;
@@ -848,7 +847,6 @@ namespace TJAPlayer3
 		}
 		public int nRisky;						// #23559 2011.6.20 yyagi Riskyでの残ミス数。0で閉店
 		public bool bIsAllowedDoubleClickFullscreen;	// #26752 2011.11.27 yyagi ダブルクリックしてもフルスクリーンに移行しない
-		public STAUTOPLAY bAutoPlay;
 		public int nSoundDeviceType;				// #24820 2012.12.23 yyagi 出力サウンドデバイス(0=ACM(にしたいが設計がきつそうならDirectShow), 1=ASIO, 2=WASAPI)
 		public int nWASAPIBufferSizeMs;				// #24820 2013.1.15 yyagi WASAPIのバッファサイズ
 //		public int nASIOBufferSizeMs;				// #24820 2012.12.28 yyagi ASIOのバッファサイズ
@@ -1228,9 +1226,9 @@ namespace TJAPlayer3
 
         // コンストラクタ
 
-		public CConfigIni()
-		{
-#if false		// #23625 2011.1.11 Config.iniからダメージ/回復値の定数変更を行う場合はここを有効にする 087リリースに合わせ機能無効化
+        public CConfigIni()
+        {
+#if false      // #23625 2011.1.11 Config.iniからダメージ/回復値の定数変更を行う場合はここを有効にする 087リリースに合わせ機能無効化
 			//----------------------------------------
 			this.fGaugeFactor[0,0] =  0.004f;
 			this.fGaugeFactor[0,1] =  0.006f;
@@ -1248,40 +1246,40 @@ namespace TJAPlayer3
 			this.fDamageLevelFactor[2] = 1.5f;
 			//----------------------------------------
 #endif
-			this.strDTXManiaのバージョン = "Unknown";
-			this.str曲データ検索パス = @".\";
-			this.b全画面モード = false;
-			this.b垂直帰線待ちを行う = true;
-			this.n初期ウィンドウ開始位置X = 0; // #30675 2013.02.04 ikanick add
-			this.n初期ウィンドウ開始位置Y = 0;  
-			this.nウインドウwidth = SampleFramework.GameWindowSize.Width;			// #23510 2010.10.31 yyagi add
-			this.nウインドウheight = SampleFramework.GameWindowSize.Height;			// 
-			this.nフレーム毎スリープms = -1;			// #xxxxx 2011.11.27 yyagi add
-			this.n非フォーカス時スリープms = 1;			// #23568 2010.11.04 ikanick add
-			this._bGuitar有効 = true;
-			this._bDrums有効 = true;
-			this.nBGAlpha = 100;
-			this.eダメージレベル = Eダメージレベル.普通;
-			this.bSTAGEFAILED有効 = true;
-			this.bAVI有効 = false;
-			this.bBGA有効 = true;
-			this.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = 1000;
-			this.n曲が選択されてからプレビュー画像が表示開始されるまでのウェイトms = 100;
-			//this.bWave再生位置自動調整機能有効 = true;
-			this.bWave再生位置自動調整機能有効 = false;
-			this.bBGM音を発声する = true;
-			this.bScoreIniを出力する = true;
-			this.bランダムセレクトを使用する = true;
-			this.bランダムセレクトで子BOXを検索対象とする = true;
-			this.n表示可能な最小コンボ数 = new STDGBVALUE<int>();
-			this.n表示可能な最小コンボ数.Drums = 3;
-			this.n表示可能な最小コンボ数.Guitar = 2;
-			this.n表示可能な最小コンボ数.Bass = 2;
-			this.n表示可能な最小コンボ数.Taiko = 3;
+            this.strDTXManiaのバージョン = "Unknown";
+            this.str曲データ検索パス = @".\";
+            this.b全画面モード = false;
+            this.b垂直帰線待ちを行う = true;
+            this.n初期ウィンドウ開始位置X = 0; // #30675 2013.02.04 ikanick add
+            this.n初期ウィンドウ開始位置Y = 0;
+            this.nウインドウwidth = SampleFramework.GameWindowSize.Width;            // #23510 2010.10.31 yyagi add
+            this.nウインドウheight = SampleFramework.GameWindowSize.Height;          // 
+            this.nフレーム毎スリープms = -1;         // #xxxxx 2011.11.27 yyagi add
+            this.n非フォーカス時スリープms = 1;            // #23568 2010.11.04 ikanick add
+            this._bGuitar有効 = true;
+            this._bDrums有効 = true;
+            this.nBGAlpha = 100;
+            this.eダメージレベル = Eダメージレベル.普通;
+            this.bSTAGEFAILED有効 = true;
+            this.bAVI有効 = false;
+            this.bBGA有効 = true;
+            this.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = 1000;
+            this.n曲が選択されてからプレビュー画像が表示開始されるまでのウェイトms = 100;
+            //this.bWave再生位置自動調整機能有効 = true;
+            this.bWave再生位置自動調整機能有効 = false;
+            this.bBGM音を発声する = true;
+            this.bScoreIniを出力する = true;
+            this.bランダムセレクトを使用する = true;
+            this.bランダムセレクトで子BOXを検索対象とする = true;
+            this.n表示可能な最小コンボ数 = new STDGBVALUE<int>();
+            this.n表示可能な最小コンボ数.Drums = 3;
+            this.n表示可能な最小コンボ数.Guitar = 2;
+            this.n表示可能な最小コンボ数.Bass = 2;
+            this.n表示可能な最小コンボ数.Taiko = 3;
             this.FontName = "MS UI Gothic";
-		    this.ApplyLoudnessMetadata = true;
+            this.ApplyLoudnessMetadata = true;
 
-		    // 2018-08-28 twopointzero:
+            // 2018-08-28 twopointzero:
             // There exists a particular large, well-known, well-curated, and
             // regularly-updated collection of content for use with Taiko no
             // Tatsujin simulators. A statistical analysis was performed on the
@@ -1296,49 +1294,51 @@ namespace TJAPlayer3
             // similar to the exemplar.
             //
             // The target loudness which achieves this is -7.4 LUFS.
-		    this.TargetLoudness = -7.4;
+            this.TargetLoudness = -7.4;
 
-		    this.ApplySongVol = false;
-		    this.SoundEffectLevel = CSound.DefaultSoundEffectLevel;
-		    this.VoiceLevel = CSound.DefaultVoiceLevel;
-		    this.SongPreviewLevel = CSound.DefaultSongPreviewLevel;
-		    this.SongPlaybackLevel = CSound.DefaultSongPlaybackLevel;
-		    this.KeyboardSoundLevelIncrement = DefaultKeyboardSoundLevelIncrement;
-			this.bログ出力 = true;
-			this.bSudden = new STDGBVALUE<bool>();
-			this.bHidden = new STDGBVALUE<bool>();
-			this.bReverse = new STDGBVALUE<bool>();
-			this.eRandom = new STDGBVALUE<Eランダムモード>();
-			this.bLight = new STDGBVALUE<bool>();
-			this.bLeft = new STDGBVALUE<bool>();
-			this.e判定位置 = new STDGBVALUE<E判定位置>();		// #33891 2014.6.26 yyagi
-			this.判定文字表示位置 = new STDGBVALUE<E判定文字表示位置>();
-			this.n譜面スクロール速度 = new STDGBVALUE<int>();
-			this.nInputAdjustTimeMs = 0;
-			this.nJudgeLinePosOffset = new STDGBVALUE<int>();	// #31602 2013.6.23 yyagi
-			this.e判定表示優先度 = E判定表示優先度.Chipより下;
-			for ( int i = 0; i < 3; i++ )
-			{
-				this.bSudden[ i ] = false;
-				this.bHidden[ i ] = false;
-				this.bReverse[ i ] = false;
-				this.eRandom[ i ] = Eランダムモード.OFF;
-				this.bLight[ i ] = false;
-				this.bLeft[ i ] = false;
-				this.判定文字表示位置[ i ] = E判定文字表示位置.レーン上;
-				this.n譜面スクロール速度[ i ] = 1;
-				this.nJudgeLinePosOffset[ i ] = 0;
-				this.eInvisible[ i ] = EInvisible.OFF;
-				this.nViewerScrollSpeed[ i ] = 1;
-				this.e判定位置[ i ] = E判定位置.標準;
-				//this.e判定表示優先度[ i ] = E判定表示優先度.Chipより下;
-			}
-			this.n演奏速度 = 20;
-			#region [ AutoPlay ]
-			this.bAutoPlay = new STAUTOPLAY();
-
-            this.b太鼓パートAutoPlay = true;
-            this.b太鼓パートAutoPlay2P = true;
+            this.ApplySongVol = false;
+            this.SoundEffectLevel = CSound.DefaultSoundEffectLevel;
+            this.VoiceLevel = CSound.DefaultVoiceLevel;
+            this.SongPreviewLevel = CSound.DefaultSongPreviewLevel;
+            this.SongPlaybackLevel = CSound.DefaultSongPlaybackLevel;
+            this.KeyboardSoundLevelIncrement = DefaultKeyboardSoundLevelIncrement;
+            this.bログ出力 = true;
+            this.bSudden = new STDGBVALUE<bool>();
+            this.bHidden = new STDGBVALUE<bool>();
+            this.bReverse = new STDGBVALUE<bool>();
+            this.eRandom = new STDGBVALUE<Eランダムモード>[2];
+            this.bLight = new STDGBVALUE<bool>();
+            this.bLeft = new STDGBVALUE<bool>();
+            this.e判定位置 = new STDGBVALUE<E判定位置>();       // #33891 2014.6.26 yyagi
+            this.判定文字表示位置 = new STDGBVALUE<E判定文字表示位置>();
+            this.n譜面スクロール速度 = new STDGBVALUE<int>[2];
+            this.eSTEALTH = new Eステルスモード[2];
+            this.nInputAdjustTimeMs = 0;
+            this.nJudgeLinePosOffset = new STDGBVALUE<int>();   // #31602 2013.6.23 yyagi
+            this.e判定表示優先度 = E判定表示優先度.Chipより下;
+            for (int i = 0; i < 3; i++)
+            {
+                this.bSudden[i] = false;
+                this.bHidden[i] = false;
+                this.bReverse[i] = false;
+                this.eRandom[0][i] = Eランダムモード.OFF;
+                this.eRandom[1][i] = Eランダムモード.OFF;
+                this.bLight[i] = false;
+                this.bLeft[i] = false;
+                this.判定文字表示位置[i] = E判定文字表示位置.レーン上;
+                this.n譜面スクロール速度[0][i] = 1;
+                this.n譜面スクロール速度[1][i] = 1;
+                this.eSTEALTH[0] = Eステルスモード.OFF;
+                this.eSTEALTH[1] = Eステルスモード.OFF;
+                this.nJudgeLinePosOffset[i] = 0;
+                this.eInvisible[i] = EInvisible.OFF;
+                this.nViewerScrollSpeed[i] = 1;
+                this.e判定位置[i] = E判定位置.標準;
+                //this.e判定表示優先度[ i ] = E判定表示優先度.Chipより下;
+            }
+            this.n演奏速度 = 20;
+            #region [ AutoPlay ]
+            this.bAutoPlay = new bool[] { true, true };
             this.bAuto先生の連打 = true;
 			#endregion
 			this.nヒット範囲ms = new STRANGE();
@@ -1411,7 +1411,6 @@ namespace TJAPlayer3
             ShowMob = true;
             ShowPuchiChara = true;
 
-            this.eSTEALTH = Eステルスモード.OFF;
             this.bNoInfo = false;
             
             //this.bNoMP3Streaming = false;
@@ -1773,8 +1772,8 @@ namespace TJAPlayer3
             sw.WriteLine("[AutoPlay]");
             sw.WriteLine();
             sw.WriteLine("; 自動演奏(0:OFF, 1:ON)");
-            sw.WriteLine("Taiko={0}", this.b太鼓パートAutoPlay ? 1 : 0);
-            sw.WriteLine("Taiko2P={0}", this.b太鼓パートAutoPlay2P ? 1 : 0);
+            sw.WriteLine("Taiko={0}", this.bAutoPlay[0] ? 1 : 0);
+            sw.WriteLine("Taiko2P={0}", this.bAutoPlay[1] ? 1 : 0);
             sw.WriteLine("TaikoAutoRoll={0}", this.bAuto先生の連打 ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine(";-------------------");
@@ -1869,8 +1868,9 @@ namespace TJAPlayer3
 			sw.WriteLine( "DrumsTight={0}", this.bTight ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; ドラム譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
-			sw.WriteLine( "DrumsScrollSpeed={0}", this.n譜面スクロール速度.Drums );
-			sw.WriteLine();
+            sw.WriteLine( "1PDrumsScrollSpeed={0}", this.n譜面スクロール速度[0].Drums);
+            sw.WriteLine( "2PDrumsScrollSpeed={0}", this.n譜面スクロール速度[1].Drums);
+            sw.WriteLine();
 			sw.WriteLine( "; 演奏速度(5～40)(→x5/20～x40/20)" );
 			sw.WriteLine( "PlaySpeed={0}", this.n演奏速度 );
 			sw.WriteLine();
@@ -1906,12 +1906,14 @@ namespace TJAPlayer3
             sw.WriteLine( "0:Path, 1:GenreName(AC8～AC14), 2GenreName(AC15～)" );
             sw.WriteLine( "DefaultSongSort={0}", this.nDefaultSongSort );
             sw.WriteLine();
-            sw.WriteLine( "; RANDOMモード(0:OFF, 1:Random, 2:Mirorr 3:SuperRandom, 4:HyperRandom)" );
-			sw.WriteLine( "TaikoRandom={0}", (int) this.eRandom.Taiko );
-			sw.WriteLine();
-            sw.WriteLine( "; STEALTHモード(0:OFF, 1:ドロン, 2:ステルス)" );
-			sw.WriteLine( "TaikoStealth={0}", (int) this.eSTEALTH );
-			sw.WriteLine();
+            sw.WriteLine( "; RANDOMモード(0:OFF, 1:Random, 2:Mirorr 3:SuperRandom, 4:HyperRandom)");
+            sw.WriteLine( "1PTaikoRandom={0}", (int)this.eRandom[0].Taiko);
+            sw.WriteLine( "2PTaikoRandom={0}", (int)this.eRandom[1].Taiko);
+            sw.WriteLine();
+            sw.WriteLine( "; STEALTHモード(0:OFF, 1:ドロン, 2:ステルス)");
+            sw.WriteLine( "1PTaikoStealth={0}", (int)this.eSTEALTH[0]);
+            sw.WriteLine( "2PTaikoStealth={0}", (int)this.eSTEALTH[1]);
+            sw.WriteLine();
             sw.WriteLine( "; ゲーム(0:OFF, 1:完走!叩ききりまショー!, 2:完走!叩ききりまショー!(激辛) )" );
 			sw.WriteLine( "GameMode={0}", (int) this.eGameMode );
 			sw.WriteLine();
@@ -2486,11 +2488,11 @@ namespace TJAPlayer3
                                     case Eセクション種別.AutoPlay:
                                         if (str3.Equals("Taiko"))
                                         {
-                                            this.b太鼓パートAutoPlay = C変換.bONorOFF(str4[0]);
+                                            this.bAutoPlay[0] = C変換.bONorOFF(str4[0]);
                                         }
                                         else if (str3.Equals("Taiko2P"))
                                         {
-                                            this.b太鼓パートAutoPlay2P = C変換.bONorOFF(str4[0]);
+                                            this.bAutoPlay[1] = C変換.bONorOFF(str4[0]);
                                         }
                                         else if (str3.Equals("TaikoAutoRoll"))
                                         {
@@ -2628,7 +2630,7 @@ namespace TJAPlayer3
 											}
 											else if( str3.Equals( "DrumsScrollSpeed" ) )
 											{
-												this.n譜面スクロール速度.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 0x7cf, this.n譜面スクロール速度.Drums );
+												this.n譜面スクロール速度[0].Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 0x7cf, this.n譜面スクロール速度[0].Drums );
 											}
 											else if( str3.Equals( "PlaySpeed" ) )
 											{
@@ -2690,15 +2692,23 @@ namespace TJAPlayer3
                                             {
                                                 this.nDefaultSongSort = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, this.nDefaultSongSort );
                                             }
-											else if( str3.Equals( "TaikoRandom" ) )
+											else if( str3.Equals( "1PTaikoRandom" ) )
 											{
-												this.eRandom.Taiko = (Eランダムモード) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 4, (int) this.eRandom.Taiko );
+                                                this.eRandom[0].Taiko = (Eランダムモード) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 4, (int) this.eRandom[0].Taiko );
 											}
-											else if( str3.Equals( "TaikoStealth" ) )
+                                            else if (str3.Equals( "2PTaikoRandom" ) )
+                                            {
+                                                this.eRandom[1].Taiko = (Eランダムモード)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.eRandom[1].Taiko);
+                                            }
+                                            else if( str3.Equals( "1PTaikoStealth" ) )
 											{
-												this.eSTEALTH = (Eステルスモード) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.eSTEALTH );
+												this.eSTEALTH[0] = (Eステルスモード) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.eSTEALTH[0] );
 											}
-											else if( str3.Equals( "GameMode" ) )
+                                            else if (str3.Equals( "2PTaikoStealth" ) )
+                                            {
+                                                this.eSTEALTH[1] = (Eステルスモード)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eSTEALTH[1]);
+                                            }
+                                            else if( str3.Equals( "GameMode" ) )
 											{
 												this.eGameMode = (EGame) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.eGameMode );
 											}

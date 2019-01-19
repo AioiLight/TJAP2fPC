@@ -49,11 +49,11 @@ namespace TJAPlayer3
 		}
 
 		// メソッド
-		public override void tActivatePopupMenu( E楽器パート einst )
+		public override void tActivatePopupMenu( E楽器パート einst ,int nPlayer )
 		{
             this.CAct演奏PauseMenuMain();
             this.bやり直しを選択した = false;
-			base.tActivatePopupMenu( einst );
+			base.tActivatePopupMenu( einst , 0 );
 		}
 		//public void tDeativatePopupMenu()
 		//{
@@ -86,7 +86,7 @@ namespace TJAPlayer3
 
                     CSound管理.rc演奏用タイマ.t再開();
 					TJAPlayer3.Timer.t再開();
-					TJAPlayer3.DTX.t全チップの再生再開();
+					TJAPlayer3.DTX[0].t全チップの再生再開();
                     TJAPlayer3.stage演奏ドラム画面.actAVI.tPauseControl();
 
 					this.tDeativatePopupMenu();

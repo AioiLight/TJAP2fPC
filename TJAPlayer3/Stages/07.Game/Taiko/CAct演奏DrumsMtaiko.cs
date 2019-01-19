@@ -143,8 +143,6 @@ namespace TJAPlayer3
 		    }
 
 
-            this.nHS = TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums < 8 ? TJAPlayer3.ConfigIni.n譜面スクロール速度.Drums : 7;
-
             //if(CDTXMania.Tx.Taiko_Frame[ 0 ] != null )
                // CDTXMania.Tx.Taiko_Frame[ 0 ].t2D描画( CDTXMania.app.Device, 0, 184 );
             if(TJAPlayer3.Tx.Taiko_Background[0] != null )
@@ -357,7 +355,7 @@ namespace TJAPlayer3
 
         public void tMtaikoEvent( int nChannel, int nHand, int nPlayer )
         {
-            if( !TJAPlayer3.ConfigIni.b太鼓パートAutoPlay )
+            if( !TJAPlayer3.ConfigIni.bAutoPlay[0])
             {
                 switch( nChannel )
                 {
@@ -455,7 +453,6 @@ namespace TJAPlayer3
         private CTexture txオプションパネル_HS;
         private CTexture txオプションパネル_RANMIR;
         private CTexture txオプションパネル_特殊;
-        private int nHS;
 
         //ネームプレート
         //private CTexture txネームプレート;
