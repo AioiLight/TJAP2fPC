@@ -728,8 +728,7 @@ namespace TJAPlayer3
         public bool bBranchGuide;
         public int nScoreMode;
         public int nDefaultCourse; //2017.01.30 DD デフォルトでカーソルをあわせる難易度
-
-
+        
         public int nPlayerCount; //2017.08.18 kairera0467 マルチプレイ対応
         public bool[] bAutoPlay;
         public bool bAuto先生の連打;
@@ -3024,10 +3023,10 @@ LeftRed=K015
 RightRed=K019
 LeftBlue=K013
 RightBlue=K020
-LeftRed2P=
-RightRed2P=
-LeftBlue2P=
-RightBlue2P=
+LeftRed2P=K031
+RightRed2P=K022
+LeftBlue2P=K012
+RightBlue2P=K047
 
 [SystemKeyAssign]
 Capture=K065

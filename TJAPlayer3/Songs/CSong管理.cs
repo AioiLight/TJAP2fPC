@@ -426,8 +426,11 @@ namespace TJAPlayer3
 
 		
 					c曲リストノード.list子リスト = new List<C曲リストノード>();
-					c曲リストノード.arスコア[ 0 ] = new Cスコア();
-					c曲リストノード.arスコア[ 0 ].ファイル情報.フォルダの絶対パス = infoDir.FullName + @"\";
+                    for (int i = 0; i < (int)Difficulty.Total; i++)
+                    {
+                        c曲リストノード.arスコア[i] = new Cスコア();
+                    }
+                    c曲リストノード.arスコア[ 0 ].ファイル情報.フォルダの絶対パス = infoDir.FullName + @"\";
 					c曲リストノード.arスコア[ 0 ].譜面情報.タイトル = c曲リストノード.strタイトル;
 					c曲リストノード.arスコア[ 0 ].譜面情報.コメント =
 						(CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja") ?
@@ -551,11 +554,14 @@ namespace TJAPlayer3
 
 
                     c曲リストノード.nスコア数 = 1;
-					c曲リストノード.arスコア[ 0 ] = new Cスコア();
-					c曲リストノード.arスコア[ 0 ].ファイル情報.フォルダの絶対パス = infoDir.FullName + @"\";
-					c曲リストノード.arスコア[ 0 ].譜面情報.タイトル = boxdef.Title;
-					c曲リストノード.arスコア[ 0 ].譜面情報.ジャンル = boxdef.Genre;
-					c曲リストノード.r親ノード = node親;
+                    for (int i = 0; i < (int)Difficulty.Total; i++)
+                    {
+                        c曲リストノード.arスコア[i] = new Cスコア();
+                        c曲リストノード.arスコア[i].ファイル情報.フォルダの絶対パス = infoDir.FullName + @"\";
+                        c曲リストノード.arスコア[i].譜面情報.タイトル = boxdef.Title;
+                        c曲リストノード.arスコア[i].譜面情報.ジャンル = boxdef.Genre;
+                    }
+                    c曲リストノード.r親ノード = node親;
 
 					c曲リストノード.strBreadcrumbs = ( c曲リストノード.r親ノード == null ) ?
 						c曲リストノード.strタイトル : c曲リストノード.r親ノード.strBreadcrumbs + " > " + c曲リストノード.strタイトル;
@@ -1022,8 +1028,10 @@ namespace TJAPlayer3
 
 					itemBack.strBreadcrumbs = ( itemBack.r親ノード == null ) ?
 						itemBack.strタイトル : itemBack.r親ノード.strBreadcrumbs + " > " + itemBack.strタイトル;
-
-					itemBack.arスコア[ 0 ] = new Cスコア();
+                    for (int i = 0; i < (int)Difficulty.Total; i++)
+                    {
+                        itemBack.arスコア[i] = new Cスコア();
+                    }
 					itemBack.arスコア[ 0 ].ファイル情報.フォルダの絶対パス = "";
 					itemBack.arスコア[ 0 ].譜面情報.タイトル = itemBack.strタイトル;
 					itemBack.arスコア[ 0 ].譜面情報.コメント =

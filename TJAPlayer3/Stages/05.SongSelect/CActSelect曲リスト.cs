@@ -154,7 +154,6 @@ namespace TJAPlayer3
         public int n現在のアンカ難易度レベルに最も近い難易度レベルを返す( C曲リストノード song , int nPlayer)
 		{
             // 事前チェック。
-
             n現在選択中の曲のコース数 = n現在選択中の曲のコース数を返す(song);
 
             if ( song == null )
@@ -176,8 +175,12 @@ namespace TJAPlayer3
 				if( song.arスコア[ n最も近いレベル ] != null )
 					break;	// 曲があった。
 
-				n最も近いレベル = ( n最も近いレベル + 1 ) % (int)Difficulty.Total;	// 曲がなかったので次の難易度レベルへGo。（5以上になったら0に戻る。）
-			}
+				n最も近いレベル = ( n最も近いレベル + 1 ) % (int)Difficulty.Total;    // 曲がなかったので次の難易度レベルへGo。（5以上になったら0に戻る。）
+                if (nPlayer != 0 && n最も近いレベル > 4)
+                {
+                    n最も近いレベル = 0;
+                }
+            }
 
 
 			// 見つかった曲がアンカより下のレベルだった場合……
@@ -194,8 +197,12 @@ namespace TJAPlayer3
 					if( song.arスコア[ n最も近いレベル ] != null )
 						break;	// 曲があった。
 
-					n最も近いレベル = ( ( n最も近いレベル - 1 ) + (int)Difficulty.Total) % (int)Difficulty.Total;	// 曲がなかったので次の難易度レベルへGo。（0未満になったら4に戻る。）
-				}
+					n最も近いレベル = ( ( n最も近いレベル - 1 ) + (int)Difficulty.Total) % (int)Difficulty.Total; // 曲がなかったので次の難易度レベルへGo。（0未満になったら4に戻る。）
+                    if (nPlayer != 0 && n最も近いレベル > 4)
+                    {
+                        n最も近いレベル = 4;
+                    }
+                }
 			}
 
 			return n最も近いレベル;
@@ -377,7 +384,7 @@ namespace TJAPlayer3
 				int index = ( i + 13 ) % 13;
 				for( int m = 0; m < 3; m++ )
 				{
-                    this.stバー情報[index].nスキル値[m] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, nPlayer)].譜面情報.最大スキル[m];
+                    this.stバー情報[index].nスキル値[m] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, 0)].譜面情報.最大スキル[m];
 				}
 				song = this.r次の曲( song );
 			}
@@ -440,7 +447,7 @@ namespace TJAPlayer3
 				int index = ( i + 13 ) % 13;
 				for( int m = 0; m < 3; m++ )
 				{
-                    this.stバー情報[index].nスキル値[m] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, nPlayer)].譜面情報.最大スキル[m];
+                    this.stバー情報[index].nスキル値[m] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, 0)].譜面情報.最大スキル[m];
 				}
 				song = this.r次の曲( song );
 			}
@@ -950,9 +957,8 @@ namespace TJAPlayer3
                         // 新しく最下部に表示されるパネル用のスキル値を取得。
                         for (int nPlayer = 0; nPlayer < 2; nPlayer++)
                             for (int i = 0; i < 3; i++)
-                                this.stバー情報[index].nスキル値[i] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, nPlayer)].譜面情報.最大スキル[i];
-
-
+                                this.stバー情報[index].nスキル値[i] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, 0)].譜面情報.最大スキル[i];
+                        
 						// 1行(100カウント)移動完了。
 
 						this.n現在のスクロールカウンタ -= 100;
@@ -1015,7 +1021,7 @@ namespace TJAPlayer3
                         // 新しく最上部に表示されるパネル用のスキル値を取得。
                         for (int nPlayer = 0; nPlayer < 2; nPlayer++)
                             for (int i = 0; i < 3; i++)
-                                this.stバー情報[index].nスキル値[i] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, nPlayer)].譜面情報.最大スキル[i];
+                                this.stバー情報[index].nスキル値[i] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, 0)].譜面情報.最大スキル[i];
 
 						// 1行(100カウント)移動完了。
 
@@ -1911,7 +1917,9 @@ namespace TJAPlayer3
                 }
 
                 for (int j = 0; j < 3; j++)
+                {
                     this.stバー情報[i].nスキル値[j] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song, 0)].譜面情報.最大スキル[j];
+                }
 
                 this.stバー情報[ i ].ttkタイトル = this.ttk曲名テクスチャを生成する( this.stバー情報[ i ].strタイトル文字列, this.stバー情報[i].ForeColor, this.stバー情報[i].BackColor);
 

@@ -610,7 +610,7 @@ namespace TJAPlayer3
 				"(ScrollSpeed=x0.5 means half speed)" );
 			this.list項目リスト.Add( this.iDrumsScrollSpeed1P );
 
-            this.iDrumsScrollSpeed2P = new CItemInteger("ScrollSpeed", 0, 0x7cf, TJAPlayer3.ConfigIni.n譜面スクロール速度[1].Drums,
+            this.iDrumsScrollSpeed2P = new CItemInteger("ScrollSpeed 2P", 0, 0x7cf, TJAPlayer3.ConfigIni.n譜面スクロール速度[1].Drums,
                 "演奏時のドラム譜面のスクロールの\n" +
                 "速度を指定します。\n" +
                 "x0.5 ～ x1000.0 を指定可能です。",
