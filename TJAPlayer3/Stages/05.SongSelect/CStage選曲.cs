@@ -389,7 +389,7 @@ namespace TJAPlayer3
 				if( base.eフェーズID == CStage.Eフェーズ.共通_通常状態 
 					&& TJAPlayer3.act現在入力を占有中のプラグイン == null )
 				{
-					#region [ 簡易CONFIGでMore、またはShift+F1: 詳細CONFIG呼び出し ]
+					#region [ 簡易CONFIGでMore、またはF1: 詳細CONFIG呼び出し ]
 					if (  actQuickConfig.bGotoDetailConfig )
 					{	// 詳細CONFIG呼び出し
 						actQuickConfig.tDeativatePopupMenu();
@@ -403,7 +403,7 @@ namespace TJAPlayer3
 					#endregion
 					if ( !this.actSortSongs.bIsActivePopupMenu && !this.actQuickConfig.bIsActivePopupMenu /*&&  !this.act難易度選択画面.bIsDifficltSelect */ )
 					{
-                        #region [ ESC ]
+                        #region [ ESC BACK               ]
                         if (TJAPlayer3.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.Escape) && (this.act曲リスト.r現在選択中の曲 != null))// && (  ) ) )
                         {
                             if (this.act曲リスト.bコース選択中[0] || this.act曲リスト.bコース選択中[1])

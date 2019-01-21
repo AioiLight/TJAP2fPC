@@ -290,38 +290,53 @@ namespace TJAPlayer3
 		}
 		public override void OnManagedリソースの作成()
 		{
-			if( !base.b活性化してない )
-			{
-				//this.t背景テクスチャの生成();
-				//this.tx太鼓ノーツ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_taiko_notes.png" ) );
-				//this.txHand = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_taiko_notes_arm.png" ) );
-				//this.txSenotes = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_senotes.png" ) );
-				//this.tx小節線 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_bar_line.png" ) );
-				//this.tx小節線_branch = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_bar_line_branch.png" ) );
-    //            this.tx判定数小文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_Result_number_s.png" ) );
-    //            this.txNamePlate = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_NamePlate.png" ) );
-    //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
-    //                this.txNamePlate2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_NamePlate2P.png" ) );
-    //            this.txPlayerNumber = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_PlayerNumber.png"));
+            if (!base.b活性化してない)
+            {
+                //this.t背景テクスチャの生成();
+                //this.tx太鼓ノーツ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_taiko_notes.png" ) );
+                //this.txHand = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_taiko_notes_arm.png" ) );
+                //this.txSenotes = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_senotes.png" ) );
+                //this.tx小節線 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_bar_line.png" ) );
+                //this.tx小節線_branch = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_bar_line_branch.png" ) );
+                //            this.tx判定数小文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_Result_number_s.png" ) );
+                //            this.txNamePlate = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_NamePlate.png" ) );
+                //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
+                //                this.txNamePlate2P = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_NamePlate2P.png" ) );
+                //            this.txPlayerNumber = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_PlayerNumber.png"));
 
-    //            this.tx判定数表示パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Paramater Panel.png" ) );
+                //            this.tx判定数表示パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Paramater Panel.png" ) );
 
-			    // When performing calibration, reduce audio distraction from user input.
-			    // For users who play primarily by listening to the music,
-			    // you might think that we want them to hear drum sound effects during
-			    // calibration, but we do not. Humans are remarkably good at adjusting
-			    // the timing of their own physical movement, even without realizing it.
-			    // We are calibrating their input timing for the purposes of judgment.
-			    // We do not want them subconsciously playing early so as to line up
-			    // their drum sound effects with the sounds of the input calibration file.
-			    // Instead, we want them focused on the sounds of their keyboard, tatacon,
-			    // other controller, etc. and the sounds of the input calibration audio file.
-			    if (!TJAPlayer3.IsPerformingCalibration)
-			    {
-			        this.soundRed = TJAPlayer3.Sound管理.tサウンドを生成する( CSkin.Path( @"Sounds\Taiko\dong.ogg" ), ESoundGroup.SoundEffect );
-			        this.soundBlue = TJAPlayer3.Sound管理.tサウンドを生成する( CSkin.Path( @"Sounds\Taiko\ka.ogg" ), ESoundGroup.SoundEffect );
-			        this.soundAdlib = TJAPlayer3.Sound管理.tサウンドを生成する( CSkin.Path(@"Sounds\Taiko\Adlib.ogg"), ESoundGroup.SoundEffect );
-			    }
+                // When performing calibration, reduce audio distraction from user input.
+                // For users who play primarily by listening to the music,
+                // you might think that we want them to hear drum sound effects during
+                // calibration, but we do not. Humans are remarkably good at adjusting
+                // the timing of their own physical movement, even without realizing it.
+                // We are calibrating their input timing for the purposes of judgment.
+                // We do not want them subconsciously playing early so as to line up
+                // their drum sound effects with the sounds of the input calibration file.
+                // Instead, we want them focused on the sounds of their keyboard, tatacon,
+                // other controller, etc. and the sounds of the input calibration audio file.
+                this.soundRed = new CSound[2];
+                this.soundBlue = new CSound[2];
+                this.soundAdlib = new CSound[2];
+                if (!TJAPlayer3.IsPerformingCalibration)
+                {
+                    for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)
+                    {
+                        if (TJAPlayer3.ConfigIni.nPlayerCount == 2)
+                        {
+                            this.soundRed[nPlayer] = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Taiko\dong" + nPlayer.ToString() + @"P" + @".ogg"), ESoundGroup.SoundEffect);
+                            this.soundBlue[nPlayer] = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Taiko\ka" + nPlayer.ToString() + @"P" + @".ogg"), ESoundGroup.SoundEffect);
+                            this.soundAdlib[nPlayer] = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Taiko\Adlib" + nPlayer.ToString() + @"P" + @".ogg"), ESoundGroup.SoundEffect);
+                        }
+                        if (this.soundRed[nPlayer] == null)
+                            this.soundRed[nPlayer] = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Taiko\dong.ogg"), ESoundGroup.SoundEffect);
+                        if (this.soundBlue[nPlayer] == null)
+                            this.soundBlue[nPlayer] = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Taiko\ka.ogg"), ESoundGroup.SoundEffect);
+                        if (this.soundAdlib[nPlayer] == null)
+                            this.soundAdlib[nPlayer] = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Taiko\Adlib.ogg"), ESoundGroup.SoundEffect);
+                    }
+                }
 
 			    base.OnManagedリソースの作成();
 			}
@@ -330,31 +345,29 @@ namespace TJAPlayer3
 		{
 			if( !base.b活性化してない )
 			{
-				////CDTXMania.tテクスチャの解放( ref this.tx背景 );
-				//CDTXMania.tテクスチャの解放( ref this.txヒットバー );
-				//CDTXMania.tテクスチャの解放( ref this.txヒットバーGB );
-				//CDTXMania.tテクスチャの解放( ref this.txチップ );
-    //            //CDTXMania.tテクスチャの解放( ref this.tx太鼓ノーツ );
-    //            CDTXMania.tテクスチャの解放( ref this.txHand );
-    //            CDTXMania.tテクスチャの解放( ref this.txSenotes );
-    //            CDTXMania.tテクスチャの解放( ref this.tx小節線 );
-    //            CDTXMania.tテクスチャの解放( ref this.tx小節線_branch );
-				//CDTXMania.tテクスチャの解放( ref this.txレーンフレームGB );
-				////CDTXMania.tテクスチャの解放( ref this.txWailing枠 );
+                ////CDTXMania.tテクスチャの解放( ref this.tx背景 );
+                //CDTXMania.tテクスチャの解放( ref this.txヒットバー );
+                //CDTXMania.tテクスチャの解放( ref this.txヒットバーGB );
+                //CDTXMania.tテクスチャの解放( ref this.txチップ );
+                //            //CDTXMania.tテクスチャの解放( ref this.tx太鼓ノーツ );
+                //            CDTXMania.tテクスチャの解放( ref this.txHand );
+                //            CDTXMania.tテクスチャの解放( ref this.txSenotes );
+                //            CDTXMania.tテクスチャの解放( ref this.tx小節線 );
+                //            CDTXMania.tテクスチャの解放( ref this.tx小節線_branch );
+                //CDTXMania.tテクスチャの解放( ref this.txレーンフレームGB );
+                ////CDTXMania.tテクスチャの解放( ref this.txWailing枠 );
 
-    //            CDTXMania.tテクスチャの解放( ref this.tx判定数表示パネル );
-    //            CDTXMania.tテクスチャの解放( ref this.tx判定数小文字 );
-    //            CDTXMania.tテクスチャの解放( ref this.txNamePlate );
-    //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
-    //                CDTXMania.tテクスチャの解放( ref this.txNamePlate2P );
-    //            CDTXMania.tテクスチャの解放( ref this.txPlayerNumber);
+                //            CDTXMania.tテクスチャの解放( ref this.tx判定数表示パネル );
+                //            CDTXMania.tテクスチャの解放( ref this.tx判定数小文字 );
+                //            CDTXMania.tテクスチャの解放( ref this.txNamePlate );
+                //            if (CDTXMania.stage演奏ドラム画面.bDoublePlay)
+                //                CDTXMania.tテクスチャの解放( ref this.txNamePlate2P );
+                //            CDTXMania.tテクスチャの解放( ref this.txPlayerNumber);
 
-                if( this.soundRed != null )
-                    this.soundRed.t解放する();
-                if( this.soundBlue != null )
-                    this.soundBlue.t解放する();
-                if( this.soundAdlib != null )
-                    this.soundAdlib.t解放する();
+                TJAPlayer3.t安全にDisposeする(ref this.soundRed);
+                TJAPlayer3.t安全にDisposeする(ref this.soundBlue);
+                TJAPlayer3.t安全にDisposeする(ref this.soundAdlib);
+
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -855,15 +868,15 @@ namespace TJAPlayer3
 
 				this.t入力メソッド記憶( E楽器パート.DRUMS );
 
-				foreach( STInputEvent inputEvent in listInputEvent )
-				{
-					if( !inputEvent.b押された )
-						continue;
+                foreach (STInputEvent inputEvent in listInputEvent)
+                {
+                    if (!inputEvent.b押された)
+                        continue;
 
-					long nTime = inputEvent.nTimeStamp + nInputAdjustTimeMs - CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
-					//int nPad09 = ( nPad == (int) Eパッド.HP ) ? (int) Eパッド.BD : nPad;		// #27029 2012.1.5 yyagi
+                    long nTime = inputEvent.nTimeStamp + nInputAdjustTimeMs - CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
+                    //int nPad09 = ( nPad == (int) Eパッド.HP ) ? (int) Eパッド.BD : nPad;		// #27029 2012.1.5 yyagi
 
-					bool bHitted = false;
+                    bool bHitted = false;
 
                     int nLane = 0;
                     int nHand = 0;
@@ -876,13 +889,19 @@ namespace TJAPlayer3
 
                     //2015.03.19 kairera0467 Chipを1つにまとめて1つのレーン扱いにする。
                     int nUsePlayer = 0;
-                    if( nPad >= 12 && nPad <= 15 ) {
+                    if (nPad >= 12 && nPad <= 15) {
                         nUsePlayer = 0;
-                    } else if( nPad >= 16 && nPad <= 19 ) {
+                    } else if (nPad >= 16 && nPad <= 19) {
                         nUsePlayer = 1;
-                        if( TJAPlayer3.ConfigIni.nPlayerCount < 2 ) //プレイ人数が2人以上でなければ入力をキャンセル
+                        if (TJAPlayer3.ConfigIni.nPlayerCount < 2) //プレイ人数が2人以上でなければ入力をキャンセル
                             break;
                     }
+                    if (TJAPlayer3.ConfigIni.bAutoPlay[0])
+                        if (nPad >= 12 && nPad <= 15)
+                            break;
+                    if (TJAPlayer3.ConfigIni.bAutoPlay[1])
+                        if (nPad >= 16 && nPad <= 19)
+                            break;
 
                     CDTX.CChip chipNoHit = this.r指定時刻に一番近い未ヒットChipを過去方向優先で検索する( nTime, nUsePlayer );
                     E判定 e判定 = ( chipNoHit != null ) ? this.e指定時刻からChipのJUDGEを返す( nTime, chipNoHit ) : E判定.Miss;
@@ -894,7 +913,7 @@ namespace TJAPlayer3
                             b太鼓音再生フラグ = false;
 
                         if( chipNoHit.nチャンネル番号 == 0x1F && ( e判定 != E判定.Miss && e判定 != E判定.Poor ) )
-                            this.soundAdlib?.t再生を開始する();
+                            this.soundAdlib[nUsePlayer]?.t再生を開始する();
                     }
 
                     switch (nPad)
@@ -905,7 +924,7 @@ namespace TJAPlayer3
                             nChannel = 0x11;
                             if( b太鼓音再生フラグ )
                             {
-                                this.soundRed?.t再生を開始する();
+                                this.soundRed[0]?.t再生を開始する();
                             }
                             break;
                         case 13:
@@ -914,7 +933,7 @@ namespace TJAPlayer3
                             nChannel = 0x11;
                             if( b太鼓音再生フラグ )
                             {
-                                this.soundRed?.t再生を開始する();
+                                this.soundRed[0]?.t再生を開始する();
                             }
                             break;
                         case 14:
@@ -922,14 +941,14 @@ namespace TJAPlayer3
                             nHand = 0;
                             nChannel = 0x12;
                             if( b太鼓音再生フラグ )
-                                this.soundBlue?.t再生を開始する();
+                                this.soundBlue[0]?.t再生を開始する();
                             break;
                         case 15:
                             nLane = 1;
                             nHand = 1;
                             nChannel = 0x12;
                             if( b太鼓音再生フラグ )
-                                this.soundBlue?.t再生を開始する();
+                                this.soundBlue[0]?.t再生を開始する();
                             break;
                         //以下2P
                         case 16:
@@ -938,7 +957,7 @@ namespace TJAPlayer3
                             nChannel = 0x11;
                             if( b太鼓音再生フラグ )
                             {
-                                this.soundRed?.t再生を開始する();
+                                this.soundRed[1]?.t再生を開始する();
                             }
                             break;
                         case 17:
@@ -947,7 +966,7 @@ namespace TJAPlayer3
                             nChannel = 0x11;
                             if( b太鼓音再生フラグ )
                             {
-                                this.soundRed?.t再生を開始する();
+                                this.soundRed[1]?.t再生を開始する();
                             }
                             break;
                         case 18:
@@ -955,14 +974,14 @@ namespace TJAPlayer3
                             nHand = 0;
                             nChannel = 0x12;
                             if( b太鼓音再生フラグ )
-                                this.soundBlue?.t再生を開始する();
+                                this.soundBlue[1]?.t再生を開始する();
                             break;
                         case 19:
                             nLane = 1;
                             nHand = 1;
                             nChannel = 0x12;
                             if( b太鼓音再生フラグ )
-                                this.soundBlue?.t再生を開始する();
+                                this.soundBlue[1]?.t再生を開始する();
                             break;
                     }
 

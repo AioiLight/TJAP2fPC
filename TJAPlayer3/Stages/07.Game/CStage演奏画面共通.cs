@@ -713,9 +713,9 @@ namespace TJAPlayer3
 
         protected int[] nHand = new int[4];
 
-        protected CSound soundRed;
-        protected CSound soundBlue;
-        protected CSound soundAdlib;
+        protected CSound[] soundRed;
+        protected CSound[] soundBlue;
+        protected CSound[] soundAdlib;
 
 
 
@@ -1050,16 +1050,16 @@ namespace TJAPlayer3
 		{
 			int index = pChip.nチャンネル番号;
             if( index == 0x11 || index == 0x13 || index == 0x1A )
-                this.soundRed?.t再生を開始する();
+                this.soundRed[nPlayer]?.t再生を開始する();
             else if( index == 0x12 || index == 0x14 || index == 0x1B )
-                this.soundBlue?.t再生を開始する();
+                this.soundBlue[nPlayer]?.t再生を開始する();
             else if( index == 0x1F )
-                this.soundAdlib?.t再生を開始する();
+                this.soundAdlib[nPlayer]?.t再生を開始する();
 
-            if( this.nHand[ nPlayer ] == 0 )
-                this.nHand[ nPlayer ]++;
+            if (this.nHand[nPlayer] == 0)
+                this.nHand[nPlayer]++;
             else
-                this.nHand[ nPlayer ] = 0;
+                this.nHand[nPlayer] = 0;
 		}
 
 		protected void tステータスパネルの選択()
@@ -1165,7 +1165,7 @@ namespace TJAPlayer3
                 //赤か青かの分岐
                 if( sort == 0 )
                 {
-                    this.soundRed?.t再生を開始する();
+                    this.soundRed[nPlayer]?.t再生を開始する();
                     if( pChip.nチャンネル番号 == 0x15 )
                     {
                         //CDTXMania.Skin.soundRed.t再生する();
@@ -1181,7 +1181,7 @@ namespace TJAPlayer3
                 }
                 else
                 {
-                    this.soundBlue?.t再生を開始する();
+                    this.soundBlue[nPlayer]?.t再生を開始する();
                     if( pChip.nチャンネル番号 == 0x15 )
                     {
                         //CDTXMania.Skin.soundBlue.t再生する();
@@ -1207,38 +1207,38 @@ namespace TJAPlayer3
             return false;
         }
 
-        protected bool tBalloonProcess( CDTX.CChip pChip, double dbProcess_time, int player )
+        protected bool tBalloonProcess( CDTX.CChip pChip, double dbProcess_time, int nPlayer )
         {
             //if( dbProcess_time >= pChip.n発声時刻ms && dbProcess_time < pChip.nノーツ終了時刻ms )
             if ((int)CSound管理.rc演奏用タイマ.n現在時刻ms >= pChip.n発声時刻ms && (int)CSound管理.rc演奏用タイマ.n現在時刻ms <= pChip.nノーツ終了時刻ms)
             {
                 if( pChip.nRollCount == 0 )
                 {
-                    this.n風船残り[ player ] = pChip.nBalloon;
+                    this.n風船残り[ nPlayer ] = pChip.nBalloon;
                 }
 
-                this.b連打中[ player ] = true;
-                if(actChara.CharaAction_Balloon_Breaking != null && player == 0)
+                this.b連打中[ nPlayer ] = true;
+                if(actChara.CharaAction_Balloon_Breaking != null && nPlayer == 0)
                 {
                     actChara.アクションタイマーリセット();
                     actChara.bマイどんアクション中 = true;
                     actChara.CharaAction_Balloon_Breaking = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking - 1, TJAPlayer3.Skin.Game_Chara_Balloon_Timer, TJAPlayer3.Timer);
                    
                 }
-                if (this.actBalloon.ct風船アニメ[player].b終了値に達してない)
+                if (this.actBalloon.ct風船アニメ[nPlayer].b終了値に達してない)
                 {
-                    this.actBalloon.ct風船アニメ[player] = new CCounter(0, 9, 14, TJAPlayer3.Timer);
-                    this.actBalloon.ct風船アニメ[player].n現在の値 = 1;
+                    this.actBalloon.ct風船アニメ[nPlayer] = new CCounter(0, 9, 14, TJAPlayer3.Timer);
+                    this.actBalloon.ct風船アニメ[nPlayer].n現在の値 = 1;
                 }
                 else
                 {
-                    this.actBalloon.ct風船アニメ[player] = new CCounter(0, 9, 14, TJAPlayer3.Timer);
+                    this.actBalloon.ct風船アニメ[nPlayer] = new CCounter(0, 9, 14, TJAPlayer3.Timer);
                 }
                 this.eRollState = E連打State.balloon;
                 pChip.nRollCount++;
-                this.n風船残り[ player ]--;
+                this.n風船残り[ nPlayer ]--;
 
-                this.n合計連打数[player]++; //  成績発表の連打数に風船を含めるように (AioiLight)
+                this.n合計連打数[nPlayer]++; //  成績発表の連打数に風船を含めるように (AioiLight)
                 //分岐のための処理。実装してない。
 
                 //赤か青かの分岐
@@ -1247,23 +1247,23 @@ namespace TJAPlayer3
                     //ﾊﾟｧｰﾝ
                     TJAPlayer3.Skin.soundBalloon.t再生する();
                     //CDTXMania.stage演奏ドラム画面.actChipFireTaiko.Start( 3, player ); //ここで飛ばす。飛ばされるのは大音符のみ。
-                    TJAPlayer3.stage演奏ドラム画面.FlyingNotes.Start(3, player);
-                    TJAPlayer3.stage演奏ドラム画面.Rainbow.Start( player );
+                    TJAPlayer3.stage演奏ドラム画面.FlyingNotes.Start(3, nPlayer);
+                    TJAPlayer3.stage演奏ドラム画面.Rainbow.Start( nPlayer );
                     //CDTXMania.stage演奏ドラム画面.actChipFireD.Start( 0, player );
                     if(pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode)
                     {
-                        this.actScore.Add(E楽器パート.TAIKO, 6000L, player);
+                        this.actScore.Add(E楽器パート.TAIKO, 6000L, nPlayer);
                     } else
                     {
-                        this.actScore.Add(E楽器パート.TAIKO, 5000L, player);
+                        this.actScore.Add(E楽器パート.TAIKO, 5000L, nPlayer);
                     }
                     pChip.bHit = true;
-                    chip現在処理中の連打チップ[ player ].bHit = true;
+                    chip現在処理中の連打チップ[ nPlayer ].bHit = true;
                     //this.b連打中 = false;
                     //this.actChara.b風船連打中 = false;
                     pChip.b可視 = false;
                     this.actChara.bマイどんアクション中 = false; // 風船終了後、再生されていたアクションがされないようにするために追加。(AioiLight)
-                    if (actChara.CharaAction_Balloon_Broke != null && player == 0)
+                    if (actChara.CharaAction_Balloon_Broke != null && nPlayer == 0)
                     {
                         actChara.アクションタイマーリセット();
                         actChara.bマイどんアクション中 = true;
@@ -1276,21 +1276,21 @@ namespace TJAPlayer3
                 {
                     if(pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode)
                     {
-                        this.actScore.Add(E楽器パート.TAIKO, 360L, player);
+                        this.actScore.Add(E楽器パート.TAIKO, 360L, nPlayer);
                     } else
                     {
-                        this.actScore.Add(E楽器パート.TAIKO, 300L, player);
+                        this.actScore.Add(E楽器パート.TAIKO, 300L, nPlayer);
                     }
                     //CDTXMania.Skin.soundRed.t再生する();
-                    this.soundRed?.t再生を開始する();
+                    this.soundRed[nPlayer]?.t再生を開始する();
                 }
-                TJAPlayer3.stage演奏ドラム画面.actTaikoLaneFlash.PlayerLane[player].Start(PlayerLane.FlashType.Hit);
+                TJAPlayer3.stage演奏ドラム画面.actTaikoLaneFlash.PlayerLane[nPlayer].Start(PlayerLane.FlashType.Hit);
             }
             else
             {
-                if ( chip現在処理中の連打チップ[ player ] != null )
-                    chip現在処理中の連打チップ[ player ].bHit = true;
-                this.b連打中[ player ] = false;
+                if ( chip現在処理中の連打チップ[ nPlayer ] != null )
+                    chip現在処理中の連打チップ[ nPlayer ].bHit = true;
+                this.b連打中[ nPlayer ] = false;
                 this.actChara.b風船連打中 = false;
                 return false;
             }
