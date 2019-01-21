@@ -69,12 +69,12 @@ namespace TJAPlayer3
 				set
 				{
 					this.p1 = value;
-					if( this.p1 > this.P1最高値 )
+                    if (this.p1 > this.最高値[0])
 					{
-						this.P1最高値 = this.p1;
+						this.最高値[0] = this.p1;
 					}
 					this.act.status.P1.nCOMBO値 = this.p1;
-					this.act.status.P1.n最高COMBO値 = this.P1最高値;
+					this.act.status.P1.n最高COMBO値 = this.最高値[0];
 				}
 			}
 			public int P2
@@ -86,12 +86,12 @@ namespace TJAPlayer3
 				set
 				{
 					this.p2 = value;
-					if( this.p2 > this.P2最高値 )
+					if( this.p2 > this.最高値[1])
 					{
-						this.P2最高値 = this.p2;
+						this.最高値[1] = this.p2;
 					}
 					this.act.status.P2.nCOMBO値 = this.p2;
-					this.act.status.P2.n最高COMBO値 = this.P2最高値;
+					this.act.status.P2.n最高COMBO値 = this.最高値[1];
 				}
 			}
 			public int P3
@@ -103,12 +103,12 @@ namespace TJAPlayer3
 				set
 				{
 					this.p3 = value;
-					if( this.p3 > this.P3最高値 )
+					if( this.p3 > this.最高値[2] )
 					{
-						this.P3最高値 = this.p3;
+						this.最高値[2] = this.p3;
 					}
 					this.act.status.P3.nCOMBO値 = this.p3;
-					this.act.status.P3.n最高COMBO値 = this.P3最高値;
+					this.act.status.P3.n最高COMBO値 = this.最高値[2];
 				}
 			}
 			public int P4
@@ -120,20 +120,18 @@ namespace TJAPlayer3
 				set
 				{
 					this.p4 = value;
-					if( this.p4 > this.P4最高値 )
+					if( this.p4 > this.最高値[3] )
 					{
-						this.P4最高値 = this.p4;
+						this.最高値[3] = this.p4;
 					}
 					this.act.status.P4.nCOMBO値 = this.p4;
-					this.act.status.P4.n最高COMBO値 = this.P4最高値;
+					this.act.status.P4.n最高COMBO値 = this.最高値[3];
 				}
 			}
-			public int P1最高値 { get; private set; }
-			public int P2最高値 { get; private set; }
-			public int P3最高値 { get; private set; }
-			public int P4最高値 { get; private set; }
-
-			private int p1;
+			public int[] 最高値 { get; set; }
+			//public int[] 最高値 { get; private set; }
+            
+            private int p1;
 			private int p2;
 			private int p3;
 			private int p4;
@@ -560,7 +558,8 @@ namespace TJAPlayer3
 
 		public override void On活性化()
 		{
-			this.n現在のコンボ数 = new STCOMBO() { act = this };
+            this.n現在のコンボ数 = new STCOMBO() { act = this };
+            this.n現在のコンボ数.最高値 = new int[4];
 			this.status = new CSTATUS();
             this.ctコンボ加算 = new CCounter[ 4 ];
 			for( int i = 0; i < 4; i++ )

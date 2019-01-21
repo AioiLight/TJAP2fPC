@@ -100,13 +100,13 @@ namespace TJAPlayer3
                         isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0]);
                         break;
                     case Exam.Type.JudgePerfect:
-                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect);
+                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Perfect);
                         break;
                     case Exam.Type.JudgeGood:
-                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Great);
+                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Great);
                         break;
                     case Exam.Type.JudgeBad:
-                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Miss);
+                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Miss);
                         break;
                     case Exam.Type.Score:
                         isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.actScore.GetScore(0));
@@ -115,10 +115,10 @@ namespace TJAPlayer3
                         isChangedAmount = Challenge[i].Update((int)(TJAPlayer3.stage演奏ドラム画面.GetRoll(0)));
                         break;
                     case Exam.Type.Hit:
-                        isChangedAmount = Challenge[i].Update((int)(TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Great + TJAPlayer3.stage演奏ドラム画面.GetRoll(0)));
+                        isChangedAmount = Challenge[i].Update((int)(TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Great + TJAPlayer3.stage演奏ドラム画面.GetRoll(0)));
                         break;
                     case Exam.Type.Combo:
-                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.P1最高値);
+                        isChangedAmount = Challenge[i].Update((int)TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.最高値[0]);
                         break;
                     default:
                         break;
@@ -145,7 +145,7 @@ namespace TJAPlayer3
                 }
                 else
                 {
-                    var notesRemain = TJAPlayer3.DTX[0].nノーツ数[3] - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Great) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Miss + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Miss);
+                    var notesRemain = TJAPlayer3.DTX[0].nノーツ数[3] - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Perfect) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Great) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Miss + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Miss);
                     // 残り音符数が0になったときに判断されるやつ
                     if (notesRemain <= 0)
                     {
@@ -172,7 +172,7 @@ namespace TJAPlayer3
                             if (notesRemain < (Challenge[i].Value[0] - Challenge[i].Amount)) Challenge[i].SetReached(true);
                             break;
                         case Exam.Type.Combo:
-                            if (notesRemain + TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.P1 < ((Challenge[i].Value[0])) && TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.P1最高値 < (Challenge[i].Value[0])) Challenge[i].SetReached(true);
+                            if (notesRemain + TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数[0] < ((Challenge[i].Value[0])) && TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.最高値[0] < (Challenge[i].Value[0])) Challenge[i].SetReached(true);
                             break;
                         default:
                             break;
@@ -300,7 +300,7 @@ namespace TJAPlayer3
 
 
             // 残り音符数を描画する。
-            var notesRemain = TJAPlayer3.DTX[0].nノーツ数[3] - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Great) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Miss + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Miss);
+            var notesRemain = TJAPlayer3.DTX[0].nノーツ数[3] - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Perfect) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Great + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Great) - (TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含む[0].Drums.Miss + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Miss);
 
             DrawNumber(notesRemain, TJAPlayer3.Skin.Game_DanC_Number_XY[0], TJAPlayer3.Skin.Game_DanC_Number_XY[1], TJAPlayer3.Skin.Game_DanC_Number_Padding);
 

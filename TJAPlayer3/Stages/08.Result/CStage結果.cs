@@ -21,7 +21,6 @@ namespace TJAPlayer3
                                                 //        10.11.17 change (int to bool) ikanick
 		public STDGBVALUE<int> nランク値;
 		public STDGBVALUE<int> n演奏回数;
-		public int n総合ランク値;
 		public CDTX.CChip[] r空うちドラムチップ;
 		public STDGBVALUE<CScoreIni.C演奏記録> st演奏記録;
 
@@ -35,7 +34,6 @@ namespace TJAPlayer3
 			this.st演奏記録.Bass = new CScoreIni.C演奏記録();
 			this.st演奏記録.Taiko = new CScoreIni.C演奏記録();
 			this.r空うちドラムチップ = new CDTX.CChip[ 10 ];
-			this.n総合ランク値 = -1;
 			this.nチャンネル0Atoレーン07 = new int[] { 1, 2, 3, 4, 5, 7, 6, 1, 7, 0 };
 			base.eステージID = CStage.Eステージ.結果;
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
@@ -98,17 +96,16 @@ namespace TJAPlayer3
 								bIsAutoPlay = TJAPlayer3.ConfigIni.bAutoPlay[0];
 								break;
 						}
-						this.fPerfect率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nPerfect数 ) / ( (float) part.n全チップ数 ) );
-						this.fGreat率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nGreat数 ) / ( (float) part.n全チップ数 ) );
-						this.fGood率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nGood数 ) / ( (float) part.n全チップ数 ) );
-						this.fPoor率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nPoor数 ) / ( (float) part.n全チップ数 ) );
-						this.fMiss率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nMiss数 ) / ( (float) part.n全チップ数 ) );
+						this.fPerfect率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nPerfect数[0] ) / ( (float) part.n全チップ数 ) );
+						this.fGreat率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nGreat数[0] ) / ( (float) part.n全チップ数 ) );
+						this.fGood率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nGood数[0] ) / ( (float) part.n全チップ数 ) );
+						this.fPoor率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nPoor数[0] ) / ( (float) part.n全チップ数 ) );
+						this.fMiss率[ i ] = bIsAutoPlay ? 0f : ( ( 100f * part.nMiss数[0] ) / ( (float) part.n全チップ数 ) );
 						this.bオート[ i ] = bIsAutoPlay;	// #23596 10.11.16 add ikanick そのパートがオートなら1
 															//        10.11.17 change (int to bool) ikanick
 						this.nランク値[ i ] = CScoreIni.tランク値を計算して返す( part );
 					}
 				}
-				this.n総合ランク値 = CScoreIni.t総合ランク値を計算して返す( this.st演奏記録.Drums, this.st演奏記録.Guitar, this.st演奏記録.Bass );
 				//---------------------
 				#endregion
 
@@ -139,7 +136,7 @@ namespace TJAPlayer3
 					}
 
 					// 新記録スコアチェック
-					if( ( this.st演奏記録[ i ].nスコア > ini.stセクション[ i * 2 ].nスコア ) && !TJAPlayer3.ConfigIni.bAutoPlay[0])
+					if( ( this.st演奏記録[ i ].nスコア[0] > ini.stセクション[ i * 2 ].nスコア[0] ) && !TJAPlayer3.ConfigIni.bAutoPlay[0])
 					{
 						this.b新記録スコア[ i ] = true;
 						ini.stセクション[ i * 2 ] = this.st演奏記録[ i ];

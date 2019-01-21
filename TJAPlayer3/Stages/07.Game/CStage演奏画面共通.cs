@@ -31,22 +31,21 @@ namespace TJAPlayer3
 
 			//if (  )
 			{
-				Drums.nスコア = (long) this.actScore.Get( E楽器パート.DRUMS, 0 );
-				Drums.dbゲーム型スキル値 = CScoreIni.tゲーム型スキルを計算して返す( TJAPlayer3.DTX[0].LEVEL.Drums, TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない.Drums.Perfect, this.actCombo.n現在のコンボ数.P1最高値, E楽器パート.DRUMS);
-				Drums.db演奏型スキル値 = CScoreIni.t演奏型スキルを計算して返す( TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない.Drums.Perfect, this.nヒット数_Auto含まない.Drums.Great, this.nヒット数_Auto含まない.Drums.Good, this.nヒット数_Auto含まない.Drums.Poor, this.nヒット数_Auto含まない.Drums.Miss, E楽器パート.DRUMS);
-				Drums.nPerfect数 = TJAPlayer3.ConfigIni.bAutoPlay[0] ? this.nヒット数_Auto含む.Drums.Perfect : this.nヒット数_Auto含まない.Drums.Perfect;
-				Drums.nGreat数 = TJAPlayer3.ConfigIni.bAutoPlay[0] ? this.nヒット数_Auto含む.Drums.Great : this.nヒット数_Auto含まない.Drums.Great;
-				Drums.nGood数 = TJAPlayer3.ConfigIni.bAutoPlay[0] ? this.nヒット数_Auto含む.Drums.Good : this.nヒット数_Auto含まない.Drums.Good;
-				Drums.nPoor数 = TJAPlayer3.ConfigIni.bAutoPlay[0] ? this.nヒット数_Auto含む.Drums.Poor : this.nヒット数_Auto含まない.Drums.Poor;
-				Drums.nMiss数 = TJAPlayer3.ConfigIni.bAutoPlay[0] ? this.nヒット数_Auto含む.Drums.Miss : this.nヒット数_Auto含まない.Drums.Miss;
-				Drums.nPerfect数_Auto含まない = this.nヒット数_Auto含まない.Drums.Perfect;
-				Drums.nGreat数_Auto含まない = this.nヒット数_Auto含まない.Drums.Great;
-				Drums.nGood数_Auto含まない = this.nヒット数_Auto含まない.Drums.Good;
-				Drums.nPoor数_Auto含まない = this.nヒット数_Auto含まない.Drums.Poor;
-				Drums.nMiss数_Auto含まない = this.nヒット数_Auto含まない.Drums.Miss;
-                Drums.n連打数 = this.n合計連打数[ 0 ];
-				Drums.n最大コンボ数 = this.actCombo.n現在のコンボ数.P1最高値;
-				Drums.n全チップ数 = TJAPlayer3.DTX[0].n可視チップ数.Drums;
+				Drums.dbゲーム型スキル値 = CScoreIni.tゲーム型スキルを計算して返す( TJAPlayer3.DTX[0].LEVEL.Drums, TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない[0].Drums.Perfect, this.actCombo.n現在のコンボ数.最高値[0], E楽器パート.DRUMS);
+				Drums.db演奏型スキル値 = CScoreIni.t演奏型スキルを計算して返す( TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない[0].Drums.Perfect, this.nヒット数_Auto含まない[0].Drums.Great, this.nヒット数_Auto含まない[0].Drums.Good, this.nヒット数_Auto含まない[0].Drums.Poor, this.nヒット数_Auto含まない[0].Drums.Miss, E楽器パート.DRUMS);
+                for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)
+                {
+                    Drums.nPerfect数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Perfect : this.nヒット数_Auto含まない[nPlayer].Drums.Perfect;
+                    Drums.nGreat数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Great : this.nヒット数_Auto含まない[nPlayer].Drums.Great;
+                    Drums.nGood数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Good : this.nヒット数_Auto含まない[nPlayer].Drums.Good;
+                    Drums.nPoor数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Poor : this.nヒット数_Auto含まない[nPlayer].Drums.Poor;
+                    Drums.nMiss数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Miss : this.nヒット数_Auto含まない[nPlayer].Drums.Miss;
+                    Drums.n連打数[nPlayer] = this.n合計連打数[nPlayer];
+                    Drums.n最大コンボ数[nPlayer] = this.actCombo.n現在のコンボ数.最高値[nPlayer];
+                    Drums.fゲージ[nPlayer] = (float)this.actGauge.db現在のゲージ値[nPlayer];
+                    Drums.nスコア[nPlayer] = (long)this.actScore.Get(E楽器パート.DRUMS, nPlayer);
+                }
+                Drums.n全チップ数 = TJAPlayer3.DTX[0].n可視チップ数.Drums;
 				Drums.bTight = TJAPlayer3.ConfigIni.bTight;
 				for ( int i = 0; i < 3; i++ )
 				{
@@ -58,8 +57,8 @@ namespace TJAPlayer3
 					Drums.bLight[ i ] = TJAPlayer3.ConfigIni.bLight[ i ];
 					Drums.bLeft[ i ] = TJAPlayer3.ConfigIni.bLeft[ i ];
 					Drums.f譜面スクロール速度[ i ] = ( (float) ( TJAPlayer3.ConfigIni.n譜面スクロール速度[0][ i ] + 1 ) ) * 0.5f;
-				}
-				Drums.eDark = TJAPlayer3.ConfigIni.eDark;
+                }
+                Drums.eDark = TJAPlayer3.ConfigIni.eDark;
 				Drums.n演奏速度分子 = TJAPlayer3.ConfigIni.n演奏速度;
 				Drums.n演奏速度分母 = 20;
 				Drums.bSTAGEFAILED有効 = TJAPlayer3.ConfigIni.bSTAGEFAILED有効;
@@ -75,7 +74,6 @@ namespace TJAPlayer3
 				Drums.strDTXManiaのバージョン = TJAPlayer3.VERSION;
 				Drums.最終更新日時 = DateTime.Now.ToString();
 				Drums.Hash = CScoreIni.t演奏セクションのMD5を求めて返す( Drums );
-                Drums.fゲージ = (float)this.actGauge.db現在のゲージ値[ 0 ];
                 if( !TJAPlayer3.ConfigIni.bAutoPlay[0])
                 {
                     Drums.nハイスコア = TJAPlayer3.stage選曲.r確定されたスコア.譜面情報.nハイスコア; //2015.06.16 kairera0467 他難易度の上書き防止。
@@ -97,21 +95,20 @@ namespace TJAPlayer3
 
 			//if ( CDTXMania.DTX.bチップがある.Drums )
 			{
-				Drums.nスコア = (long) this.actScore.Get( E楽器パート.DRUMS, 0 );
-				Drums.dbゲーム型スキル値 = CScoreIni.tゲーム型スキルを計算して返す( TJAPlayer3.DTX[0].LEVEL.Drums, TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない.Drums.Perfect, this.actCombo.n現在のコンボ数.P2, E楽器パート.DRUMS );
-				Drums.db演奏型スキル値 = CScoreIni.t演奏型スキルを計算して返す( TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない.Drums.Perfect, this.nヒット数_Auto含まない.Drums.Great, this.nヒット数_Auto含まない.Drums.Good, this.nヒット数_Auto含まない.Drums.Poor, this.nヒット数_Auto含まない.Drums.Miss, E楽器パート.DRUMS );
-				Drums.nPerfect数 = this.nヒット数_Auto含まない.Taiko.Perfect;
-				Drums.nGreat数 = this.nヒット数_Auto含まない.Taiko.Great;
-				Drums.nGood数 = this.nヒット数_Auto含まない.Taiko.Good;
-				Drums.nPoor数 = this.nヒット数_Auto含まない.Taiko.Poor;
-				Drums.nMiss数 = this.nヒット数_Auto含まない.Taiko.Miss;
-				Drums.nPerfect数_Auto含まない = this.nヒット数_Auto含まない.Taiko.Perfect;
-				Drums.nGreat数_Auto含まない = this.nヒット数_Auto含まない.Taiko.Great;
-				Drums.nGood数_Auto含まない = this.nヒット数_Auto含まない.Taiko.Good;
-				Drums.nPoor数_Auto含まない = this.nヒット数_Auto含まない.Taiko.Poor;
-				Drums.nMiss数_Auto含まない = this.nヒット数_Auto含まない.Taiko.Miss;
-                Drums.n連打数 = this.n合計連打数[ 0 ];
-				Drums.n最大コンボ数 = this.actCombo.n現在のコンボ数.P2;
+				Drums.dbゲーム型スキル値 = CScoreIni.tゲーム型スキルを計算して返す( TJAPlayer3.DTX[0].LEVEL.Drums, TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない[0].Drums.Perfect, this.actCombo.n現在のコンボ数[1], E楽器パート.DRUMS );
+				Drums.db演奏型スキル値 = CScoreIni.t演奏型スキルを計算して返す( TJAPlayer3.DTX[0].n可視チップ数.Drums, this.nヒット数_Auto含まない[0].Drums.Perfect, this.nヒット数_Auto含まない[0].Drums.Great, this.nヒット数_Auto含まない[0].Drums.Good, this.nヒット数_Auto含まない[0].Drums.Poor, this.nヒット数_Auto含まない[0].Drums.Miss, E楽器パート.DRUMS );
+                for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)
+                {
+                    Drums.nPerfect数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Perfect : this.nヒット数_Auto含まない[nPlayer].Drums.Perfect;
+                    Drums.nGreat数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Great : this.nヒット数_Auto含まない[nPlayer].Drums.Great;
+                    Drums.nGood数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Good : this.nヒット数_Auto含まない[nPlayer].Drums.Good;
+                    Drums.nPoor数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Poor : this.nヒット数_Auto含まない[nPlayer].Drums.Poor;
+                    Drums.nMiss数[nPlayer] = TJAPlayer3.ConfigIni.bAutoPlay[nPlayer] ? this.nヒット数_Auto含む[nPlayer].Drums.Miss : this.nヒット数_Auto含まない[nPlayer].Drums.Miss;
+                    Drums.n連打数[nPlayer] = this.n合計連打数[nPlayer];
+                    Drums.n最大コンボ数[nPlayer] = this.actCombo.n現在のコンボ数.最高値[nPlayer];
+                    Drums.fゲージ[nPlayer] = (float)this.actGauge.db現在のゲージ値[nPlayer];
+                    Drums.nスコア[nPlayer] = (long)this.actScore.Get(E楽器パート.DRUMS, nPlayer);
+                }
 				Drums.n全チップ数 = TJAPlayer3.DTX[0].nノーツ数[ 3 ];
 				Drums.bTight = TJAPlayer3.ConfigIni.bTight;
 				for ( int i = 0; i < 3; i++ )
@@ -141,7 +138,6 @@ namespace TJAPlayer3
 				Drums.strDTXManiaのバージョン = TJAPlayer3.VERSION;
 				Drums.最終更新日時 = DateTime.Now.ToString();
 				Drums.Hash = CScoreIni.t演奏セクションのMD5を求めて返す( Drums );
-                Drums.fゲージ = (float)this.actGauge.db現在のゲージ値[ 0 ];
 			}
 		}
 		#endregion
@@ -194,14 +190,22 @@ namespace TJAPlayer3
 
 			cInvisibleChip = new CInvisibleChip( TJAPlayer3.ConfigIni.nDisplayTimesMs, TJAPlayer3.ConfigIni.nFadeoutTimeMs );
 			this.演奏判定ライン座標 = new C演奏判定ライン座標共通();
-			for ( int k = 0; k < 4; k++ )
+            this.nヒット数_Auto含まない = new STDGBVALUE<CHITCOUNTOFRANK>[2];
+            this.nヒット数_Auto含む = new STDGBVALUE<CHITCOUNTOFRANK>[2];
+            for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)
+            {
+                this.nヒット数_Auto含まない[nPlayer] = new STDGBVALUE<CHITCOUNTOFRANK>();
+                this.nヒット数_Auto含む[nPlayer] = new STDGBVALUE<CHITCOUNTOFRANK>();
+                for (int k = 0; k < 4; k++)
+                {
+                    this.nヒット数_Auto含まない[nPlayer][k] = new CHITCOUNTOFRANK();
+                    this.nヒット数_Auto含む[nPlayer][k] = new CHITCOUNTOFRANK();
+                }
+            }
+
+            for ( int k = 0; k < 4; k++ )
 			{
-				//for ( int n = 0; n < 5; n++ )
-				//{
-					this.nヒット数_Auto含まない[ k ] = new CHITCOUNTOFRANK();
-					this.nヒット数_Auto含む[ k ] = new CHITCOUNTOFRANK();
-				//}
-				this.queWailing[ k ] = new Queue<CDTX.CChip>();
+                this.queWailing[ k ] = new Queue<CDTX.CChip>();
 				this.r現在の歓声Chip[ k ] = null;
 				cInvisibleChip.eInvisibleMode[ k ] = TJAPlayer3.ConfigIni.eInvisible[ k ];
 				if ( TJAPlayer3.DTXVmode.Enabled )
@@ -614,9 +618,10 @@ namespace TJAPlayer3
         protected readonly int[] nパッド0Atoパッド08 = new int[] { 1, 2, 3, 4, 5, 6, 7, 1, 8, 0, 9, 9 };// パッド画像のヒット処理用
                                                               //   HH SD BD HT LT FT CY HHO RD LC LP LBD
         protected readonly int[] nパッド0Atoレーン07 = new int[] { 1, 2, 3, 4, 5, 6, 7, 1, 9, 0, 8, 8 };
-		public STDGBVALUE<CHITCOUNTOFRANK> nヒット数_Auto含まない;
-		public STDGBVALUE<CHITCOUNTOFRANK> nヒット数_Auto含む;
-		protected int n現在のトップChip = -1;
+		public STDGBVALUE<CHITCOUNTOFRANK>[] nヒット数_Auto含まない;
+        public STDGBVALUE<CHITCOUNTOFRANK>[] nヒット数_Auto含む;
+        
+        protected int n現在のトップChip = -1;
 		protected int[] n最後に再生したBGMの実WAV番号 = new int[ 50 ];
 		protected int n最後に再生したHHのチャンネル番号;
 		protected List<int> L最後に再生したHHの実WAV番号;		// #23921 2011.1.4 yyagi: change "int" to "List<int>", for recording multiple wav No.
@@ -1571,7 +1576,7 @@ namespace TJAPlayer3
                             case E判定.Perfect:
                                 {
                                     this.nBranch_Perfect[ nPlayer ]++;
-                                    if( nPlayer == 0 ) this.nヒット数_Auto含まない.Drums.Perfect++;
+                                    this.nヒット数_Auto含まない[nPlayer].Drums.Perfect++;
                                     this.actCombo.n現在のコンボ数[ nPlayer ]++;
                                     if (this.actCombo.ctコンボ加算[nPlayer].b終了値に達してない)
                                     {
@@ -1587,7 +1592,7 @@ namespace TJAPlayer3
                             case E判定.Good:
                                 {
                                     this.nBranch_Good[ nPlayer ]++;
-                                    if( nPlayer == 0 ) this.nヒット数_Auto含まない.Drums.Great++;
+                                    this.nヒット数_Auto含まない[nPlayer].Drums.Great++;
                                     this.actCombo.n現在のコンボ数[ nPlayer ]++;
                                     //this.actCombo.ctコンボ加算 = new CCounter( 0, 8, 10, CDTXMania.Timer );
                                     //this.actCombo.ctコンボ加算.t進行();
@@ -1609,7 +1614,7 @@ namespace TJAPlayer3
                                     if( pChip.nチャンネル番号 == 0x1F )
                                         break;
                                     this.nBranch_Miss[ nPlayer ]++;
-                                    if( nPlayer == 0 ) this.nヒット数_Auto含まない.Drums.Miss++;
+                                    this.nヒット数_Auto含まない[nPlayer].Drums.Miss++;
                                     this.actCombo.n現在のコンボ数[ nPlayer ] = 0;
                                     this.actComboVoice.tリセット();
                                     //for (int i = 0; i < 2; i++)
@@ -1619,7 +1624,7 @@ namespace TJAPlayer3
                                 }
 			    				break;
 				    		default:
-					    		this.nヒット数_Auto含む.Drums[ (int) eJudgeResult ]++;
+					    		this.nヒット数_Auto含む[nPlayer].Drums[ (int) eJudgeResult ]++;
 		    					break;
 			    		}
                     }
@@ -1634,7 +1639,7 @@ namespace TJAPlayer3
                                     if( pChip.nチャンネル番号 != 0x15 && pChip.nチャンネル番号 != 0x16 && pChip.nチャンネル番号 != 0x17 && pChip.nチャンネル番号 != 0x18 )
                                     {
                                         this.nBranch_Perfect[ nPlayer ]++;
-                                        if( nPlayer == 0 ) this.nヒット数_Auto含む.Drums.Perfect++;
+                                        this.nヒット数_Auto含む[nPlayer].Drums.Perfect++;
                                         this.actCombo.n現在のコンボ数[ nPlayer ]++;
                                         //this.actCombo.ctコンボ加算.t進行();
                                         if (this.actCombo.ctコンボ加算[nPlayer].b終了値に達してない)
@@ -2027,7 +2032,7 @@ namespace TJAPlayer3
 					break;
 
 				case E楽器パート.TAIKO:
-					this.actCombo.n現在のコンボ数.P1 = 0;
+					this.actCombo.n現在のコンボ数[0] = 0;
 					break;
 
 				default:
@@ -3994,18 +3999,19 @@ namespace TJAPlayer3
         {
             if (b演奏記録)
             {
-                this.nヒット数_Auto含む.Taiko.Perfect = 0;
-                this.nヒット数_Auto含む.Taiko.Great = 0;
-                this.nヒット数_Auto含む.Taiko.Good = 0;
-                this.nヒット数_Auto含む.Taiko.Poor = 0;
-                this.nヒット数_Auto含む.Taiko.Miss = 0;
-
-                this.nヒット数_Auto含まない.Taiko.Perfect = 0;
-                this.nヒット数_Auto含まない.Taiko.Great = 0;
-                this.nヒット数_Auto含まない.Taiko.Good = 0;
-                this.nヒット数_Auto含まない.Taiko.Poor = 0;
-                this.nヒット数_Auto含まない.Taiko.Miss = 0;
-
+                for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)
+                {
+                    this.nヒット数_Auto含む[nPlayer].Drums.Perfect = 0;
+                    this.nヒット数_Auto含む[nPlayer].Drums.Great = 0;
+                    this.nヒット数_Auto含む[nPlayer].Drums.Good = 0;
+                    this.nヒット数_Auto含む[nPlayer].Drums.Poor = 0;
+                    this.nヒット数_Auto含む[nPlayer].Drums.Miss = 0;
+                    this.nヒット数_Auto含まない[nPlayer].Drums.Perfect = 0;
+                    this.nヒット数_Auto含まない[nPlayer].Drums.Great = 0;
+                    this.nヒット数_Auto含まない[nPlayer].Drums.Good = 0;
+                    this.nヒット数_Auto含まない[nPlayer].Drums.Poor = 0;
+                    this.nヒット数_Auto含まない[nPlayer].Drums.Miss = 0;
+                }
                 this.actCombo.On活性化();
                 this.actScore.On活性化();
                 for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)

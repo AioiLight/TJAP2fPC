@@ -595,9 +595,9 @@ namespace TJAPlayer3
                     }
                 }
                 #region[ 全体 ]
-                if( TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect != 0 || TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Great != 0 )
+                if( TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Perfect != 0 || TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Great != 0 )
                 {
-                    double db全体精度 = ( (double) ( TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Great ) / this.st叩ききりまショー.n区間ノート数 ) * 100.0;
+                    double db全体精度 = ( (double) ( TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Perfect + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Great ) / this.st叩ききりまショー.n区間ノート数 ) * 100.0;
                     for( int i = 0; i < this.n全体精度ボーナス.Length; i++ )
                     {
                         if( db全体精度 >= this.n全体精度ボーナス[ i ].ret )
@@ -622,9 +622,9 @@ namespace TJAPlayer3
                     }
                 }
                 #endregion
-                if( TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.P1最高値 != 0 )
+                if( TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.最高値[0] != 0 )
                 {
-                    double db全体コンボ率 = ( (double)TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.P1最高値 / this.st叩ききりまショー.n現在通過したノート数 ) * 100.0;
+                    double db全体コンボ率 = ( (double)TJAPlayer3.stage演奏ドラム画面.actCombo.n現在のコンボ数.最高値[0] / this.st叩ききりまショー.n現在通過したノート数 ) * 100.0;
                     for( int i = 0; i < this.n全体コンボ率ボーナス.Length; i++ )
                     {
                         if( db全体コンボ率 >= this.n全体コンボ率ボーナス[ i ].ret )
@@ -635,7 +635,7 @@ namespace TJAPlayer3
                     }
                 }
 
-                double db全体ミス率 = ( ( (double)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Poor + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Miss ) / this.st叩ききりまショー.n現在通過したノート数 ) * 100.0;
+                double db全体ミス率 = ( ( (double)TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Poor + TJAPlayer3.stage演奏ドラム画面.nヒット数_Auto含まない[0].Drums.Miss ) / this.st叩ききりまショー.n現在通過したノート数 ) * 100.0;
                 for( int i = 0; i < this.n全体ミス率ボーナス.Length; i++ )
                 {
                     if( db全体ミス率 >= this.n全体ミス率ボーナス[ i ].ret )

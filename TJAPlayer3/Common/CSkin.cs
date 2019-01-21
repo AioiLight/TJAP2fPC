@@ -2297,7 +2297,6 @@ namespace TJAPlayer3
         public int[] Background_Scroll_Y = new int[] { 0, 536 };
         #endregion
 
-
         #region[ 座標 ]
         //2017.08.11 kairera0467 DP実用化に向けてint配列に変更
 
@@ -2689,6 +2688,35 @@ namespace TJAPlayer3
         public int[] Result_Dan = new int[] { 500, 500 };
         public int[] Result_Dan_XY = new int[] { 100, 0 };
         public int[] Result_Dan_Plate_XY = new int[] { 149, 416 };
+
+        public int[] Result_Panel_X = new int[] { 515, 515 };
+        public int[] Result_Panel_Y = new int[] { 75, 375 };
+        public int[] Result_Score_X = new int[] { 582, 582 };
+        public int[] Result_Score_Y = new int[] { 252, 552 };      
+        public int[] Result_ScoreText_X = new int[] { 753, 753 };
+        public int[] Result_ScoreText_Y = new int[] { 249, 549 };
+        public int[] Result_Judge_X = new int[] { 815, 815 };
+        public int[] Result_Judge_Y = new int[] { 182, 482 };
+        public int[] Result_Great_X = new int[] { 875, 875 };
+        public int[] Result_Great_Y = new int[] { 188, 488 };
+        public int[] Result_Good_X = new int[] { 875, 875 };
+        public int[] Result_Good_Y = new int[] { 226, 526 };
+        public int[] Result_Bad_X = new int[] { 875, 875 };
+        public int[] Result_Bad_Y = new int[] { 266, 566 };
+        public int[] Result_Combo_X = new int[] { 1144, 1144 };
+        public int[] Result_Combo_Y = new int[] { 188, 488 };
+        public int[] Result_Roll_X = new int[] { 1144, 1144 };
+        public int[] Result_Roll_Y = new int[] { 226, 526 };
+        public int[] Result_GaugeBase_X = new int[] { 555, 555 };
+        public int[] Result_GaugeBase_Y = new int[] { 122, 422 };
+        public int[] Result_GaugeBody_X = new int[] { 559, 559 };
+        public int[] Result_GaugeBody_Y = new int[] { 125, 425 };
+        public int[] Result_GaugeSoul_X = new int[] { 1174, 1174 };
+        public int[] Result_GaugeSoul_Y = new int[] { 107, 407 };
+        public int[] Result_GaugeSoulFire_X = new int[] { 1100, 1100 };
+        public int[] Result_GaugeSoulFire_Y = new int[] { 34, 334 };
+
+
         #endregion
         #region Font
         public int Font_Edge_Ratio = 30;

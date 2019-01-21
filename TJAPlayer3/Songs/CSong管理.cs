@@ -1623,11 +1623,11 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 						score.譜面情報.最大ランク[ n楽器番号 ] =
 							CScoreIni.tランク値を計算して返す( 
 								ini.stセクション[ n ].n全チップ数,
-								ini.stセクション[ n ].nPerfect数, 
-								ini.stセクション[ n ].nGreat数,
-								ini.stセクション[ n ].nGood数, 
-								ini.stセクション[ n ].nPoor数,
-								ini.stセクション[ n ].nMiss数 );
+								ini.stセクション[ n ].nPerfect数[0], 
+								ini.stセクション[ n ].nGreat数[0],
+								ini.stセクション[ n ].nGood数[0], 
+								ini.stセクション[ n ].nPoor数[0],
+								ini.stセクション[ n ].nMiss数[0] );
 					}
 					else
 					{
@@ -1639,7 +1639,7 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 					#endregion
 					score.譜面情報.最大スキル[ n楽器番号 ] = ini.stセクション[ n ].db演奏型スキル値;
 					score.譜面情報.フルコンボ[ n楽器番号 ] = ini.stセクション[ n ].bフルコンボである;
-                    score.譜面情報.ハイスコア = (int)ini.stセクション.HiScoreDrums.nスコア;
+                    score.譜面情報.ハイスコア = (int)ini.stセクション.HiScoreDrums.nスコア[0];
                     for( int i = 0; i < (int)Difficulty.Total; i++ )
                     {
                         score.譜面情報.nハイスコア[ i ] = (int)ini.stセクション.HiScoreDrums.nハイスコア[ i ];
