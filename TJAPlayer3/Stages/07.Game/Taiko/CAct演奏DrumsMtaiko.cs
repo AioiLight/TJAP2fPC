@@ -260,96 +260,16 @@ namespace TJAPlayer3
                 }
             }
 
-            for( int i = 0; i < TJAPlayer3.ConfigIni.nPlayerCount; i++ )
+            for( int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++ )
             {
-                // 2018/7/1 一時的にオプション画像の廃止。オプション画像については後日作り直します。(AioiLight)
-                //if( !CDTXMania.ConfigIni.bNoInfo && CDTXMania.Skin.eDiffDispMode != E難易度表示タイプ.mtaikoに画像で表示 )
-                //{
-                //    this.txオプションパネル_HS.t2D描画( CDTXMania.app.Device, 0, 230, new Rectangle( 0, this.nHS * 44, 162, 44 ) );
-                //    switch( CDTXMania.ConfigIni.eRandom.Taiko )
-                //    {
-                //        case Eランダムモード.RANDOM:
-                //            if( this.txオプションパネル_RANMIR != null )
-                //                this.txオプションパネル_RANMIR.t2D描画( CDTXMania.app.Device, 0, 264, new Rectangle( 0, 0, 162, 44 ) );
-                //            break;
-                //        case Eランダムモード.HYPERRANDOM:
-                //            if( this.txオプションパネル_RANMIR != null )
-                //                this.txオプションパネル_RANMIR.t2D描画( CDTXMania.app.Device, 0, 264, new Rectangle( 0, 88, 162, 44 ) );
-                //            break;
-                //        case Eランダムモード.SUPERRANDOM:
-                //            if( this.txオプションパネル_RANMIR != null )
-                //                this.txオプションパネル_RANMIR.t2D描画( CDTXMania.app.Device, 0, 264, new Rectangle( 0, 132, 162, 44 ) );
-                //            break;
-                //        case Eランダムモード.MIRROR:
-                //            if( this.txオプションパネル_RANMIR != null )
-                //                this.txオプションパネル_RANMIR.t2D描画( CDTXMania.app.Device, 0, 264, new Rectangle( 0, 44, 162, 44 ) );
-                //            break;
-                //    }
-
-                //    if( CDTXMania.ConfigIni.eSTEALTH == Eステルスモード.STEALTH )
-                //        this.txオプションパネル_特殊.t2D描画( CDTXMania.app.Device, 0, 300, new Rectangle( 0, 0, 162, 44 ) );
-                //    else if( CDTXMania.ConfigIni.eSTEALTH == Eステルスモード.DORON )
-                //        this.txオプションパネル_特殊.t2D描画( CDTXMania.app.Device, 0, 300, new Rectangle( 0, 44, 162, 44 ) );
-                //}
-                if (TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.nSeelectedCource[0]] != null)
-                {
-                    TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.nSeelectedCource[0]].t2D描画(TJAPlayer3.app.Device,
-                        TJAPlayer3.Skin.Game_CourseSymbol_X[i],
-                        TJAPlayer3.Skin.Game_CourseSymbol_Y[i]
-                        );
-                }
-
+                TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_CourseSymbol_X[nPlayer], TJAPlayer3.Skin.Game_CourseSymbol_Y[nPlayer]);
                 if (TJAPlayer3.ConfigIni.ShinuchiMode)
                 {
-                    if (TJAPlayer3.Tx.Couse_Symbol[(int)Difficulty.Total] != null)
-                    {
-                        TJAPlayer3.Tx.Couse_Symbol[(int)Difficulty.Total].t2D描画(TJAPlayer3.app.Device,
-                            TJAPlayer3.Skin.Game_CourseSymbol_X[i],
-                            TJAPlayer3.Skin.Game_CourseSymbol_Y[i]
-                            );
-                    }
-
+                    TJAPlayer3.Tx.Couse_Symbol[(int)Difficulty.Total]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_CourseSymbol_X[nPlayer], TJAPlayer3.Skin.Game_CourseSymbol_Y[nPlayer]);
                 }
-
-
+                TJAPlayer3.Tx.Taiko_NamePlate[nPlayer]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Taiko_NamePlate_X[nPlayer], TJAPlayer3.Skin.Game_Taiko_NamePlate_Y[nPlayer]);
+                TJAPlayer3.Tx.Taiko_PlayerNumber[nPlayer]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Taiko_PlayerNumber_X[nPlayer], TJAPlayer3.Skin.Game_Taiko_PlayerNumber_Y[nPlayer]);
             }
-            if (TJAPlayer3.Tx.Taiko_NamePlate[0] != null)
-            {
-                TJAPlayer3.Tx.Taiko_NamePlate[0].t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Taiko_NamePlate_X[0], TJAPlayer3.Skin.Game_Taiko_NamePlate_Y[0]);
-            }
-            if(TJAPlayer3.stage演奏ドラム画面.bDoublePlay && TJAPlayer3.Tx.Taiko_NamePlate[1] != null)
-            {
-                TJAPlayer3.Tx.Taiko_NamePlate[1].t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Taiko_NamePlate_X[1], TJAPlayer3.Skin.Game_Taiko_NamePlate_Y[1]);
-            }
-
-            if (TJAPlayer3.Tx.Taiko_PlayerNumber[0] != null)
-            {
-                TJAPlayer3.Tx.Taiko_PlayerNumber[0].t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Taiko_PlayerNumber_X[0], TJAPlayer3.Skin.Game_Taiko_PlayerNumber_Y[0]);
-            }
-            if (TJAPlayer3.stage演奏ドラム画面.bDoublePlay && TJAPlayer3.Tx.Taiko_PlayerNumber[1] != null)
-            {
-                TJAPlayer3.Tx.Taiko_PlayerNumber[1].t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Taiko_PlayerNumber_X[1], TJAPlayer3.Skin.Game_Taiko_PlayerNumber_Y[1]);
-            }
-
-            //if (CDTXMania.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.V))
-            //{
-            //    this.tMtaikoEvent( 0x11, 0, 1 );
-            //}
-            //if (CDTXMania.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.N))
-            //{
-            //    this.tMtaikoEvent( 0x11, 1, 1 );
-            //}
-            //if (CDTXMania.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.C))
-            //{
-            //    this.tMtaikoEvent( 0x12, 0, 1 );
-            //}
-            //if (CDTXMania.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.M))
-            //{
-            //    this.tMtaikoEvent( 0x12, 1, 1 );
-            //}
-
-
-
             return base.On進行描画();
         }
 
