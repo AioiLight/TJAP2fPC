@@ -1223,11 +1223,11 @@ namespace TJAPlayer3
                 }
 
                 this.b連打中[ nPlayer ] = true;
-                if(actChara.CharaAction_Balloon_Breaking != null && nPlayer == 0)
+                if(actChara.CharaAction_Balloon_Breaking[nPlayer] != null)
                 {
-                    actChara.アクションタイマーリセット();
-                    actChara.bマイどんアクション中 = true;
-                    actChara.CharaAction_Balloon_Breaking = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking - 1, TJAPlayer3.Skin.Game_Chara_Balloon_Timer, TJAPlayer3.Timer);
+                    actChara.アクションタイマーリセット(nPlayer);
+                    actChara.bマイどんアクション中[nPlayer] = true;
+                    actChara.CharaAction_Balloon_Breaking[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking - 1, TJAPlayer3.Skin.Game_Chara_Balloon_Timer, TJAPlayer3.Timer);
                    
                 }
                 if (this.actBalloon.ct風船アニメ[nPlayer].b終了値に達してない)
@@ -1267,13 +1267,13 @@ namespace TJAPlayer3
                     //this.b連打中 = false;
                     //this.actChara.b風船連打中 = false;
                     pChip.b可視 = false;
-                    this.actChara.bマイどんアクション中 = false; // 風船終了後、再生されていたアクションがされないようにするために追加。(AioiLight)
-                    if (actChara.CharaAction_Balloon_Broke != null && nPlayer == 0)
+                    this.actChara.bマイどんアクション中[nPlayer] = false; // 風船終了後、再生されていたアクションがされないようにするために追加。(AioiLight)
+                    if (actChara.CharaAction_Balloon_Broke[nPlayer] != null)
                     {
-                        actChara.アクションタイマーリセット();
-                        actChara.bマイどんアクション中 = true;
-                        actChara.CharaAction_Balloon_Broke = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke - 1, TJAPlayer3.Skin.Game_Chara_Balloon_Timer, TJAPlayer3.Timer);
-                        if(actChara.CharaAction_Balloon_Delay != null )actChara.CharaAction_Balloon_Delay = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Balloon_Delay - 1, 1, TJAPlayer3.Timer);
+                        actChara.アクションタイマーリセット(nPlayer);
+                        actChara.bマイどんアクション中[nPlayer] = true;
+                        actChara.CharaAction_Balloon_Broke[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke - 1, TJAPlayer3.Skin.Game_Chara_Balloon_Timer, TJAPlayer3.Timer);
+                        if(actChara.CharaAction_Balloon_Delay[nPlayer] != null )actChara.CharaAction_Balloon_Delay[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Balloon_Delay - 1, 1, TJAPlayer3.Timer);
                     }
                     this.eRollState = E連打State.none;
                 }
@@ -1296,7 +1296,7 @@ namespace TJAPlayer3
                 if ( chip現在処理中の連打チップ[ nPlayer ] != null )
                     chip現在処理中の連打チップ[ nPlayer ].bHit = true;
                 this.b連打中[ nPlayer ] = false;
-                this.actChara.b風船連打中 = false;
+                this.actChara.b風船連打中[nPlayer] = false;
                 return false;
             }
 
@@ -1418,7 +1418,7 @@ namespace TJAPlayer3
                         {
                             #region[ 風船 ]
                             this.b連打中[ nPlayer ] = true;
-                            this.actChara.b風船連打中 = true;
+                            this.actChara.b風船連打中[nPlayer] = true;
                             
                             if( bAutoPlay )
                             {
@@ -1515,25 +1515,25 @@ namespace TJAPlayer3
 
                 if ((int)actGauge.db現在のゲージ値[nPlayer] >= 100 && this.bIsAlreadyMaxed[nPlayer] == false)
                 {
-                    if(TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn != 0 && nPlayer == 0 && actChara.CharaAction_Balloon_Delay.b終了値に達した)
+                    if(TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn != 0&& actChara.CharaAction_Balloon_Delay[nPlayer].b終了値に達した)
                     {
-                        this.actChara.アクションタイマーリセット();
-                        this.actChara.ctキャラクターアクション_魂MAX = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn) * 2, CSound管理.rc演奏用タイマ);
-                        this.actChara.ctキャラクターアクション_魂MAX.t進行db();
-                        this.actChara.ctキャラクターアクション_魂MAX.db現在の値 = 0D;
-                        this.actChara.bマイどんアクション中 = true;
+                        this.actChara.アクションタイマーリセット(nPlayer);
+                        this.actChara.ctキャラクターアクション_魂MAX[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn) * 2, CSound管理.rc演奏用タイマ);
+                        this.actChara.ctキャラクターアクション_魂MAX[nPlayer].t進行db();
+                        this.actChara.ctキャラクターアクション_魂MAX[nPlayer].db現在の値 = 0D;
+                        this.actChara.bマイどんアクション中[nPlayer] = true;
                     }
                     this.bIsAlreadyMaxed[nPlayer] = true;
                 }
                 if ((int)actGauge.db現在のゲージ値[nPlayer] >= 80 && this.bIsAlreadyCleared[nPlayer] == false)
                 {
-                    if(TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn != 0 && nPlayer == 0 && actChara.CharaAction_Balloon_Delay.b終了値に達した)
+                    if(TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn != 0 && actChara.CharaAction_Balloon_Delay[nPlayer].b終了値に達した)
                     {
-                        this.actChara.アクションタイマーリセット();
-                        this.actChara.ctキャラクターアクション_ノルマ = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn) * 2, CSound管理.rc演奏用タイマ);
-                        this.actChara.ctキャラクターアクション_ノルマ.t進行db();
-                        this.actChara.ctキャラクターアクション_ノルマ.db現在の値 = 0D;
-                        this.actChara.bマイどんアクション中 = true;
+                        this.actChara.アクションタイマーリセット(nPlayer);
+                        this.actChara.ctキャラクターアクション_ノルマ[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn) * 2, CSound管理.rc演奏用タイマ);
+                        this.actChara.ctキャラクターアクション_ノルマ[nPlayer].t進行db();
+                        this.actChara.ctキャラクターアクション_ノルマ[nPlayer].db現在の値 = 0D;
+                        this.actChara.bマイどんアクション中[nPlayer] = true;
                     }
                     this.bIsAlreadyCleared[nPlayer] = true;
                     TJAPlayer3.stage演奏ドラム画面.actBackground.ClearIn(nPlayer);
@@ -1694,37 +1694,37 @@ namespace TJAPlayer3
                             }
                         }
 
-                        if (this.actCombo.n現在のコンボ数[0] % 10 == 0 && this.actCombo.n現在のコンボ数[0] > 0)
+                        if (this.actCombo.n現在のコンボ数[nPlayer] % 10 == 0 && this.actCombo.n現在のコンボ数[nPlayer] > 0)
                         {
                             //if (this.actChara.bマイどんアクション中 == false)
                             //{
                                 if (!pChip.bGOGOTIME) //2018.03.11 kairera0467 チップに埋め込んだフラグから読み取る
                                 {
-                                    if (TJAPlayer3.Skin.Game_Chara_Ptn_10combo != 0 && nPlayer == 0 && !this.actChara.ctキャラクターアクション_ノルマ.b進行中db && actChara.CharaAction_Balloon_Delay.b終了値に達した)
+                                    if (TJAPlayer3.Skin.Game_Chara_Ptn_10combo != 0 && !this.actChara.ctキャラクターアクション_ノルマ[nPlayer].b進行中db && actChara.CharaAction_Balloon_Delay[0].b終了値に達した)
                                     {
-                                        if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0] < 100)
+                                        if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[nPlayer] < 100)
                                         {
                                             // 魂ゲージMAXではない
                                             // ジャンプ_ノーマル
-                                            this.actChara.アクションタイマーリセット();
-                                            this.actChara.ctキャラクターアクション_10コンボ = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_10combo - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_10combo) * 2, CSound管理.rc演奏用タイマ);
-                                            this.actChara.ctキャラクターアクション_10コンボ.t進行db();
-                                            this.actChara.ctキャラクターアクション_10コンボ.db現在の値 = 0D;
-                                            this.actChara.bマイどんアクション中 = true;
+                                            this.actChara.アクションタイマーリセット(nPlayer);
+                                            this.actChara.ctキャラクターアクション_10コンボ[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_10combo - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_10combo) * 2, CSound管理.rc演奏用タイマ);
+                                            this.actChara.ctキャラクターアクション_10コンボ[nPlayer].t進行db();
+                                            this.actChara.ctキャラクターアクション_10コンボ[nPlayer].db現在の値 = 0D;
+                                            this.actChara.bマイどんアクション中[nPlayer] = true;
                                             //this.actChara.マイどん_アクション_10コンボ();
                                         }
                                     }
-                                    if (TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max != 0 && nPlayer == 0 && !this.actChara.ctキャラクターアクション_魂MAX.b進行中db && actChara.CharaAction_Balloon_Delay.b終了値に達した)
+                                    if (TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max != 0 && !this.actChara.ctキャラクターアクション_魂MAX[nPlayer].b進行中db && actChara.CharaAction_Balloon_Delay[nPlayer].b終了値に達した)
                                     {
-                                        if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0] >= 100)
+                                        if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[nPlayer] >= 100)
                                         {
                                             // 魂ゲージMAX
                                             // ジャンプ_MAX
-                                            this.actChara.アクションタイマーリセット();
-                                            this.actChara.ctキャラクターアクション_10コンボMAX = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max) * 2, CSound管理.rc演奏用タイマ);
-                                            this.actChara.ctキャラクターアクション_10コンボMAX.t進行db();
-                                            this.actChara.ctキャラクターアクション_10コンボMAX.db現在の値 = 0D;
-                                            this.actChara.bマイどんアクション中 = true;
+                                            this.actChara.アクションタイマーリセット(nPlayer);
+                                            this.actChara.ctキャラクターアクション_10コンボMAX[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max) * 2, CSound管理.rc演奏用タイマ);
+                                            this.actChara.ctキャラクターアクション_10コンボMAX[nPlayer].t進行db();
+                                            this.actChara.ctキャラクターアクション_10コンボMAX[nPlayer].db現在の値 = 0D;
+                                            this.actChara.bマイどんアクション中[nPlayer] = true;
                                         }
                                     }
                                 }
@@ -3026,7 +3026,7 @@ namespace TJAPlayer3
                             {
                                 this.b連打中[ nPlayer ] = false;
                                 this.actRoll.b表示[ nPlayer ] = false;
-                                this.actChara.b風船連打中 = false;
+                                this.actChara.b風船連打中[nPlayer] = false;
                                 pChip.bHit = true;
                                 if( chip現在処理中の連打チップ[ nPlayer ] != null )
                                     chip現在処理中の連打チップ[ nPlayer ].bHit = true;
@@ -3105,29 +3105,29 @@ namespace TJAPlayer3
                                     if (TJAPlayer3.Skin.Game_Chara_Ptn_Normal != 0)
                                     {
                                         double dbPtn_Normal = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_Normal / this.actChara.arモーション番号.Length;
-                                        this.actChara.ctChara_Normal = new CCounter(0, this.actChara.arモーション番号.Length - 1, dbPtn_Normal, CSound管理.rc演奏用タイマ);
+                                        this.actChara.ctChara_Normal[nPlayer] = new CCounter(0, this.actChara.arモーション番号.Length - 1, dbPtn_Normal, CSound管理.rc演奏用タイマ);
                                     }
                                     else
                                     {
-                                        this.actChara.ctChara_Normal = new CCounter();
+                                        this.actChara.ctChara_Normal[nPlayer] = new CCounter();
                                     }
                                     if (TJAPlayer3.Skin.Game_Chara_Ptn_Clear != 0)
                                     {
                                         double dbPtn_Clear = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_Clear / this.actChara.arクリアモーション番号.Length;
-                                        this.actChara.ctChara_Clear = new CCounter(0, this.actChara.arクリアモーション番号.Length - 1, dbPtn_Clear, CSound管理.rc演奏用タイマ);
+                                        this.actChara.ctChara_Clear[nPlayer] = new CCounter(0, this.actChara.arクリアモーション番号.Length - 1, dbPtn_Clear, CSound管理.rc演奏用タイマ);
                                     }
                                     else
                                     {
-                                        this.actChara.ctChara_Clear = new CCounter();
+                                        this.actChara.ctChara_Clear[nPlayer] = new CCounter();
                                     }
                                     if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGo != 0)
                                     {
                                         double dbPtn_GoGo = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_GoGo / this.actChara.arゴーゴーモーション番号.Length;
-                                        this.actChara.ctChara_GoGo = new CCounter(0, this.actChara.arゴーゴーモーション番号.Length - 1, dbPtn_GoGo, CSound管理.rc演奏用タイマ);
+                                        this.actChara.ctChara_GoGo[nPlayer] = new CCounter(0, this.actChara.arゴーゴーモーション番号.Length - 1, dbPtn_GoGo, CSound管理.rc演奏用タイマ);
                                     }
                                     else
                                     {
-                                        this.actChara.ctChara_GoGo = new CCounter();
+                                        this.actChara.ctChara_GoGo[nPlayer] = new CCounter();
                                     }
                                     this.ct制御タイマ = new CCounter(0, 10, 500, CSound管理.rc演奏用タイマ);
                                     if (TJAPlayer3.Skin.Game_Dancer_Ptn != 0)
@@ -3335,27 +3335,27 @@ namespace TJAPlayer3
                                 if (TJAPlayer3.Skin.Game_Chara_Ptn_Normal != 0)
                                 {
                                     double dbPtn_Normal = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_Normal / this.actChara.arモーション番号.Length;
-                                    this.actChara.ctChara_Normal = new CCounter(0, this.actChara.arモーション番号.Length - 1, dbPtn_Normal, CSound管理.rc演奏用タイマ);
+                                    this.actChara.ctChara_Normal[nPlayer] = new CCounter(0, this.actChara.arモーション番号.Length - 1, dbPtn_Normal, CSound管理.rc演奏用タイマ);
                                 } else
                                 {
-                                    this.actChara.ctChara_Normal = new CCounter();
+                                    this.actChara.ctChara_Normal[nPlayer] = new CCounter();
                                 }
                                 if (TJAPlayer3.Skin.Game_Chara_Ptn_Clear != 0)
                                 {
                                     double dbPtn_Clear = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_Clear / this.actChara.arクリアモーション番号.Length;
-                                    this.actChara.ctChara_Clear = new CCounter(0, this.actChara.arクリアモーション番号.Length - 1, dbPtn_Clear, CSound管理.rc演奏用タイマ);
+                                    this.actChara.ctChara_Clear[nPlayer] = new CCounter(0, this.actChara.arクリアモーション番号.Length - 1, dbPtn_Clear, CSound管理.rc演奏用タイマ);
                                 }
                                 else
                                 {
-                                    this.actChara.ctChara_Clear = new CCounter();
+                                    this.actChara.ctChara_Clear[nPlayer] = new CCounter();
                                 }
                                 if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGo != 0)
                                 {
                                     double dbPtn_GoGo = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_GoGo / this.actChara.arゴーゴーモーション番号.Length;
-                                    this.actChara.ctChara_GoGo = new CCounter(0, this.actChara.arゴーゴーモーション番号.Length - 1, dbPtn_GoGo, CSound管理.rc演奏用タイマ);
+                                    this.actChara.ctChara_GoGo[nPlayer] = new CCounter(0, this.actChara.arゴーゴーモーション番号.Length - 1, dbPtn_GoGo, CSound管理.rc演奏用タイマ);
                                 } else
                                 {
-                                    this.actChara.ctChara_GoGo = new CCounter();
+                                    this.actChara.ctChara_GoGo[nPlayer] = new CCounter();
                                 }
                                 this.ct制御タイマ = new CCounter(0, 10, 500, CSound管理.rc演奏用タイマ);
                                 if (TJAPlayer3.Skin.Game_Dancer_Ptn != 0)
@@ -3412,36 +3412,32 @@ namespace TJAPlayer3
                             this.bIsGOGOTIME[ nPlayer ] = true;
                             //double dbUnit = (((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM))));
                             double dbUnit = (((60.0 / pChip.dbBPM)));
-                            if(nPlayer == 0)
-                            {
-                                if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart != 0 && nPlayer == 0 && actChara.CharaAction_Balloon_Delay.b終了値に達した)
+                                if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart != 0 && actChara.CharaAction_Balloon_Delay[nPlayer].b終了値に達した)
                                 {
-                                    if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0] < 100)
+                                    if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[nPlayer] < 100)
                                     {
                                         // 魂ゲージMAXではない
                                         // ゴーゴースタート_ノーマル
-                                        this.actChara.アクションタイマーリセット();
-                                        this.actChara.ctキャラクターアクション_ゴーゴースタート = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart) * 2, CSound管理.rc演奏用タイマ);
-                                        this.actChara.ctキャラクターアクション_ゴーゴースタート.t進行db();
-                                        this.actChara.ctキャラクターアクション_ゴーゴースタート.db現在の値 = 0D;
-                                        this.actChara.bマイどんアクション中 = true;
+                                        this.actChara.アクションタイマーリセット(nPlayer);
+                                        this.actChara.ctキャラクターアクション_ゴーゴースタート[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart) * 2, CSound管理.rc演奏用タイマ);
+                                        this.actChara.ctキャラクターアクション_ゴーゴースタート[nPlayer].t進行db();
+                                        this.actChara.ctキャラクターアクション_ゴーゴースタート[nPlayer].db現在の値 = 0D;
+                                        this.actChara.bマイどんアクション中[nPlayer] = true;
                                         //this.actChara.マイどん_アクション_10コンボ();
                                     }
                                 }
-                                if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max != 0 && nPlayer == 0 && actChara.CharaAction_Balloon_Delay.b終了値に達した)
+                            if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max != 0 && actChara.CharaAction_Balloon_Delay[nPlayer].b終了値に達した)
+                            {
+                                if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[nPlayer] >= 100)
                                 {
-                                    if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0] >= 100)
-                                    {
-                                        // 魂ゲージMAX
-                                        // ゴーゴースタート_MAX
-                                        this.actChara.アクションタイマーリセット();
-                                        this.actChara.ctキャラクターアクション_ゴーゴースタートMAX = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max) * 2, CSound管理.rc演奏用タイマ);
-                                        this.actChara.ctキャラクターアクション_ゴーゴースタートMAX.t進行db();
-                                        this.actChara.ctキャラクターアクション_ゴーゴースタートMAX.db現在の値 = 0D;
-                                        this.actChara.bマイどんアクション中 = true;
-                                    }
+                                    // 魂ゲージMAX
+                                    // ゴーゴースタート_MAX
+                                    this.actChara.アクションタイマーリセット(nPlayer);
+                                    this.actChara.ctキャラクターアクション_ゴーゴースタートMAX[nPlayer] = new CCounter(0, TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max) * 2, CSound管理.rc演奏用タイマ);
+                                    this.actChara.ctキャラクターアクション_ゴーゴースタートMAX[nPlayer].t進行db();
+                                    this.actChara.ctキャラクターアクション_ゴーゴースタートMAX[nPlayer].db現在の値 = 0D;
+                                    this.actChara.bマイどんアクション中[nPlayer] = true;
                                 }
-
                             }
                             TJAPlayer3.stage演奏ドラム画面.actLaneTaiko.GOGOSTART();
                         }
@@ -3619,14 +3615,7 @@ namespace TJAPlayer3
                     case 0xE2:
                         if( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
                         {
-                            if (nPlayer == 0)
-                            {
-                                TJAPlayer3.stage演奏ドラム画面.actLaneTaiko.t判定枠移動(dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].db移動時間, dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].n移動距離px, dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].n移動方向);
-                            }
-                            else
-                            {
-                                TJAPlayer3.stage演奏ドラム画面.actLaneTaiko.t判定枠移動2(dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].db移動時間, dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].n移動距離px, dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].n移動方向);
-                            }
+                            TJAPlayer3.stage演奏ドラム画面.actLaneTaiko.t判定枠移動(dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].db移動時間, dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].n移動距離px, dTX.listJPOSSCROLL[nJPOSSCROLL[nPlayer]].n移動方向);
                             this.nJPOSSCROLL[ nPlayer ]++;
                             pChip.bHit = true;
                         }

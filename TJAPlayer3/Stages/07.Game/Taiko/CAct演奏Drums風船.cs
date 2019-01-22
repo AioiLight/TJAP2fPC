@@ -121,10 +121,10 @@ namespace TJAPlayer3
             return base.On進行描画();
         }
 
-        public int On進行描画(int n連打ノルマ, int n連打数, int player)
+        public int On進行描画(int n連打ノルマ, int n連打数, int nPlayer)
         {
             this.ct風船ふきだしアニメ.t進行Loop();
-            this.ct風船アニメ[player].t進行();
+            this.ct風船アニメ[nPlayer].t進行();
 
             //CDTXMania.act文字コンソール.tPrint( 0, 16, C文字コンソール.Eフォント種別.赤, this.ct風船終了.n現在の値.ToString() );
             int[] n残り打数 = new int[] { 0, 0, 0, 0, 0 };
@@ -155,20 +155,20 @@ namespace TJAPlayer3
                     if (n残り打数[j] < n連打数)
                     {
                         if (TJAPlayer3.Tx.Balloon_Breaking[j] != null)
-                            TJAPlayer3.Tx.Balloon_Breaking[j].t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Balloon_Balloon_X[player] + (this.ct風船ふきだしアニメ.n現在の値 == 1 ? 3 : 0), TJAPlayer3.Skin.Game_Balloon_Balloon_Y[player]);
+                            TJAPlayer3.Tx.Balloon_Breaking[j].t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Balloon_Balloon_X[nPlayer] + (this.ct風船ふきだしアニメ.n現在の値 == 1 ? 3 : 0), TJAPlayer3.Skin.Game_Balloon_Balloon_Y[nPlayer]);
                         break;
                     }
                 }
                 //1P:31 2P:329
                 if (TJAPlayer3.Tx.Balloon_Balloon != null)
-                    TJAPlayer3.Tx.Balloon_Balloon.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Balloon_Balloon_Frame_X[player], TJAPlayer3.Skin.Game_Balloon_Balloon_Frame_Y[player]);
-                this.t文字表示(TJAPlayer3.Skin.Game_Balloon_Balloon_Number_X[player], TJAPlayer3.Skin.Game_Balloon_Balloon_Number_Y[player], n連打数.ToString(), n連打数, player);
+                    TJAPlayer3.Tx.Balloon_Balloon.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Balloon_Balloon_Frame_X[nPlayer], TJAPlayer3.Skin.Game_Balloon_Balloon_Frame_Y[nPlayer]);
+                this.t文字表示(TJAPlayer3.Skin.Game_Balloon_Balloon_Number_X[nPlayer], TJAPlayer3.Skin.Game_Balloon_Balloon_Number_Y[nPlayer], n連打数.ToString(), n連打数, nPlayer);
                 //CDTXMania.act文字コンソール.tPrint( 0, 0, C文字コンソール.Eフォント種別.白, n連打数.ToString() );
             }
-            if (n連打数 == 0 && TJAPlayer3.stage演奏ドラム画面.actChara.b風船連打中)
+            if (n連打数 == 0 && TJAPlayer3.stage演奏ドラム画面.actChara.b風船連打中[nPlayer])
             {
-                TJAPlayer3.stage演奏ドラム画面.actChara.b風船連打中 = false;
-                TJAPlayer3.stage演奏ドラム画面.b連打中[player] = false;
+                TJAPlayer3.stage演奏ドラム画面.actChara.b風船連打中[nPlayer] = false;
+                TJAPlayer3.stage演奏ドラム画面.b連打中[nPlayer] = false;
                 //this.tEnd();
                 ////this.ct風船終了.n現在の値 = 0;
                 //if (this.ct風船終了.b進行中db)
