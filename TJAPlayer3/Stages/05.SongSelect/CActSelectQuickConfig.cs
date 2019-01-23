@@ -73,8 +73,8 @@ namespace TJAPlayer3
             {
                 l.Add(new CItemList("ゲーム", CItemBase.Eパネル種別.通常, (int)TJAPlayer3.ConfigIni.eGameMode, "", "",
                 new string[] { "OFF", "完走!", "完走!激辛" }));
-                l.Add(new CItemList(nameof(TJAPlayer3.ConfigIni.ShinuchiMode), CItemBase.Eパネル種別.通常, TJAPlayer3.ConfigIni.ShinuchiMode ? 1 : 0, "", "", new string[] { "OFF", "ON" }));
             }
+            l.Add(new CItemList("ShinuchiMode", CItemBase.Eパネル種別.通常, TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer] ? 1 : 0, "", "", new string[] { "OFF", "ON" }));
             #endregion
             #region [ 共通 SET切り替え/More/Return ]
             l.Add(new CSwitchItemList("More...", CItemBase.Eパネル種別.通常, 0, "", "", ""));
@@ -130,7 +130,7 @@ namespace TJAPlayer3
                         TJAPlayer3.ConfigIni.eGameMode = game;
                         break;
                     case (int)EOrder1P.ShinuchiMode:
-                        TJAPlayer3.ConfigIni.ShinuchiMode = !TJAPlayer3.ConfigIni.ShinuchiMode;
+                        TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer] = !TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer];
                         break;
                     case (int)EOrder1P.More:
                         SetAutoParameters();            // 簡易CONFIGメニュー脱出に伴い、簡易CONFIG内のAUTOの設定をConfigIniクラスに反映する
@@ -161,6 +161,9 @@ namespace TJAPlayer3
                         break;
                     case (int)EOrder2P.Stealth:
                         TJAPlayer3.ConfigIni.eSTEALTH[nPlayer] = (Eステルスモード)GetIndex((int)EOrder2P.Stealth);
+                        break;
+                    case (int)EOrder2P.ShinuchiMode:
+                        TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer] = !TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer];
                         break;
                     case (int)EOrder2P.More:
                         SetAutoParameters();            // 簡易CONFIGメニュー脱出に伴い、簡易CONFIG内のAUTOの設定をConfigIniクラスに反映する
@@ -276,7 +279,7 @@ namespace TJAPlayer3
             ScrollSpeed,
             Random,
             Stealth,
-            //ShinuchiMode,
+            ShinuchiMode,
             More,
             Return,
             END,

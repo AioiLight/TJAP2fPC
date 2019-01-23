@@ -247,7 +247,6 @@ namespace TJAPlayer3
             this.bLEVELHOLD = new bool[]{ false, false, false, false };
 
             this.bDoublePlay = TJAPlayer3.ConfigIni.nPlayerCount >= 2 ? true : false;
-
             this.nLoopCount_Clear = 1;
 
             #region[ branch ]
@@ -714,7 +713,7 @@ namespace TJAPlayer3
         //5～9:使用しない
         //
         //Type-Aの場合は使いません。
-        protected int[] nScore = new int[11];
+        protected int[][] nScore = new int[2][];
 
         protected int[] nHand = new int[4];
 
@@ -1127,10 +1126,10 @@ namespace TJAPlayer3
                 if(TJAPlayer3.stage選曲.nSeelectedCource[0] != (int)Difficulty.Dan) this.actRollChara.Start(nPlayer);
 
                 //2017.01.28 DD CDTXから直接呼び出す
-                if (pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode) //2018.03.11 kairera0467 チップに埋め込んだフラグから読み取る
+                if (pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer]) //2018.03.11 kairera0467 チップに埋め込んだフラグから読み取る
                 {
                     // 旧配点・旧筐体配点
-                    if( TJAPlayer3.DTX[0].nScoreModeTmp == 0 || TJAPlayer3.DTX[0].nScoreModeTmp == 1 )
+                    if( TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 0 || TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 1 )
                     {
                         if( pChip.nチャンネル番号 == 0x15 )
                             this.actScore.Add( E楽器パート.TAIKO, (long)( 300 * 1.2f ), nPlayer );
@@ -1149,7 +1148,7 @@ namespace TJAPlayer3
                 else
                 {
                     // 旧配点・旧筐体配点
-                    if( TJAPlayer3.DTX[0].nScoreModeTmp == 0 || TJAPlayer3.DTX[0].nScoreModeTmp == 1 )
+                    if( TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 0 || TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 1 )
                     {
                         if( pChip.nチャンネル番号 == 0x15 )
                             this.actScore.Add( E楽器パート.TAIKO, 300L, nPlayer );
@@ -1255,7 +1254,7 @@ namespace TJAPlayer3
                     TJAPlayer3.stage演奏ドラム画面.FlyingNotes.Start(3, nPlayer);
                     TJAPlayer3.stage演奏ドラム画面.Rainbow.Start( nPlayer );
                     //CDTXMania.stage演奏ドラム画面.actChipFireD.Start( 0, player );
-                    if(pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode)
+                    if(pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer])
                     {
                         this.actScore.Add(E楽器パート.TAIKO, 6000L, nPlayer);
                     } else
@@ -1279,7 +1278,7 @@ namespace TJAPlayer3
                 }
                 else
                 {
-                    if(pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode)
+                    if(pChip.bGOGOTIME && !TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer])
                     {
                         this.actScore.Add(E楽器パート.TAIKO, 360L, nPlayer);
                     } else
@@ -1775,14 +1774,14 @@ namespace TJAPlayer3
 			}
 			if ( ( ( pChip.e楽器パート != E楽器パート.UNKNOWN ) ) && ( eJudgeResult != E判定.Miss ) && ( eJudgeResult != E判定.Bad ) && ( eJudgeResult != E判定.Poor ) && ( pChip.nチャンネル番号 <= 0x14 || pChip.nチャンネル番号 == 0x1A || pChip.nチャンネル番号 == 0x1B ) )
 			{
-				int nCombos = this.actCombo.n現在のコンボ数[ nPlayer ];
-                long nInit = TJAPlayer3.DTX[0].nScoreInit[ 0, TJAPlayer3.stage選曲.nSeelectedCource[0]];
-                long nDiff = TJAPlayer3.DTX[0].nScoreDiff[ TJAPlayer3.stage選曲.nSeelectedCource[0]];
+				int nCombos = this.actCombo.n現在のコンボ数[nPlayer];
+                long nInit = TJAPlayer3.DTX[nPlayer].nScoreInit[0, TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]];
+                long nDiff = TJAPlayer3.DTX[nPlayer].nScoreDiff[TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]];
                 long nAddScore = 0;
 
-                if( TJAPlayer3.ConfigIni.ShinuchiMode )  //2016.07.04 kairera0467 真打モード。
+                if( TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer] )  //2016.07.04 kairera0467 真打モード。
                 {
-                    nAddScore = TJAPlayer3.DTX[0].nScoreInit[ 1, TJAPlayer3.stage選曲.nSeelectedCource[0]];
+                    nAddScore = TJAPlayer3.DTX[nPlayer].nScoreInit[ 1, TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]];
                     if( nAddScore == 0 )
                     {
                         //可の時に0除算をするとエラーが発生するため、それらしい数値を自動算出する。
@@ -1808,27 +1807,27 @@ namespace TJAPlayer3
 
                     this.actScore.Add( E楽器パート.TAIKO, nAddScore, nPlayer );
                 }
-                else if( TJAPlayer3.DTX[0].nScoreModeTmp == 2 )
+                else if( TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 2 )
                 {
                     if( nCombos < 10 )
                     {
-                        nAddScore = this.nScore[ 0 ];
+                        nAddScore = this.nScore[nPlayer][ 0 ];
                     }
                     else if( nCombos >= 10 && nCombos <= 29 )
                     {
-                        nAddScore = this.nScore[ 1 ];
+                        nAddScore = this.nScore[nPlayer][ 1 ];
                     }
                     else if( nCombos >= 30 && nCombos <= 49 )
                     {
-                        nAddScore = this.nScore[ 2 ];
+                        nAddScore = this.nScore[nPlayer][ 2 ];
                     }
                     else if( nCombos >= 50 && nCombos <= 99 )
                     {
-                        nAddScore = this.nScore[ 3 ];
+                        nAddScore = this.nScore[nPlayer][ 3 ];
                     }
                     else if (nCombos >= 100)
                     {
-                        nAddScore = this.nScore[ 4 ];
+                        nAddScore = this.nScore[nPlayer][ 4 ];
                     }
 
                     if (eJudgeResult == E判定.Great || eJudgeResult == E判定.Good)
@@ -1877,51 +1876,51 @@ namespace TJAPlayer3
                     this.actScore.Add( E楽器パート.TAIKO, nAddScore, nPlayer );
                     //this.actScore.Add( E楽器パート.DRUMS, bIsAutoPlay, nAddScore );
                 }
-                else if( TJAPlayer3.DTX[0].nScoreModeTmp == 1 )
+                else if( TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 1 )
                 {
                     if (nCombos < 10)
                     {
-                        nAddScore = this.nScore[ 0 ];
+                        nAddScore = this.nScore[nPlayer][ 0 ];
                     }
                     else if( nCombos >= 10 && nCombos <= 19 )
                     {
-                        nAddScore = this.nScore[ 1 ];
+                        nAddScore = this.nScore[nPlayer][ 1 ];
                     }
                     else if( nCombos >= 20 && nCombos <= 29 )
                     {
-                        nAddScore = this.nScore[ 2 ];
+                        nAddScore = this.nScore[nPlayer][ 2 ];
                     }
                     else if( nCombos >= 30 && nCombos <= 39 )
                     {
-                        nAddScore = this.nScore[ 3 ];
+                        nAddScore = this.nScore[nPlayer][ 3 ];
                     }
                     else if( nCombos >= 40 && nCombos <= 49 )
                     {
-                        nAddScore = this.nScore[ 4 ];
+                        nAddScore = this.nScore[nPlayer][ 4 ];
                     }
                     else if( nCombos >= 50 && nCombos <= 59 )
                     {
-                        nAddScore = this.nScore[ 5 ];
+                        nAddScore = this.nScore[nPlayer][ 5 ];
                     }
                     else if( nCombos >= 60 && nCombos <= 69 )
                     {
-                        nAddScore = this.nScore[ 6 ];
+                        nAddScore = this.nScore[nPlayer][ 6 ];
                     }
                     else if( nCombos >= 70 && nCombos <= 79 )
                     {
-                        nAddScore = this.nScore[ 7 ];
+                        nAddScore = this.nScore[nPlayer][ 7 ];
                     }
                     else if( nCombos >= 80 && nCombos <= 89 )
                     {
-                        nAddScore = this.nScore[ 8 ];
+                        nAddScore = this.nScore[nPlayer][ 8 ];
                     }
                     else if( nCombos >= 90 && nCombos <= 99 )
                     {
-                        nAddScore = this.nScore[ 9 ];
+                        nAddScore = this.nScore[nPlayer][ 9 ];
                     }
                     else if( nCombos >= 100 )
                     {
-                        nAddScore = this.nScore[ 10 ];
+                        nAddScore = this.nScore[nPlayer][ 10 ];
                     }
 
                     if (eJudgeResult == E判定.Great || eJudgeResult == E判定.Good)
@@ -4022,11 +4021,11 @@ namespace TJAPlayer3
                     this.n現在の連打数[nPlayer] = 0;
                     this.n合計連打数[nPlayer] = 0;
                     this.n分岐した回数[nPlayer] = 0;
+                    this.ReSetScore(TJAPlayer3.DTX[nPlayer].nScoreInit[0, TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]], TJAPlayer3.DTX[nPlayer].nScoreDiff[TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]], nPlayer);
                 }
                 this.actComboVoice.tリセット();
             }
 
-            this.ReSetScore(TJAPlayer3.DTX[0].nScoreInit[0, TJAPlayer3.stage選曲.nSeelectedCource[0]], TJAPlayer3.DTX[0].nScoreDiff[TJAPlayer3.stage選曲.nSeelectedCource[0]]);
             this.nHand = new int[]{ 0, 0, 0, 0 };
         }
 
@@ -4389,30 +4388,30 @@ namespace TJAPlayer3
             }
 		}
 
-        public void ReSetScore(int scoreInit, int scoreDiff)
+        public void ReSetScore(int scoreInit, int scoreDiff , int nPlayer)
         {
             //一打目の処理落ちがひどいので、あらかじめここで点数の計算をしておく。
             // -1だった場合、その前を引き継ぐ。
-            int nInit = scoreInit != -1 ? scoreInit : this.nScore[0];
-            int nDiff = scoreDiff != -1 ? scoreDiff : this.nScore[1] - this.nScore[0];
+            int nInit = scoreInit != -1 ? scoreInit : this.nScore[nPlayer][0];
+            int nDiff = scoreDiff != -1 ? scoreDiff : this.nScore[nPlayer][1] - this.nScore[nPlayer][0];
             int nAddScore = 0;
             int[] n倍率 = { 0, 1, 2, 4, 8 };
-
-            if( TJAPlayer3.DTX[0].nScoreModeTmp == 1 )
+            
+            if ( TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 1 )
             {
                 for( int i = 0; i < 11; i++ )
                 {
-                    this.nScore[ i ] = (int)( nInit + ( nDiff * ( i ) ) );
+                    this.nScore[nPlayer][ i ] = (int)( nInit + ( nDiff * ( i ) ) );
                 }
             }
-            else if( TJAPlayer3.DTX[0].nScoreModeTmp == 2 )
+            else if( TJAPlayer3.DTX[nPlayer].nScoreModeTmp == 2 )
             {
                 for( int i = 0; i < 5; i++ )
                 {
-                    this.nScore[ i ] = (int)( nInit + ( nDiff * n倍率[ i ] ) );
+                    this.nScore[nPlayer][ i ] = (int)( nInit + ( nDiff * n倍率[ i ] ) );
 
-                    this.nScore[ i ] = (int)( this.nScore[ i ] / 10.0 );
-                    this.nScore[ i ] = this.nScore[ i ] * 10;
+                    this.nScore[nPlayer][ i ] = (int)( this.nScore[nPlayer][ i ] / 10.0 );
+                    this.nScore[nPlayer][ i ] = this.nScore[nPlayer][ i ] * 10;
 
                 }
 

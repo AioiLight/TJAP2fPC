@@ -191,8 +191,12 @@ namespace TJAPlayer3
 			this.bフィルイン中 = false;
             this.n待機中の大音符の座標 = 0;
             this.actGame.t叩ききりまショー_初期化();
-            base.ReSetScore(TJAPlayer3.DTX[0].nScoreInit[0, TJAPlayer3.stage選曲.nSeelectedCource[0]], TJAPlayer3.DTX[0].nScoreDiff[TJAPlayer3.stage選曲.nSeelectedCource[0]]);
-			base.On活性化();
+            for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)
+            {
+                this.nScore[nPlayer] = new int[11];
+                base.ReSetScore(TJAPlayer3.DTX[nPlayer].nScoreInit[0, TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]], TJAPlayer3.DTX[nPlayer].nScoreDiff[TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]], nPlayer);
+            }
+            base.On活性化();
 
 			// MODIFY_BEGIN #25398 2011.06.07 FROM
 			if( TJAPlayer3.bコンパクトモード )

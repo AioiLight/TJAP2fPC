@@ -221,7 +221,7 @@ namespace TJAPlayer3
                 TJAPlayer3.Tx.Result_Panel?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_Panel_X[nPlayer], TJAPlayer3.Skin.Result_Panel_Y[nPlayer]);
                 TJAPlayer3.Tx.Result_Score_Text?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_ScoreText_X[nPlayer], TJAPlayer3.Skin.Result_ScoreText_Y[nPlayer]); //点
                 TJAPlayer3.Tx.Result_Judge?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_Judge_X[nPlayer], TJAPlayer3.Skin.Result_Judge_Y[nPlayer]);
-                TJAPlayer3.Tx.Result_Gauge_Base?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_GaugeBase_X[nPlayer], TJAPlayer3.Skin.Result_GaugeBase_Y[nPlayer], new Rectangle(0, 0, 691, 47));
+                TJAPlayer3.Tx.Result_Gauge_Base[nPlayer]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_GaugeBase_X[nPlayer], TJAPlayer3.Skin.Result_GaugeBase_Y[nPlayer], new Rectangle(0, 0, 691, 47));
                 for (int nGauge = 2; nGauge <= TJAPlayer3.stage結果.st演奏記録.Drums.fゲージ[nPlayer]; nGauge += 2)
                 {
                     int px = (nGauge - 2) * 616 / 98;
@@ -231,7 +231,7 @@ namespace TJAPlayer3
                     else if (nGauge == 80) rec = new Rectangle(25, 0, 13, 40);
                     else if (nGauge == 40) rec = new Rectangle(12, 0, 13, 40);
                     if (TJAPlayer3.stage結果.st演奏記録.Drums.fゲージ[nPlayer] >= nGauge + 2)
-                        TJAPlayer3.Tx.Result_Gauge?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_GaugeBody_X[nPlayer] + px, TJAPlayer3.Skin.Result_GaugeBody_Y[nPlayer], rec);
+                        TJAPlayer3.Tx.Result_Gauge[nPlayer]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_GaugeBody_X[nPlayer] + px, TJAPlayer3.Skin.Result_GaugeBody_Y[nPlayer], rec);
                 }
                 if (TJAPlayer3.stage結果.st演奏記録.Drums.fゲージ[nPlayer] >= 100.0f)
                     TJAPlayer3.Tx.Gauge_Soul_Fire?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_GaugeSoulFire_X[nPlayer], TJAPlayer3.Skin.Result_GaugeSoulFire_Y[nPlayer], new Rectangle(0, 0, 230, 230));

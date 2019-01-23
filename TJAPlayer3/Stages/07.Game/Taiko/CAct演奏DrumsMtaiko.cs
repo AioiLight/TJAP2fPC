@@ -263,7 +263,7 @@ namespace TJAPlayer3
             for( int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++ )
             {
                 TJAPlayer3.Tx.Couse_Symbol[TJAPlayer3.stage選曲.nSeelectedCource[nPlayer]]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_CourseSymbol_X[nPlayer], TJAPlayer3.Skin.Game_CourseSymbol_Y[nPlayer]);
-                if (TJAPlayer3.ConfigIni.ShinuchiMode)
+                if (TJAPlayer3.ConfigIni.ShinuchiMode[nPlayer])
                 {
                     TJAPlayer3.Tx.Couse_Symbol[(int)Difficulty.Total]?.t2D描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_CourseSymbol_X[nPlayer], TJAPlayer3.Skin.Game_CourseSymbol_Y[nPlayer]);
                 }
