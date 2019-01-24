@@ -15,49 +15,52 @@ namespace TJAPlayer3
 
         public void Render()
         {
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_10combo; i++)
+            for (int nPlayer = 0; nPlayer < TJAPlayer3.ConfigIni.nPlayerCount; nPlayer++)
             {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_10Combo[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_10Combo_Maxed[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_GoGoStart[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_GoGoStart_Maxed[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Normal; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Normal[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Clear; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Normal_Cleared[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Become_Cleared[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Become_Maxed[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Balloon_Breaking[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Balloon_Broke[i]);
-            }
-            for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Miss; i++)
-            {
-                NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Balloon_Miss[i]);
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_10combo[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_10Combo[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_10Combo_Maxed[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_GoGoStart[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_GoGoStart_Maxed[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Normal[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Normal[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Clear[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Normal_Cleared[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Become_Cleared[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Become_Maxed[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Balloon_Breaking[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Balloon_Broke[nPlayer][i]);
+                }
+                for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Miss[nPlayer]; i++)
+                {
+                    NullCheckAndRender(ref TJAPlayer3.Tx.Chara_Balloon_Miss[nPlayer][i]);
+                }
             }
 
             for (int i = 0; i < 5; i++)
