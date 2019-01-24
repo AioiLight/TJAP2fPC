@@ -270,54 +270,51 @@ namespace TJAPlayer3
 		}
 		public override int On進行描画()
 		{
-			if( !base.b活性化してない )
-			{
-				int num;
-				if( base.b初めての進行描画 )
-				{
-					this.ct登場用 = new CCounter( 0, 100, 5, TJAPlayer3.Timer );
-					this.actFI.tフェードイン開始();
-					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
-					if( this.rResultSound != null )
-					{
-						this.rResultSound.t再生を開始する();
-					}
-					base.b初めての進行描画 = false;
-				}
-				this.bアニメが完了 = true;
-				if( this.ct登場用.b進行中 )
-				{
-					this.ct登場用.t進行();
-					if( this.ct登場用.b終了値に達した )
-					{
-						this.ct登場用.t停止();
-					}
-					else
-					{
-						this.bアニメが完了 = false;
-					}
-				}
+            if (!base.b活性化してない)
+            {
+                int num;
+                if (base.b初めての進行描画)
+                {
+                    this.ct登場用 = new CCounter(0, 100, 5, TJAPlayer3.Timer);
+                    this.actFI.tフェードイン開始();
+                    base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
+                    if (this.rResultSound != null)
+                    {
+                        this.rResultSound.t再生を開始する();
+                    }
+                    base.b初めての進行描画 = false;
+                }
+                this.bアニメが完了 = true;
+                if (this.ct登場用.b進行中)
+                {
+                    this.ct登場用.t進行();
+                    if (this.ct登場用.b終了値に達した)
+                    {
+                        this.ct登場用.t停止();
+                    }
+                    else
+                    {
+                        this.bアニメが完了 = false;
+                    }
+                }
 
-				// 描画
-
-				if(TJAPlayer3.Tx.Result_Background != null )
-				{
-                    TJAPlayer3.Tx.Result_Background.t2D描画( TJAPlayer3.app.Device, 0, 0 );
-				}
-				if( this.ct登場用.b進行中 && ( TJAPlayer3.Tx.Result_Header != null ) )
-				{
-					double num2 = ( (double) this.ct登場用.n現在の値 ) / 100.0;
-					double num3 = Math.Sin( Math.PI / 2 * num2 );
-					num = ( (int) ( TJAPlayer3.Tx.Result_Header.sz画像サイズ.Height * num3 ) ) - TJAPlayer3.Tx.Result_Header.sz画像サイズ.Height;
-				}
-				else
-				{
-					num = 0;
-				}
-				if(TJAPlayer3.Tx.Result_Header != null )
-				{
-                    TJAPlayer3.Tx.Result_Header.t2D描画( TJAPlayer3.app.Device, 0, 0 );
-				}
+                // 描画
+                if (TJAPlayer3.ConfigIni.nPlayerCount == 2 && TJAPlayer3.Tx.Result_Background[1] != null)
+                {
+                    TJAPlayer3.Tx.Result_Background[1]?.t2D描画(TJAPlayer3.app.Device, 0, 0);
+                }
+                else
+                {
+                    TJAPlayer3.Tx.Result_Background[0]?.t2D描画(TJAPlayer3.app.Device, 0, 0);
+                }
+                if (TJAPlayer3.ConfigIni.nPlayerCount == 2 && TJAPlayer3.Tx.Result_Header[1] != null)
+                {
+                    TJAPlayer3.Tx.Result_Header[1]?.t2D描画(TJAPlayer3.app.Device, 0, 0);
+                }
+                else
+                {
+                    TJAPlayer3.Tx.Result_Header[0]?.t2D描画(TJAPlayer3.app.Device, 0, 0);
+                }
                 if ( this.actResultImage.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;

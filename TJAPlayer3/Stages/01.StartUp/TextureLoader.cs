@@ -492,15 +492,19 @@ namespace TJAPlayer3
             #endregion
 
             #region 6_結果発表
-            Result_Background = TxC(RESULT + @"Background.png");
-            Result_FadeIn = TxC(RESULT + @"FadeIn.png");
+
             Result_Judge = TxC(RESULT + @"Judge.png");
-            Result_Header = TxC(RESULT + @"Header.png");
             Result_Number = TxC(RESULT + @"Number.png");
             Result_Panel = TxC(RESULT + @"Panel.png");
             Result_Score_Text = TxC(RESULT + @"Score_Text.png");
             Result_Score_Number = TxC(RESULT + @"Score_Number.png");
             Result_Dan = TxC(RESULT + @"Dan.png");
+            Result_Background[0] = TxC(RESULT + @"Background.png");
+            Result_FadeIn[0] = TxC(RESULT + @"FadeIn.png");
+            Result_Header[0] = TxC(RESULT + @"Header.png");
+            Result_Background[1] = TxC(RESULT + @"Background_2P.png");
+            Result_FadeIn[1] = TxC(RESULT + @"FadeIn_2P.png");
+            Result_Header[1] = TxC(RESULT + @"Header_2P.png");
             for (int i = 0; i < 2; i++)
             {
                 Result_Gauge[i] = TxC(RESULT + @"Gauge_" + (i + 1).ToString() + "P.png");
@@ -818,10 +822,7 @@ namespace TJAPlayer3
             #endregion
 
             #region 6_結果発表
-            TJAPlayer3.tテクスチャの解放(ref Result_Background);
-            TJAPlayer3.tテクスチャの解放(ref Result_FadeIn);
             TJAPlayer3.tテクスチャの解放(ref Result_Judge);
-            TJAPlayer3.tテクスチャの解放(ref Result_Header);
             TJAPlayer3.tテクスチャの解放(ref Result_Number);
             TJAPlayer3.tテクスチャの解放(ref Result_Panel);
             TJAPlayer3.tテクスチャの解放(ref Result_Score_Text);
@@ -831,6 +832,9 @@ namespace TJAPlayer3
             {
                 TJAPlayer3.tテクスチャの解放(ref Result_Gauge[i]);
                 TJAPlayer3.tテクスチャの解放(ref Result_Gauge_Base[i]);
+                TJAPlayer3.tテクスチャの解放(ref Result_Header[i]);
+                TJAPlayer3.tテクスチャの解放(ref Result_Background[i]);
+                TJAPlayer3.tテクスチャの解放(ref Result_FadeIn[i]);
             }
             #endregion
 
@@ -1032,17 +1036,17 @@ namespace TJAPlayer3
         #endregion
 
         #region 6_結果発表
-        public CTexture Result_Background,
-            Result_FadeIn,
-            Result_Judge,
-            Result_Header,
+        public CTexture Result_Judge,
             Result_Number,
             Result_Panel,
             Result_Score_Text,
             Result_Score_Number,
             Result_Dan;
         public CTexture[] Result_Gauge = new CTexture[2],
-            Result_Gauge_Base = new CTexture[2];
+            Result_Gauge_Base = new CTexture[2],
+            Result_Background = new CTexture[2],
+            Result_Header = new CTexture[2],
+            Result_FadeIn = new CTexture[2];
         #endregion
 
         #region 7_終了画面
