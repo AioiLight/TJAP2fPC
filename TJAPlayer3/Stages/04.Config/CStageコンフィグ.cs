@@ -25,7 +25,7 @@ namespace TJAPlayer3
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
 			this.actFont = font = new CActDFPFont();
 			base.list子Activities.Add( font );
-			base.list子Activities.Add( this.actFIFO = new CActFIFOWhite() );
+			base.list子Activities.Add( this.actFIFO = new CActFIFOBlack() );
 			base.list子Activities.Add( this.actList = new CActConfigList() );
 			base.list子Activities.Add( this.actKeyAssign = new CActConfigKeyAssign() );
 			base.list子Activities.Add( this.actオプションパネル = new CActオプションパネル() );
@@ -447,7 +447,7 @@ namespace TJAPlayer3
 			}
 		}
 
-		private CActFIFOWhite actFIFO;
+		private CActFIFOBlack actFIFO;
 		private CActConfigKeyAssign actKeyAssign;
 		private CActConfigList actList;
 		private CActオプションパネル actオプションパネル;
