@@ -18,9 +18,9 @@ namespace TJAPlayer3
 		{
 			base.eステージID = CStage.Eステージ.タイトル;
 			base.b活性化してない = true;
-			base.list子Activities.Add( this.actFIfromSetup = new CActFIFOWhite() );
-			base.list子Activities.Add( this.actFI = new CActFIFOWhite() );
-			base.list子Activities.Add( this.actFO = new CActFIFOWhite() );
+			base.list子Activities.Add( this.actFIfromSetup = new CActFIFOBlack() );
+			base.list子Activities.Add( this.actFI = new CActFIFOBlack() );
+			base.list子Activities.Add( this.actFO = new CActFIFOBlack() );
 		}
 
 
@@ -361,9 +361,9 @@ namespace TJAPlayer3
 			}
 		}
 
-		private CActFIFOWhite actFI;
-		private CActFIFOWhite actFIfromSetup;
-		private CActFIFOWhite actFO;
+		private CActFIFOBlack actFI;
+		private CActFIFOBlack actFIfromSetup;
+		private CActFIFOBlack actFO;
 		private CCounter ctカーソルフラッシュ用;
 		private STキー反復用カウンタ ctキー反復用;
 		private CCounter ct下移動用;
