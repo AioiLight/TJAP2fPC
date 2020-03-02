@@ -63,7 +63,28 @@ namespace FDK
             get;
             set;
         }
-
+        public int _n間隔ms
+	{
+		get
+		{
+			return this.n間隔ms;
+		}
+		set
+		{
+			this.n間隔ms = value >= 0 ? value : value * -1; 
+		}
+	}
+	public double _db間隔
+	{
+		get
+		{
+			return this.db間隔;
+		}
+		set
+		{
+			this.db間隔 = value >= 0 ? value : value * -1;
+		}
+	}
 
 		// 状態プロパティ
 
@@ -116,13 +137,13 @@ namespace FDK
 			this.timer = null;
 			this.n開始値 = 0;
 			this.n終了値 = 0;
-			this.n間隔ms = 0;
+			this._n間隔ms = 0;
 			this.n現在の値 = 0;
 			this.n現在の経過時間ms = CTimer.n未使用;
 
             this.db開始値 = 0;
             this.db終了値 = 0;
-            this.db間隔 = 0;
+            this._db間隔 = 0;
             this.db現在の値 = 0;
             this.db現在の経過時間 = CSoundTimer.n未使用;
 		}
@@ -155,7 +176,7 @@ namespace FDK
 		{
 			this.n開始値 = n開始値;
 			this.n終了値 = n終了値;
-			this.n間隔ms = n間隔ms;
+			this._n間隔ms = n間隔ms;
 			this.timer = timer;
 			this.n現在の経過時間ms = this.timer.n現在時刻;
 			this.n現在の値 = n開始値;
@@ -172,7 +193,7 @@ namespace FDK
 		{
 			this.db開始値 = db開始値;
 			this.db終了値 = db終了値;
-			this.db間隔 = db間隔;
+			this._db間隔 = db間隔;
 			this.timerdb = timer;
 			this.db現在の経過時間 = this.timerdb.dbシステム時刻;
 			this.db現在の値 = db開始値;
