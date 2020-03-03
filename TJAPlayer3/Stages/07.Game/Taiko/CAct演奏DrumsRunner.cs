@@ -106,7 +106,8 @@ namespace TJAPlayer3
                     }
                     for (int n = stRunners[i].nOldValue; n < stRunners[i].ct進行.n現在の値; n++)
                     {
-                        stRunners[i].fX += (float)TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM / 18;
+                        double dbBPM = TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM >= 0 ? TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM : TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM * -1;
+                        stRunners[i].fX += (float)dbBPM / 18;
                         int Width = 1280 / Ptn;
                         stRunners[i].nNowPtn = (int)stRunners[i].fX / Width;
                     }
