@@ -757,7 +757,23 @@ namespace TJAPlayer3
             public bool b譜面分岐中;
             public int n分岐した回数;
         }
+	public class CREPLAY
+	{
+		public CDTX.CChip cChip = new CDTX.CChip();
+		public int nPad = 11;
+                public int nChipNum = 0;
+		public bool IsDong = false;
+		public int nChannel = 1;
+		public long nTime = 0;
+		public bool bHit = false;
+		public int nHand = 0;
+		public int nLane = 0;
+		public int nNotesCount = 0;
+		public CDTX.CChip c削除用Chip = new CDTX.CChip();
+		public E判定 e判定 = E判定.Great;
+	}
 
+		public List<CREPLAY>[] listReplay = new List<CREPLAY>[3];
         //
         private System.Timers.Timer combot;
         //
@@ -1320,20 +1336,20 @@ namespace TJAPlayer3
             return true;
         }
 
-		protected E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip )
+		protected E判定 tチップのヒット処理(long nHitTime, CDTX.CChip pChip, E判定 eReplay判定 = E判定.Miss, bool bReplay = false)
 		{
-			return tチップのヒット処理( nHitTime, pChip, true );
+			return tチップのヒット処理(nHitTime, pChip, true, eReplay判定, bReplay);
 		}
-		protected abstract E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane );
-		protected E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, E楽器パート screenmode )		// E楽器パート screenmode
+		protected abstract E判定 tチップのヒット処理(long nHitTime, CDTX.CChip pChip, bool bCorrectLane, E判定 eReplay判定 = E判定.Miss, bool bReplay = false);
+		protected E判定 tチップのヒット処理(long nHitTime, CDTX.CChip pChip, E楽器パート screenmode, E判定 eReplay判定 = E判定.Miss, bool bReplay = false)        // E楽器パート screenmode
 		{
-			return tチップのヒット処理( nHitTime, pChip, screenmode, true, 1, 0 );
+			return tチップのヒット処理(nHitTime, pChip, screenmode, true, 1, 0, eReplay判定, bReplay);
 		}
-		protected E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, E楽器パート screenmode, bool bCorrectLane, int nNowInput )
+		protected E判定 tチップのヒット処理(long nHitTime, CDTX.CChip pChip, E楽器パート screenmode, bool bCorrectLane, int nNowInput, E判定 eReplay判定 = E判定.Miss, bool bReplay = false)
 		{
-			return tチップのヒット処理( nHitTime, pChip, screenmode, bCorrectLane, nNowInput, 0 );
+			return tチップのヒット処理(nHitTime, pChip, screenmode, bCorrectLane, nNowInput, 0, eReplay判定, bReplay);
 		}
-		protected unsafe E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, E楽器パート screenmode, bool bCorrectLane, int nNowInput, int nPlayer )
+		protected unsafe E判定 tチップのヒット処理(long nHitTime, CDTX.CChip pChip, E楽器パート screenmode, bool bCorrectLane, int nNowInput, int nPlayer, E判定 eReplay判定 = E判定.Miss, bool bReplay = false, int nChipNumber = 0)
 		{
             //unsafeコードにつき、デバッグ中の変更厳禁!
 
@@ -1355,9 +1371,18 @@ namespace TJAPlayer3
 
             if( pChip.nチャンネル番号 != 0x15 && pChip.nチャンネル番号 != 0x16 && pChip.nチャンネル番号 != 0x17 && pChip.nチャンネル番号 != 0x18 )
             {
-                //if( nPlayer == pChip.nPlayerSide )
-			        pChip.bHit = true;
-                pChip.IsHitted = true;
+      		if (!bReplay)
+		{
+			pChip.bHit = true;
+			pChip.IsHitted = true;
+		}
+	        else
+		{
+			listChip[nPlayer][nChipNumber].bHit = true;
+			listChip[nPlayer][nChipNumber].IsHitted = true;
+			listChip[nPlayer][nChipNumber].bShow = false;
+			listChip[nPlayer][nChipNumber].b可視 = false;
+		}
             }
 
 			if ( pChip.e楽器パート == E楽器パート.UNKNOWN )
@@ -1379,7 +1404,9 @@ namespace TJAPlayer3
 				case E楽器パート.TAIKO:
 					{
                         //連打が短すぎると発声されない
-						eJudgeResult = (bCorrectLane)? this.e指定時刻からChipのJUDGEを返す( nHitTime, pChip ) : E判定.Miss;
+						if (!bReplay)
+							eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip) : E判定.Miss;
+						else eJudgeResult = (bCorrectLane) ? eReplay判定 : E判定.Miss;
 
 					    if (!bAutoPlay && eJudgeResult != E判定.Miss)
 					    {
@@ -2589,7 +2616,312 @@ namespace TJAPlayer3
 #endif
             return nearestChip;
         }
+/// <summary>
+		/// 最も判定枠に近いノーツ番号を返します。
+		/// </summary>
+		/// <param name="nowTime">判定時の時間。</param>
+		/// <param name="player">プレイヤー。</param>
+		/// <returns>最も判定枠に近いノーツ。</returns>
+		protected int GetChipOfNearestChipNum(long nowTime, int player)
+		{
+			var nearestchipnum = 0;
+			var nearestChip = new CDTX.CChip();
+			var count = listChip[player].Count;
+			var chips = listChip[player];
+			var startPosision = NowProcessingChip[player];
+			CDTX.CChip pastChip; // 判定されるべき過去ノート
+			CDTX.CChip futureChip; // 判定されるべき未来ノート
+			var pastJudge = E判定.Miss;
+			var futureJudge = E判定.Miss;
+			var pastchipnum = 0;
+			var afterchipnum = 0;
+			var futurechipnum = 0;
+			if (count <= 0)
+			{
+				return 0;
+			}
 
+			if (startPosision >= count)
+			{
+				startPosision -= 1;
+			}
+
+			#region 過去のノーツで、かつ可判定以上のノーツの決定
+			CDTX.CChip afterChip = null;
+			for (int pastNote = startPosision - 1; ; pastNote--)
+			{
+				if (pastNote < 0)
+				{
+					pastchipnum = afterchipnum;
+					pastChip = afterChip != null ? afterChip : null; // afterChipに過去の判定があるかもしれないので
+					break;
+				}
+				var processingChip = chips[pastNote];
+				if (!processingChip.IsHitted && processingChip.nコース == n現在のコース[player]) // まだ判定されてない音符
+				{
+					if (((0x11 <= processingChip.nチャンネル番号) && (processingChip.nチャンネル番号 <= 0x18))
+						|| processingChip.nチャンネル番号 == 0x1A
+						|| processingChip.nチャンネル番号 == 0x1B
+						|| processingChip.nチャンネル番号 == 0x1F) // 音符のチャンネルである
+					{
+						var thisChipJudge = pastJudge = e指定時刻からChipのJUDGEを返すImpl(nowTime, processingChip);
+						if (thisChipJudge != E判定.Miss)
+						{
+							// 判定が見過ごし不可ではない(=たたいて不可以上)
+							// その前のノートがもしかしたら存在して、可以上の判定かもしれないからまだ処理を続行する。
+							afterChip = processingChip;
+							afterchipnum = pastNote;
+
+							continue;
+						}
+						else
+						{
+							// 判定が不可だった
+							// その前のノーツを過去で可以上のノート(つまり判定されるべきノート)とする。
+							pastChip = afterChip;
+							pastchipnum = pastNote;
+							break; // 検索終わり
+						}
+					}
+				}
+				if (processingChip.IsHitted && processingChip.nコース == n現在のコース[player]) // 連打
+				{
+					if ((0x15 <= processingChip.nチャンネル番号) && (processingChip.nチャンネル番号 <= 0x17))
+					{
+						if (processingChip.nノーツ終了時刻ms > nowTime)
+						{
+							pastChip = processingChip;
+							pastchipnum = pastNote;
+							break;
+						}
+					}
+				}
+			}
+			#endregion
+
+			#region 未来のノーツで、かつ可判定以上のノーツの決定
+			for (int futureNote = startPosision; ; futureNote++)
+			{
+				if (futureNote >= count)
+				{
+					futureChip = null;
+					break;
+				}
+				var processingChip = chips[futureNote];
+				if (!processingChip.IsHitted && processingChip.nコース == n現在のコース[player]) // まだ判定されてない音符
+				{
+					if (((0x11 <= processingChip.nチャンネル番号) && (processingChip.nチャンネル番号 <= 0x18))
+						|| processingChip.nチャンネル番号 == 0x1A
+						|| processingChip.nチャンネル番号 == 0x1B
+						|| processingChip.nチャンネル番号 == 0x1F) // 音符のチャンネルである
+					{
+						var thisChipJudge = futureJudge = e指定時刻からChipのJUDGEを返すImpl(nowTime, processingChip);
+						if (thisChipJudge != E判定.Miss)
+						{
+							// 判定が見過ごし不可ではない(=たたいて不可以上)
+							// そのノートを処理すべきなので、検索終わり。
+							futureChip = processingChip;
+							futurechipnum = futureNote;
+							break; // 検索終わり
+						}
+						else
+						{
+							// 判定が不可だった
+							// つまり未来に処理すべきノートはないので、検索終わり。
+							futureChip = null; // 今処理中のノート
+							futurechipnum = futureNote;
+							break; // 検索終わり
+						}
+					}
+				}
+			}
+			#endregion
+
+			#region 過去のノーツが見つかったらそれを返却、そうでなければ未来のノーツを返却
+			if ((pastJudge == E判定.Miss || pastJudge == E判定.Poor) && (pastJudge != E判定.Miss && pastJudge != E判定.Poor))
+			{
+				// 過去の判定が不可で、未来の判定が可以上なら未来を返却。
+				nearestChip = futureChip;
+				nearestchipnum = futurechipnum;
+			}
+			else if (futureChip == null && pastChip != null)
+			{
+				// 未来に処理するべきノートがなかったので、過去の処理すべきノートを返す。
+				nearestChip = pastChip;
+				nearestchipnum = pastchipnum;
+			}
+			else if (pastChip == null && futureChip != null)
+			{
+				// 過去の検索が該当なしだったので、未来のノートを返す。
+				nearestChip = futureChip;
+				nearestchipnum = futurechipnum;
+			}
+			else
+			{
+				// 基本的には過去のノートを返す。
+				nearestChip = pastChip;
+				nearestchipnum = pastchipnum;
+			}
+			#endregion
+
+			return nearestchipnum;
+		}
+		/// <summary>
+		/// 最も判定枠に近いドンカツ番号を返します。
+		/// </summary>
+		/// <param name="nowTime">判定時の時間。</param>
+		/// <param name="player">プレイヤー。</param>
+		/// <param name="don">ドンかどうか。</param>
+		/// <returns>最も判定枠に近いノーツ。</returns>
+		protected int GetChipOfNearestChipNum(long nowTime, int player, bool don)
+		{
+			var nearestchipnum = 0;
+			var nearestChip = new CDTX.CChip();
+			var count = listChip[player].Count;
+			var chips = listChip[player];
+			var startPosision = NowProcessingChip[player];
+			CDTX.CChip pastChip; // 判定されるべき過去ノート
+			CDTX.CChip futureChip; // 判定されるべき未来ノート
+			var pastJudge = E判定.Miss;
+			var futureJudge = E判定.Miss;
+			var pastchipnum = 0;
+			var afterchipnum = 0;
+			var futurechipnum = 0;
+			bool GetDon(CDTX.CChip note)
+			{
+				return note.nチャンネル番号 == 0x11 || note.nチャンネル番号 == 0x13 || note.nチャンネル番号 == 0x1A || note.nチャンネル番号 == 0x1F;
+			}
+			bool GetKatsu(CDTX.CChip note)
+			{
+				return note.nチャンネル番号 == 0x12 || note.nチャンネル番号 == 0x14 || note.nチャンネル番号 == 0x1B || note.nチャンネル番号 == 0x1F;
+			}
+
+			if (count <= 0)
+			{
+				return 0;
+			}
+
+			if (startPosision >= count)
+			{
+				startPosision -= 1;
+			}
+
+			#region 過去のノーツで、かつ可判定以上のノーツの決定
+			CDTX.CChip afterChip = null;
+			for (int pastNote = startPosision - 1; ; pastNote--)
+			{
+				if (pastNote < 0)
+				{
+					pastchipnum = afterchipnum;
+					pastChip = afterChip != null ? afterChip : null; // afterChipに過去の判定があるかもしれないので
+					break;
+				}
+				var processingchipnum = pastNote;
+				var processingChip = chips[pastNote];
+				if (!processingChip.IsHitted && processingChip.nコース == n現在のコース[player]) // まだ判定されてない音符
+				{
+					if (don ? GetDon(processingChip) : GetKatsu(processingChip)) // 音符のチャンネルである
+					{
+						var thisChipJudge = pastJudge = e指定時刻からChipのJUDGEを返すImpl(nowTime, processingChip);
+						if (thisChipJudge != E判定.Miss)
+						{
+							// 判定が見過ごし不可ではない(=たたいて不可以上)
+							// その前のノートがもしかしたら存在して、可以上の判定かもしれないからまだ処理を続行する。
+							afterChip = processingChip;
+							afterchipnum = processingchipnum;
+							continue;
+						}
+						else
+						{
+							// 判定が不可だった
+							// その前のノーツを過去で可以上のノート(つまり判定されるべきノート)とする。
+							pastChip = afterChip;
+							pastchipnum = afterchipnum;
+							break; // 検索終わり
+						}
+					}
+				}
+				if (processingChip.IsHitted && processingChip.nコース == n現在のコース[player]) // 連打
+				{
+					if ((0x15 <= processingChip.nチャンネル番号) && (processingChip.nチャンネル番号 <= 0x17))
+					{
+						if (processingChip.nノーツ終了時刻ms > nowTime)
+						{
+							pastchipnum = processingchipnum;
+							pastChip = processingChip;
+							break;
+						}
+					}
+				}
+			}
+			#endregion
+
+			#region 未来のノーツで、かつ可判定以上のノーツの決定
+			for (int futureNote = startPosision; ; futureNote++)
+			{
+				if (futureNote >= count)
+				{
+					futurechipnum = 0;
+					futureChip = null;
+					break;
+				}
+				var processingChip = chips[futureNote];
+				var processingchipnum = futureNote;
+				if (!processingChip.IsHitted && processingChip.nコース == n現在のコース[player]) // まだ判定されてない音符
+				{
+					if (don ? GetDon(processingChip) : GetKatsu(processingChip)) // 音符のチャンネルである
+					{
+						var thisChipJudge = futureJudge = e指定時刻からChipのJUDGEを返すImpl(nowTime, processingChip);
+						if (thisChipJudge != E判定.Miss)
+						{
+							// 判定が見過ごし不可ではない(=たたいて不可以上)
+							// そのノートを処理すべきなので、検索終わり。
+							futureChip = processingChip;
+							futurechipnum = processingchipnum;
+							break; // 検索終わり
+						}
+						else
+						{
+							// 判定が不可だった
+							// つまり未来に処理すべきノートはないので、検索終わり。
+							futureChip = null; // 今処理中のノート
+							futurechipnum = 0;
+							break; // 検索終わり
+						}
+					}
+				}
+			}
+			#endregion
+
+			#region 過去のノーツが見つかったらそれを返却、そうでなければ未来のノーツを返却
+			if ((pastJudge == E判定.Miss || pastJudge == E判定.Poor) && (pastJudge != E判定.Miss && pastJudge != E判定.Poor))
+			{
+				// 過去の判定が不可で、未来の判定が可以上なら未来を返却。
+				nearestChip = futureChip;
+				nearestchipnum = futurechipnum;
+			}
+			else if (futureChip == null && pastChip != null)
+			{
+				// 未来に処理するべきノートがなかったので、過去の処理すべきノートを返す。
+				nearestChip = pastChip;
+				nearestchipnum = pastchipnum;
+			}
+			else if (pastChip == null && futureChip != null)
+			{
+				// 過去の検索が該当なしだったので、未来のノートを返す。
+				nearestChip = futureChip;
+				nearestchipnum = futurechipnum;
+			}
+			else
+			{
+				// 基本的には過去のノートを返す。
+				nearestChip = pastChip;
+				nearestchipnum = pastchipnum;
+			}
+			#endregion
+
+			return nearestchipnum;
+		}
 
         protected CDTX.CChip r指定時刻に一番近い未ヒットChip( long nTime, int nChannel, int nInputAdjustTime, int n検索範囲時間ms, int nPlayer )
 		{
@@ -4280,7 +4612,16 @@ namespace TJAPlayer3
                 this.chip現在処理中の連打チップ[ i ] = null;
             }
             this.bPAUSE = false;
-        }
+        }		
+	public void tリプレイ情報を初期化()
+	{
+		bリプレイ = false;
+		for (int i = 0; i < 2; i++)
+		{
+			listReplay[i].Clear();
+		}
+	}
+	public bool bリプレイ;
 
 		public void t停止()
 		{
@@ -4473,7 +4814,8 @@ namespace TJAPlayer3
 		}
 
         public void t演奏中止()
-        {
+        {			
+	    bリプレイ = false;
             this.actFO.tフェードアウト開始();
             base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
             this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.演奏中断;
